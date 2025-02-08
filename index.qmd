@@ -1,0 +1,8 @@
+---
+title: "AD688_Group5.github.io"
+---
+
+This is a Quarto website.
+
+# Group Project 1
+Yixuan Yang, Arohit Talari, Chengjie Lu
