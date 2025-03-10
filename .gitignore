@@ -171,3 +171,5 @@ cython_debug/
 .pypirc
 
 /.quarto/
+lightcast_cleaned.csv
+lightcast_job_postings.csv

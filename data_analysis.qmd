@@ -14,7 +14,7 @@ author:
   - name: Chengjie Lu
     affiliations:
       - ref: bu
-      
+
 bibliography: references.bib
 csl: csl/econometrica.csl
 format: 
@@ -23,3 +23,30 @@ format:
     number-sections: true
     df-print: paged
 ---
+```{python}
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+```
+```{python}
+data = pd.read_csv("lightcast_job_postings.csv")
+```
+
+```{python}
+columns_to_drop = [
+   "ID", "URL", "ACTIVE_URLS", "DUPLICATES", "LAST_UPDATED_TIMESTAMP",
+    "NAICS2", "NAICS3", "NAICS4", "NAICS5", "NAICS6",
+    "SOC_2", "SOC_2_NAME", "SOC_3", "SOC_3_NAME", "SOC_4", "SOC_4_NAME", "SOC_5", "SOC_5_NAME", "SOC_2021_2", "SOC_2021_2_NAME", "SOC_2021_3", "SOC_2021_3_NAME", "SOC_2021_5", "SOC_2021_5_NAME",
+    'NAICS_2022_2', 'NAICS_2022_2_NAME', 'NAICS_2022_3',
+       'NAICS_2022_3_NAME', 'NAICS_2022_4', 'NAICS_2022_4_NAME','NAICS_2022_5', 'NAICS_2022_5_NAME', 'SOC_2_NAME', 'SOC_3_NAME', 'SOC_4', 'SOC_4_NAME', 'SOC_5_NAME'
+]
+data_drop = data.drop(columns=columns_to_drop)
+```
+```{python eval=false}
+#Replace salary with median
+pd.set_option('display.max_rows', None)
+pd.set_option('display.max_columns', None)
+data_drop.head()
+data_drop.columns
+```
+
