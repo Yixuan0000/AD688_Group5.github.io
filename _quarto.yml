@@ -2,12 +2,17 @@ project:
   type: website
 
 website:
-  title: "AD688_Group5.github.io"
+  title: "Job Market Analysis 2024_Group5"
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
+      - href: research_introduction.qmd
+        text: "Research"
+      - href: data_analysis.qmd
+        text: "Data Analysis"
+      - href: career_plan.qmd
+        text: "Career Strategy"
 
 format:
   html:
