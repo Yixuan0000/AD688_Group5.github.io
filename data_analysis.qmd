@@ -27,6 +27,8 @@ format:
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import plotly.express as px
+import plotly.offline as pyo
 ```
 ```{python}
 data = pd.read_csv("lightcast_job_postings.csv")
@@ -42,11 +44,10 @@ columns_to_drop = [
 ]
 data_drop = data.drop(columns=columns_to_drop)
 ```
-```{python eval=false}
-pd.set_option('display.max_rows', None)
-pd.set_option('display.max_columns', None)
-data_drop.head()
-data_drop.columns
+```{python include=false}
+#pd.set_option('display.max_rows', None)
+#pd.set_option('display.max_columns', None)
+#data_drop.columns
 ```
 
 ```{python}
@@ -54,9 +55,9 @@ data_drop.columns
 salary_median = data_drop['SALARY'].median()
 salary_to_median = data_drop['SALARY_TO'].median()
 salary_from_median = data_drop['SALARY_FROM'].median()
-data_drop['SALARY'].fillna(salary_median)
-data_drop['SALARY_TO'].fillna(salary_to_median)
-data_drop['SALARY_FROM'].fillna(salary_from_median)
+data_drop['SALARY'] = data_drop['SALARY'].fillna(salary_median)
+data_drop['SALARY_TO'] = data_drop['SALARY_TO'].fillna(salary_to_median)
+data_drop['SALARY_FROM'] = data_drop['SALARY_FROM'].fillna(salary_from_median)
 ```
 
 ```{python}
@@ -86,10 +87,17 @@ numeric_cols = data_drop.select_dtypes(include=['float64', 'int64']).columns
 data_drop[numeric_cols] = data_drop[numeric_cols].fillna(0)
 ```
 
-```{python eval=false}
+```{python include=false}
 data_drop.isna().sum()
 ```
 
 ```{python}
+#Remove Duplicates
 data_cleaned = data_drop.drop_duplicates(subset=["TITLE", "COMPANY", "LOCATION", "POSTED"], keep="first")
+```
+
+```{python}
+#Data Visualization
+fig = px.bar(data_cleaned["NAICS_2022_6_NAME"].value_counts(), title="Job Postings by Industry")
+fig
 ```
