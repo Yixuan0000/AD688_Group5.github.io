@@ -43,10 +43,49 @@ columns_to_drop = [
 data_drop = data.drop(columns=columns_to_drop)
 ```
 ```{python eval=false}
-#Replace salary with median
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
 data_drop.head()
 data_drop.columns
 ```
 
+```{python}
+#Replace salary with median
+salary_median = data_drop['SALARY'].median()
+salary_to_median = data_drop['SALARY_TO'].median()
+salary_from_median = data_drop['SALARY_FROM'].median()
+data_drop['SALARY'].fillna(salary_median)
+data_drop['SALARY_TO'].fillna(salary_to_median)
+data_drop['SALARY_FROM'].fillna(salary_from_median)
+```
+
+```{python}
+#Replace NA Values with 0 and -1
+data_drop['MIN_YEARS_EXPERIENCE'] = data_drop['MIN_YEARS_EXPERIENCE'].fillna(0)
+data_drop['DURATION'] = data_drop['DURATION'].fillna(-1)
+data_drop['MODELED_DURATION'] = data_drop['MODELED_DURATION'].fillna(-1)
+```
+
+```{python}
+#Replace Missing Dates with Reasonable Values, and convert to date time format
+data_drop['POSTED'] = pd.to_datetime(data['POSTED'], errors='coerce')
+data_drop['EXPIRED'] = pd.to_datetime(data['EXPIRED'], errors='coerce')
+data_drop['LAST_UPDATED_DATE'] = pd.to_datetime(data['LAST_UPDATED_DATE'], errors='coerce')
+data_drop['MODELED_EXPIRED'] = pd.to_datetime(data_drop['MODELED_EXPIRED'], errors='coerce')
+
+data_drop['EXPIRED'] = data_drop['EXPIRED'].fillna(pd.to_datetime('2100-12-31'))
+data_drop['MODELED_EXPIRED'] = data_drop['MODELED_EXPIRED'].fillna(pd.to_datetime('2100-12-31'))
+```
+
+```{python}
+#Handle the remaining missing values
+string_cols = data_drop.select_dtypes(include='object').columns
+data_drop[string_cols] = data_drop[string_cols].fillna("Unknown")
+
+numeric_cols = data_drop.select_dtypes(include=['float64', 'int64']).columns
+data_drop[numeric_cols] = data_drop[numeric_cols].fillna(0)
+```
+
+```{python eval=false}
+data_drop.isna().sum()
+```
