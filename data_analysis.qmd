@@ -22,6 +22,8 @@ format:
     toc: true
     number-sections: true
     df-print: paged
+    code-tools: true
+    code-fold: true
 ---
 ```{python}
 import pandas as pd
@@ -88,7 +90,7 @@ data_drop[numeric_cols] = data_drop[numeric_cols].fillna(0)
 ```
 
 ```{python include=false}
-data_drop.isna().sum()
+#data_drop.isna().sum()
 ```
 
 ```{python}
@@ -98,6 +100,12 @@ data_cleaned = data_drop.drop_duplicates(subset=["TITLE", "COMPANY", "LOCATION",
 
 ```{python}
 #Data Visualization
-fig = px.bar(data_cleaned["NAICS_2022_6_NAME"].value_counts(), title="Job Postings by Industry")
-fig
+fig = px.bar(
+    data_cleaned["NAICS_2022_6_NAME"].value_counts(),
+    title="Job Postings by Industry",
+    labels={'x': 'Industry', 'y': 'Count'}
+)
+
+# Render the figure
+pyo.iplot(fig)
 ```
