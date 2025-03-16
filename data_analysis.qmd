@@ -31,9 +31,10 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
 import plotly.offline as pyo
+import plotly.io as pio
 ```
 ```{python}
-data = pd.read_csv("lightcast_job_postings.csv")
+data = pd.read_csv("files/lightcast_job_postings.csv")
 ```
 
 ```{python}
@@ -99,13 +100,12 @@ data_cleaned = data_drop.drop_duplicates(subset=["TITLE", "COMPANY", "LOCATION",
 ```
 
 ```{python}
-#Data Visualization
 fig = px.bar(
     data_cleaned["NAICS_2022_6_NAME"].value_counts(),
     title="Job Postings by Industry",
     labels={'x': 'Industry', 'y': 'Count'}
 )
-
-# Render the figure
-pyo.iplot(fig)
+fig.write_html("industry_plot.html")
 ```
+<iframe src="industry_plot.html" width="100%" height="500"></iframe>
+
