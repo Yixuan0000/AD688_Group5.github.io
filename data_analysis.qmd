@@ -22,10 +22,13 @@ format:
     toc: true
     number-sections: true
     df-print: paged
+    code: false
     code-tools: true
-    code-fold: true
+    section-divs: true
 ---
+# Data Preparation and Cleaning 
 ```{python}
+#| echo: false
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -34,10 +37,12 @@ import plotly.offline as pyo
 import plotly.io as pio
 ```
 ```{python}
+#| echo: false
 data = pd.read_csv("files/lightcast_job_postings.csv")
 ```
 
-```{python}
+```{python include=false}
+#| echo: false
 columns_to_drop = [
    "ID", "URL", "ACTIVE_URLS", "DUPLICATES", "LAST_UPDATED_TIMESTAMP",
     "NAICS2", "NAICS3", "NAICS4", "NAICS5", "NAICS6",
@@ -47,13 +52,15 @@ columns_to_drop = [
 ]
 data_drop = data.drop(columns=columns_to_drop)
 ```
-```{python include=false}
+```{python}
+#| echo: false
 #pd.set_option('display.max_rows', None)
 #pd.set_option('display.max_columns', None)
 #data_drop.columns
 ```
 
 ```{python}
+#| echo: false
 #Replace salary with median
 salary_median = data_drop['SALARY'].median()
 salary_to_median = data_drop['SALARY_TO'].median()
@@ -64,6 +71,7 @@ data_drop['SALARY_FROM'] = data_drop['SALARY_FROM'].fillna(salary_from_median)
 ```
 
 ```{python}
+#| echo: false
 #Replace NA Values with 0 and -1
 data_drop['MIN_YEARS_EXPERIENCE'] = data_drop['MIN_YEARS_EXPERIENCE'].fillna(0)
 data_drop['DURATION'] = data_drop['DURATION'].fillna(-1)
@@ -71,6 +79,7 @@ data_drop['MODELED_DURATION'] = data_drop['MODELED_DURATION'].fillna(-1)
 ```
 
 ```{python}
+#| echo: false
 #Replace Missing Dates with Reasonable Values, and convert to date time format
 data_drop['POSTED'] = pd.to_datetime(data['POSTED'], errors='coerce')
 data_drop['EXPIRED'] = pd.to_datetime(data['EXPIRED'], errors='coerce')
@@ -82,6 +91,7 @@ data_drop['MODELED_EXPIRED'] = data_drop['MODELED_EXPIRED'].fillna(pd.to_datetim
 ```
 
 ```{python}
+#| echo: false
 #Handle the remaining missing values
 string_cols = data_drop.select_dtypes(include='object').columns
 data_drop[string_cols] = data_drop[string_cols].fillna("Unknown")
@@ -91,20 +101,27 @@ data_drop[numeric_cols] = data_drop[numeric_cols].fillna(0)
 ```
 
 ```{python include=false}
-#data_drop.isna().sum()
+#| echo: false
+data_drop.isna().sum()
 ```
 
-```{python}
+```{python include=false}
+#| echo: false
 #Remove Duplicates
 data_cleaned = data_drop.drop_duplicates(subset=["TITLE", "COMPANY", "LOCATION", "POSTED"], keep="first")
 ```
 
+# Data Visualization
 ```{python}
-industry_counts = data_cleaned["NAICS_2022_6_NAME"].value_counts().head(10).reset_index()
+#| echo: false
+industry_counts = data_cleaned["NAICS_2022_6_NAME"].value_counts().head(11).reset_index()
 industry_counts.columns = ['Industry', 'Count']
+industry_counts = industry_counts[industry_counts['Industry'] != 'Unclassified Industry']
+
 fig = px.bar(industry_counts, x='Industry', y='Count', title="Top 10 Job Postings by Industry")
-fig.update_layout(xaxis_tickangle=45, height=600, margin=dict(b=200))
+fig.update_layout(xaxis_tickangle=45, height=800, margin=dict(b=200))
 fig.write_html("industry_plot.html")
+print("The bar plot is used to display the top 10 highest number of job posting industries. \nThe graph shows that computer related services are standing out, management services and employment placement agencies also have double the amount of job postings than others in this category.")
 ```
 <iframe src="industry_plot.html" width="100%" height="500"></iframe>
 
