@@ -121,7 +121,11 @@ industry_counts = industry_counts[industry_counts['Industry'] != 'Unclassified I
 fig = px.bar(industry_counts, x='Industry', y='Count', title="Top 10 Job Postings by Industry")
 fig.update_layout(xaxis_tickangle=45, height=800, margin=dict(b=200))
 fig.write_html("industry_plot.html")
-print("The bar plot is used to display the top 10 highest number of job posting industries. \nThe graph shows that computer related services are standing out, management services and employment placement agencies also have double the amount of job postings than others in this category.")
+
 ```
 <iframe src="industry_plot.html" width="100%" height="500"></iframe>
 
+```{python}
+#| echo: false
+print("The bar plot is used to display the top 10 highest number of job posting industries. \nThe graph shows that computer related services are standing out, management services and employment placement agencies also have double the amount of job postings than others in this category.")
+```

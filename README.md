@@ -1,2 +1,2 @@
 # AD688_Group5
-This is the page for group5's project
+https://yixuan0000.github.io/AD688_Group5.github.io/
