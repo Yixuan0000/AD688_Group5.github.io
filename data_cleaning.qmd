@@ -107,6 +107,16 @@ data_cleaned = data_cleaned.drop(index=478)
 ```{python include=false}
 data_cleaned.isna().sum()
 ```
+
+```{python}
+#| include: false
+folder = "files"
+file_name = "cleaned_job_postings.csv"
+file_path = os.path.join(folder, file_name)
+
+# Save the DataFrame to CSV in the files folder
+data_cleaned.to_csv(file_path, index=False)
+```
 # Data Visualization
 ```{python}
 #| echo: false
