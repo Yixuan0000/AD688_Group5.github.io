@@ -1,0 +1,26 @@
+---
+title: "Exploratory Data Analysis"
+subtitle: "Enhanced Visuals"
+
+bibliography: references.bib
+csl: csl/econometrica.csl
+format: 
+  html:
+    toc: true
+    number-sections: true
+    df-print: paged
+    code: false
+    code-tools: true
+    section-divs: true
+---
+# Top 10 Job Postings by Industry
+<iframe src="figures/industry_plot.html" width="100%" height="500"></iframe>
+
+# Salary Distribution by Industry
+<iframe src="figures/salary_distribution_by_industry.html" width="100%" height="500"></iframe>
+
+# Remote vs. On-Site Jobs
+<iframe src="figures/remote_vs_onsite_jobs.html" width="100%" height="500"></iframe>
+
+# Team Skill Levels Heatmap
+<iframe src="figures/team_skill_levels_heatmap.html" width="100%" height="500"></iframe>
