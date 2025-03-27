@@ -38,6 +38,7 @@ import plotly.io as pio
 import os
 ```
 ```{python}
+#| echo: false
 data = pd.read_csv("files/lightcast_job_postings_new.csv")
 ```
 
@@ -53,6 +54,9 @@ data_drop = data.drop(columns=columns_to_drop)
 ```
 ```{python}
 #| echo: false
+figures_folder = "figures"
+if not os.path.exists(figures_folder):
+    os.makedirs(figures_folder)
 #pd.set_option('display.max_rows', None)
 #pd.set_option('display.max_columns', None)
 #data_drop.columns
@@ -127,10 +131,10 @@ industry_counts = industry_counts[industry_counts['Industry'] != 'Unclassified I
 
 fig = px.bar(industry_counts, x='Industry', y='Count', title="Top 10 Job Postings by Industry")
 fig.update_layout(xaxis_tickangle=45, height=800, margin=dict(b=200))
-fig.write_html("industry_plot.html")
+fig.write_html(os.path.join(figures_folder, "industry_plot.html"))
 
 ```
-<iframe src="industry_plot.html" width="100%" height="500"></iframe>
+<iframe src="figures/industry_plot.html" width="100%" height="500"></iframe>
 
 ```{python}
 #| echo: false
@@ -161,9 +165,9 @@ fig.update_layout(
     margin=dict(b=150)
 )
 
-fig.write_html("salary_distribution_by_industry.html")
+fig.write_html(os.path.join(figures_folder, "salary_distribution_by_industry.html"))
 ```
-<iframe src="salary_distribution_by_industry.html" width="100%" height="500"></iframe>
+<iframe src="figures/salary_distribution_by_industry.html" width="100%" height="500"></iframe>
 
 ```{python}
 #| echo: false
@@ -191,9 +195,9 @@ fig = px.pie(
 fig.update_traces(textinfo="percent+label")
 fig.update_layout(height=400)
 
-fig.write_html("remote_vs_onsite_jobs.html")
+fig.write_html(os.path.join(figures_folder, "remote_vs_onsite_jobs.html"))
 ```
-<iframe src="remote_vs_onsite_jobs.html" width="100%" height="500"></iframe>
+<iframe src="figures/remote_vs_onsite_jobs.html" width="100%" height="500"></iframe>
 
 ```{python}
 #| echo: false

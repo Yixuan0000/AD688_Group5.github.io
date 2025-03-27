@@ -25,9 +25,17 @@ import plotly.express as px
 import plotly.offline as pyo
 import plotly.io as pio
 from collections import Counter
+import os
 ```
 ```{python}
+#| echo: false
 data = pd.read_csv("files/cleaned_job_postings.csv")
+```
+```{python}
+#| echo: false
+figures_folder = "figures"
+if not os.path.exists(figures_folder):
+    os.makedirs(figures_folder)
 ```
 ```{python}
 skills_data = {
@@ -35,7 +43,19 @@ skills_data = {
     "Python": [5, 3, 4],
     "SQL": [4, 2, 5],
     "Machine Learning": [3, 1, 4],
-    "Cloud Computing": [2, 2, 3]
+    "Cloud Computing": [2, 2, 3],
+    "Data Visualization": [4, 3, 5],
+    "Statistics": [5, 2, 4],
+    "Project Management": [3, 4, 3],
+    "Communication": [2, 5, 4],
+    "Problem-Solving": [4, 4, 5],
+    "Teamwork": [5, 5, 5],
+    "Excel" :[4, 4, 4],
+    "Adaptability": [4, 5, 3],
+    "Data Analysis": [4, 3, 4],
+    "Leadership": [3, 4, 2],
+    "R": [3, 5, 4]
+
 }
 
 df_skills = pd.DataFrame(skills_data)
@@ -43,11 +63,31 @@ df_skills.set_index("Name", inplace=True)
 df_skills
 ```
 ```{python}
-plt.figure(figsize=(8, 6))
-sns.heatmap(df_skills, annot=True, cmap="coolwarm", linewidths=0.5)
-plt.title("Team Skill Levels Heatmap")
-plt.show()
+#| echo: false
+fig = px.imshow(
+    df_skills,
+    labels=dict(x="Skills", y="Team Members", color="Skill Level"),
+    x=df_skills.columns,
+    y=df_skills.index,
+    color_continuous_scale="RdBu",
+    title="Team Skill Levels Heatmap",
+    text_auto=True
+)
+
+fig.update_layout(
+    width=800,
+    height=600,
+    margin=dict(l=100, r=100, t=100, b=100),
+    xaxis_title="Skills",
+    yaxis_title="Team Members",
+    coloraxis_colorbar_title="Skill Level"
+)
+
+heatmap_file = os.path.join(figures_folder, "team_skill_levels_heatmap.html")
+fig.write_html(heatmap_file)
 ```
+<iframe src="figures/team_skill_levels_heatmap.html" width="100%" height="500"></iframe>
+
 
 ```{python}
 skill_keywords = [
@@ -80,5 +120,9 @@ for skills in data['extracted_skills']:
 print(all_skills)
 ```
 ```{python}
+for skill in all_skills:
+    if skill not in df_skills.columns:
+        df_skills[skill] = 0  
 
+df_skills
 ```
