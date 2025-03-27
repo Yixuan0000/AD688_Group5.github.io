@@ -227,16 +227,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="data-preparation-and-cleaning" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Data Preparation and Cleaning</h1>
-<div id="2d6936c5" class="cell" data-execution_count="2">
+<div id="0620ceee" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_csv(<span class="st">"files/lightcast_job_postings_new.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/8c/3l15xlrn78x5217gdqdbbnc00000gn/T/ipykernel_97797/3367646316.py:1: DtypeWarning:
+<pre><code>/var/folders/8c/3l15xlrn78x5217gdqdbbnc00000gn/T/ipykernel_99243/3367646316.py:1: DtypeWarning:
 
 Columns (19,30) have mixed types. Specify dtype option on import or set low_memory=False.
 </code></pre>
 </div>
 </div>
-<div id="190f955a" class="cell" data-execution_count="3">
+<div id="60d798e6" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>columns_to_drop <span class="op">=</span> [</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>   <span class="st">"ID"</span>, <span class="st">"URL"</span>, <span class="st">"ACTIVE_URLS"</span>, <span class="st">"DUPLICATES"</span>, <span class="st">"LAST_UPDATED_TIMESTAMP"</span>,</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"NAICS2"</span>, <span class="st">"NAICS3"</span>, <span class="st">"NAICS4"</span>, <span class="st">"NAICS5"</span>, <span class="st">"NAICS6"</span>,</span>
@@ -246,7 +246,7 @@ Columns (19,30) have mixed types. Specify dtype option on import or set low_memo
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>]</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>data_drop <span class="op">=</span> data.drop(columns<span class="op">=</span>columns_to_drop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="b9e546af" class="cell" data-execution_count="5">
+<div id="31b61bbe" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Replace salary with median</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>salary_median <span class="op">=</span> data_drop[<span class="st">'SALARY'</span>].median()</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>salary_to_median <span class="op">=</span> data_drop[<span class="st">'SALARY_TO'</span>].median()</span>
@@ -255,13 +255,13 @@ Columns (19,30) have mixed types. Specify dtype option on import or set low_memo
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'SALARY_TO'</span>] <span class="op">=</span> data_drop[<span class="st">'SALARY_TO'</span>].fillna(salary_to_median)</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'SALARY_FROM'</span>] <span class="op">=</span> data_drop[<span class="st">'SALARY_FROM'</span>].fillna(salary_from_median)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="12280049" class="cell" data-execution_count="6">
+<div id="6b2f4a48" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Replace NA Values with 0 and -1</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'MIN_YEARS_EXPERIENCE'</span>] <span class="op">=</span> data_drop[<span class="st">'MIN_YEARS_EXPERIENCE'</span>].fillna(<span class="dv">0</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'DURATION'</span>] <span class="op">=</span> data_drop[<span class="st">'DURATION'</span>].fillna(<span class="op">-</span><span class="dv">1</span>)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'MODELED_DURATION'</span>] <span class="op">=</span> data_drop[<span class="st">'MODELED_DURATION'</span>].fillna(<span class="op">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="17cabaf4" class="cell" data-execution_count="7">
+<div id="d313df41" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Replace Missing Dates with Reasonable Values, and convert to date time format</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'POSTED'</span>] <span class="op">=</span> pd.to_datetime(data[<span class="st">'POSTED'</span>], errors<span class="op">=</span><span class="st">'coerce'</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'EXPIRED'</span>] <span class="op">=</span> pd.to_datetime(data[<span class="st">'EXPIRED'</span>], errors<span class="op">=</span><span class="st">'coerce'</span>)</span>
@@ -271,7 +271,7 @@ Columns (19,30) have mixed types. Specify dtype option on import or set low_memo
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'EXPIRED'</span>] <span class="op">=</span> data_drop[<span class="st">'EXPIRED'</span>].fillna(pd.to_datetime(<span class="st">'2100-12-31'</span>))</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'MODELED_EXPIRED'</span>] <span class="op">=</span> data_drop[<span class="st">'MODELED_EXPIRED'</span>].fillna(pd.to_datetime(<span class="st">'2100-12-31'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="eb882a80" class="cell" data-execution_count="8">
+<div id="3e775484" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Handle the remaining missing values</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>string_cols <span class="op">=</span> data_drop.select_dtypes(include<span class="op">=</span><span class="st">'object'</span>).columns</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>data_drop[string_cols] <span class="op">=</span> data_drop[string_cols].fillna(<span class="st">"Unknown"</span>)</span>
@@ -279,15 +279,15 @@ Columns (19,30) have mixed types. Specify dtype option on import or set low_memo
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>numeric_cols <span class="op">=</span> data_drop.select_dtypes(include<span class="op">=</span>[<span class="st">'float64'</span>, <span class="st">'int64'</span>]).columns</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>data_drop[numeric_cols] <span class="op">=</span> data_drop[numeric_cols].fillna(<span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="9874d4da" class="cell" data-execution_count="9">
+<div id="5284ae49" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Remove Duplicates</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="op">=</span> data_drop.drop_duplicates(subset<span class="op">=</span>[<span class="st">"TITLE"</span>, <span class="st">"COMPANY"</span>, <span class="st">"LOCATION"</span>, <span class="st">"POSTED"</span>], keep<span class="op">=</span><span class="st">"first"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="4c107bbe" class="cell" data-execution_count="10">
+<div id="81dd082d" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>data_cleaned[data_cleaned.isna().<span class="bu">any</span>(axis<span class="op">=</span><span class="dv">1</span>)]</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="op">=</span> data_cleaned.drop(index<span class="op">=</span><span class="dv">478</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="c661898c" class="cell" data-execution_count="11">
+<div id="6ece2ea2" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>data_cleaned.isna().<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>LAST_UPDATED_DATE          0
@@ -309,7 +309,7 @@ Length: 99, dtype: int64</code></pre>
 <h1 data-number="2"><span class="header-section-number">2</span> Data Visualization</h1>
 <iframe src="industry_plot.html" width="100%" height="500">
 </iframe>
-<div id="bddcb3f3" class="cell" data-execution_count="13">
+<div id="81d3a02a" class="cell" data-execution_count="14">
 <div class="cell-output cell-output-stdout">
 <pre><code>The bar plot is used to display the top 10 highest number of job posting industries. 
 The graph shows that computer related services are standing out, management services and employment placement agencies also have double the amount of job postings than others in this category.</code></pre>
@@ -317,7 +317,7 @@ The graph shows that computer related services are standing out, management serv
 </div>
 <iframe src="salary_distribution_by_industry.html" width="100%" height="500">
 </iframe>
-<div id="0b4d0528" class="cell" data-execution_count="15">
+<div id="df67551c" class="cell" data-execution_count="16">
 <div class="cell-output cell-output-stdout">
 <pre><code>The box plot presents the salary distribution across the top 10 industries with the highest number of job postings. 
 By reducing the number of categories and adjusting the axis labels, we improve readability.</code></pre>
@@ -325,7 +325,7 @@ By reducing the number of categories and adjusting the axis labels, we improve r
 </div>
 <iframe src="remote_vs_onsite_jobs.html" width="100%" height="500">
 </iframe>
-<div id="ff9edde2" class="cell" data-execution_count="17">
+<div id="90dc6cab" class="cell" data-execution_count="18">
 <div class="cell-output cell-output-stdout">
 <pre><code>The pie chart represents the distribution of remote, on-site, and hybrid job postings. 
 It helps visualize the proportion of different work arrangements in the job market.</code></pre>
@@ -843,160 +843,171 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
 <span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.offline <span class="im">as</span> pyo</span>
 <span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.io <span class="im">as</span> pio</span>
-<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_csv(<span class="st">"files/lightcast_job_postings_new.csv"</span>)</span>
-<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a><span class="in">```{python include=false}</span></span>
-<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a><span class="in">columns_to_drop = [</span></span>
-<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a><span class="in">   "ID", "URL", "ACTIVE_URLS", "DUPLICATES", "LAST_UPDATED_TIMESTAMP",</span></span>
-<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a><span class="in">    "NAICS2", "NAICS3", "NAICS4", "NAICS5", "NAICS6",</span></span>
-<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a><span class="in">    "SOC_2", "SOC_2_NAME", "SOC_3", "SOC_3_NAME", "SOC_4", "SOC_4_NAME", "SOC_5", "SOC_5_NAME", "SOC_2021_2", "SOC_2021_2_NAME", "SOC_2021_3", "SOC_2021_3_NAME", "SOC_2021_5", "SOC_2021_5_NAME",</span></span>
-<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a><span class="in">    'NAICS_2022_2', 'NAICS_2022_2_NAME', 'NAICS_2022_3',</span></span>
-<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a><span class="in">       'NAICS_2022_3_NAME', 'NAICS_2022_4', 'NAICS_2022_4_NAME','NAICS_2022_5', 'NAICS_2022_5_NAME', 'SOC_2_NAME', 'SOC_3_NAME', 'SOC_4', 'SOC_4_NAME', 'SOC_5_NAME'</span></span>
-<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a><span class="in">]</span></span>
-<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a><span class="in">data_drop = data.drop(columns=columns_to_drop)</span></span>
-<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb15-61"><a href="#cb15-61" aria-hidden="true" tabindex="-1"></a><span class="co">#pd.set_option('display.max_rows', None)</span></span>
-<span id="cb15-62"><a href="#cb15-62" aria-hidden="true" tabindex="-1"></a><span class="co">#pd.set_option('display.max_columns', None)</span></span>
-<span id="cb15-63"><a href="#cb15-63" aria-hidden="true" tabindex="-1"></a><span class="co">#data_drop.columns</span></span>
-<span id="cb15-64"><a href="#cb15-64" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-65"><a href="#cb15-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-68"><a href="#cb15-68" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb15-69"><a href="#cb15-69" aria-hidden="true" tabindex="-1"></a><span class="co">#Replace salary with median</span></span>
-<span id="cb15-70"><a href="#cb15-70" aria-hidden="true" tabindex="-1"></a>salary_median <span class="op">=</span> data_drop[<span class="st">'SALARY'</span>].median()</span>
-<span id="cb15-71"><a href="#cb15-71" aria-hidden="true" tabindex="-1"></a>salary_to_median <span class="op">=</span> data_drop[<span class="st">'SALARY_TO'</span>].median()</span>
-<span id="cb15-72"><a href="#cb15-72" aria-hidden="true" tabindex="-1"></a>salary_from_median <span class="op">=</span> data_drop[<span class="st">'SALARY_FROM'</span>].median()</span>
-<span id="cb15-73"><a href="#cb15-73" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'SALARY'</span>] <span class="op">=</span> data_drop[<span class="st">'SALARY'</span>].fillna(salary_median)</span>
-<span id="cb15-74"><a href="#cb15-74" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'SALARY_TO'</span>] <span class="op">=</span> data_drop[<span class="st">'SALARY_TO'</span>].fillna(salary_to_median)</span>
-<span id="cb15-75"><a href="#cb15-75" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'SALARY_FROM'</span>] <span class="op">=</span> data_drop[<span class="st">'SALARY_FROM'</span>].fillna(salary_from_median)</span>
-<span id="cb15-76"><a href="#cb15-76" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-77"><a href="#cb15-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-80"><a href="#cb15-80" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb15-81"><a href="#cb15-81" aria-hidden="true" tabindex="-1"></a><span class="co">#Replace NA Values with 0 and -1</span></span>
-<span id="cb15-82"><a href="#cb15-82" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'MIN_YEARS_EXPERIENCE'</span>] <span class="op">=</span> data_drop[<span class="st">'MIN_YEARS_EXPERIENCE'</span>].fillna(<span class="dv">0</span>)</span>
-<span id="cb15-83"><a href="#cb15-83" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'DURATION'</span>] <span class="op">=</span> data_drop[<span class="st">'DURATION'</span>].fillna(<span class="op">-</span><span class="dv">1</span>)</span>
-<span id="cb15-84"><a href="#cb15-84" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'MODELED_DURATION'</span>] <span class="op">=</span> data_drop[<span class="st">'MODELED_DURATION'</span>].fillna(<span class="op">-</span><span class="dv">1</span>)</span>
-<span id="cb15-85"><a href="#cb15-85" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-86"><a href="#cb15-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-89"><a href="#cb15-89" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb15-90"><a href="#cb15-90" aria-hidden="true" tabindex="-1"></a><span class="co">#Replace Missing Dates with Reasonable Values, and convert to date time format</span></span>
-<span id="cb15-91"><a href="#cb15-91" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'POSTED'</span>] <span class="op">=</span> pd.to_datetime(data[<span class="st">'POSTED'</span>], errors<span class="op">=</span><span class="st">'coerce'</span>)</span>
-<span id="cb15-92"><a href="#cb15-92" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'EXPIRED'</span>] <span class="op">=</span> pd.to_datetime(data[<span class="st">'EXPIRED'</span>], errors<span class="op">=</span><span class="st">'coerce'</span>)</span>
-<span id="cb15-93"><a href="#cb15-93" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'LAST_UPDATED_DATE'</span>] <span class="op">=</span> pd.to_datetime(data[<span class="st">'LAST_UPDATED_DATE'</span>], errors<span class="op">=</span><span class="st">'coerce'</span>)</span>
-<span id="cb15-94"><a href="#cb15-94" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'MODELED_EXPIRED'</span>] <span class="op">=</span> pd.to_datetime(data_drop[<span class="st">'MODELED_EXPIRED'</span>], errors<span class="op">=</span><span class="st">'coerce'</span>)</span>
-<span id="cb15-95"><a href="#cb15-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-96"><a href="#cb15-96" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'EXPIRED'</span>] <span class="op">=</span> data_drop[<span class="st">'EXPIRED'</span>].fillna(pd.to_datetime(<span class="st">'2100-12-31'</span>))</span>
-<span id="cb15-97"><a href="#cb15-97" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'MODELED_EXPIRED'</span>] <span class="op">=</span> data_drop[<span class="st">'MODELED_EXPIRED'</span>].fillna(pd.to_datetime(<span class="st">'2100-12-31'</span>))</span>
-<span id="cb15-98"><a href="#cb15-98" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-99"><a href="#cb15-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-102"><a href="#cb15-102" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb15-103"><a href="#cb15-103" aria-hidden="true" tabindex="-1"></a><span class="co">#Handle the remaining missing values</span></span>
-<span id="cb15-104"><a href="#cb15-104" aria-hidden="true" tabindex="-1"></a>string_cols <span class="op">=</span> data_drop.select_dtypes(include<span class="op">=</span><span class="st">'object'</span>).columns</span>
-<span id="cb15-105"><a href="#cb15-105" aria-hidden="true" tabindex="-1"></a>data_drop[string_cols] <span class="op">=</span> data_drop[string_cols].fillna(<span class="st">"Unknown"</span>)</span>
-<span id="cb15-106"><a href="#cb15-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-107"><a href="#cb15-107" aria-hidden="true" tabindex="-1"></a>numeric_cols <span class="op">=</span> data_drop.select_dtypes(include<span class="op">=</span>[<span class="st">'float64'</span>, <span class="st">'int64'</span>]).columns</span>
-<span id="cb15-108"><a href="#cb15-108" aria-hidden="true" tabindex="-1"></a>data_drop[numeric_cols] <span class="op">=</span> data_drop[numeric_cols].fillna(<span class="dv">0</span>)</span>
-<span id="cb15-109"><a href="#cb15-109" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-110"><a href="#cb15-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-111"><a href="#cb15-111" aria-hidden="true" tabindex="-1"></a><span class="in">```{python include=false}</span></span>
-<span id="cb15-112"><a href="#cb15-112" aria-hidden="true" tabindex="-1"></a><span class="in">#Remove Duplicates</span></span>
-<span id="cb15-113"><a href="#cb15-113" aria-hidden="true" tabindex="-1"></a><span class="in">data_cleaned = data_drop.drop_duplicates(subset=["TITLE", "COMPANY", "LOCATION", "POSTED"], keep="first")</span></span>
-<span id="cb15-114"><a href="#cb15-114" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-115"><a href="#cb15-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-116"><a href="#cb15-116" aria-hidden="true" tabindex="-1"></a><span class="in">```{python include=false}</span></span>
-<span id="cb15-117"><a href="#cb15-117" aria-hidden="true" tabindex="-1"></a><span class="in">data_cleaned[data_cleaned.isna().any(axis=1)]</span></span>
-<span id="cb15-118"><a href="#cb15-118" aria-hidden="true" tabindex="-1"></a><span class="in">data_cleaned = data_cleaned.drop(index=478)</span></span>
-<span id="cb15-119"><a href="#cb15-119" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-120"><a href="#cb15-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-121"><a href="#cb15-121" aria-hidden="true" tabindex="-1"></a><span class="in">```{python include=false}</span></span>
-<span id="cb15-122"><a href="#cb15-122" aria-hidden="true" tabindex="-1"></a><span class="in">data_cleaned.isna().sum()</span></span>
-<span id="cb15-123"><a href="#cb15-123" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-124"><a href="#cb15-124" aria-hidden="true" tabindex="-1"></a><span class="fu"># Data Visualization</span></span>
-<span id="cb15-127"><a href="#cb15-127" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb15-128"><a href="#cb15-128" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb15-129"><a href="#cb15-129" aria-hidden="true" tabindex="-1"></a>industry_counts <span class="op">=</span> data_cleaned[<span class="st">"NAICS_2022_6_NAME"</span>].value_counts().head(<span class="dv">11</span>).reset_index()</span>
-<span id="cb15-130"><a href="#cb15-130" aria-hidden="true" tabindex="-1"></a>industry_counts.columns <span class="op">=</span> [<span class="st">'Industry'</span>, <span class="st">'Count'</span>]</span>
-<span id="cb15-131"><a href="#cb15-131" aria-hidden="true" tabindex="-1"></a>industry_counts <span class="op">=</span> industry_counts[industry_counts[<span class="st">'Industry'</span>] <span class="op">!=</span> <span class="st">'Unclassified Industry'</span>]</span>
-<span id="cb15-132"><a href="#cb15-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-133"><a href="#cb15-133" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.bar(industry_counts, x<span class="op">=</span><span class="st">'Industry'</span>, y<span class="op">=</span><span class="st">'Count'</span>, title<span class="op">=</span><span class="st">"Top 10 Job Postings by Industry"</span>)</span>
-<span id="cb15-134"><a href="#cb15-134" aria-hidden="true" tabindex="-1"></a>fig.update_layout(xaxis_tickangle<span class="op">=</span><span class="dv">45</span>, height<span class="op">=</span><span class="dv">800</span>, margin<span class="op">=</span><span class="bu">dict</span>(b<span class="op">=</span><span class="dv">200</span>))</span>
-<span id="cb15-135"><a href="#cb15-135" aria-hidden="true" tabindex="-1"></a>fig.write_html(<span class="st">"industry_plot.html"</span>)</span>
-<span id="cb15-136"><a href="#cb15-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-137"><a href="#cb15-137" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-138"><a href="#cb15-138" aria-hidden="true" tabindex="-1"></a>&lt;iframe src="industry_plot.html" width="100%" height="500"&gt;&lt;/iframe&gt;</span>
-<span id="cb15-139"><a href="#cb15-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-142"><a href="#cb15-142" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb15-143"><a href="#cb15-143" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb15-144"><a href="#cb15-144" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The bar plot is used to display the top 10 highest number of job posting industries. </span><span class="ch">\n</span><span class="st">The graph shows that computer related services are standing out, management services and employment placement agencies also have double the amount of job postings than others in this category."</span>)</span>
-<span id="cb15-145"><a href="#cb15-145" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-148"><a href="#cb15-148" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb15-149"><a href="#cb15-149" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb15-150"><a href="#cb15-150" aria-hidden="true" tabindex="-1"></a>top_industries <span class="op">=</span> data_cleaned[<span class="st">"NAICS_2022_6_NAME"</span>].value_counts().head(<span class="dv">11</span>).index</span>
-<span id="cb15-151"><a href="#cb15-151" aria-hidden="true" tabindex="-1"></a>filtered_data <span class="op">=</span> data_cleaned[data_cleaned[<span class="st">"NAICS_2022_6_NAME"</span>].isin(top_industries)]</span>
-<span id="cb15-152"><a href="#cb15-152" aria-hidden="true" tabindex="-1"></a>filtered_data <span class="op">=</span> filtered_data[filtered_data[<span class="st">'NAICS_2022_6_NAME'</span>] <span class="op">!=</span> <span class="st">'Unclassified Industry'</span>]</span>
-<span id="cb15-153"><a href="#cb15-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-154"><a href="#cb15-154" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.box(</span>
-<span id="cb15-155"><a href="#cb15-155" aria-hidden="true" tabindex="-1"></a>    filtered_data,</span>
-<span id="cb15-156"><a href="#cb15-156" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"NAICS_2022_6_NAME"</span>,</span>
-<span id="cb15-157"><a href="#cb15-157" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">"SALARY"</span>,</span>
-<span id="cb15-158"><a href="#cb15-158" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"Salary Distribution by Industry"</span>,</span>
-<span id="cb15-159"><a href="#cb15-159" aria-hidden="true" tabindex="-1"></a>    labels<span class="op">=</span>{<span class="st">"NAICS_2022_6_NAME"</span>: <span class="st">"Industry"</span>, <span class="st">"SALARY"</span>: <span class="st">"Salary"</span>},</span>
-<span id="cb15-160"><a href="#cb15-160" aria-hidden="true" tabindex="-1"></a>    points<span class="op">=</span><span class="st">"outliers"</span>,</span>
-<span id="cb15-161"><a href="#cb15-161" aria-hidden="true" tabindex="-1"></a>    category_orders<span class="op">=</span>{<span class="st">"NAICS_2022_6_NAME"</span>: top_industries}</span>
-<span id="cb15-162"><a href="#cb15-162" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb15-163"><a href="#cb15-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-164"><a href="#cb15-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-165"><a href="#cb15-165" aria-hidden="true" tabindex="-1"></a>fig.update_layout(</span>
-<span id="cb15-166"><a href="#cb15-166" aria-hidden="true" tabindex="-1"></a>    xaxis_tickangle<span class="op">=</span><span class="dv">45</span>,</span>
-<span id="cb15-167"><a href="#cb15-167" aria-hidden="true" tabindex="-1"></a>    xaxis_title<span class="op">=</span><span class="st">"Top 10 Industries"</span>,</span>
-<span id="cb15-168"><a href="#cb15-168" aria-hidden="true" tabindex="-1"></a>    yaxis_title<span class="op">=</span><span class="st">"Salary ($)"</span>,</span>
-<span id="cb15-169"><a href="#cb15-169" aria-hidden="true" tabindex="-1"></a>    height<span class="op">=</span><span class="dv">700</span>,</span>
-<span id="cb15-170"><a href="#cb15-170" aria-hidden="true" tabindex="-1"></a>    margin<span class="op">=</span><span class="bu">dict</span>(b<span class="op">=</span><span class="dv">150</span>)</span>
-<span id="cb15-171"><a href="#cb15-171" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb15-172"><a href="#cb15-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-173"><a href="#cb15-173" aria-hidden="true" tabindex="-1"></a>fig.write_html(<span class="st">"salary_distribution_by_industry.html"</span>)</span>
-<span id="cb15-174"><a href="#cb15-174" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-175"><a href="#cb15-175" aria-hidden="true" tabindex="-1"></a>&lt;iframe src="salary_distribution_by_industry.html" width="100%" height="500"&gt;&lt;/iframe&gt;</span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_csv(<span class="st">"files/lightcast_job_postings_new.csv"</span>)</span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a><span class="in">```{python include=false}</span></span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a><span class="in">columns_to_drop = [</span></span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a><span class="in">   "ID", "URL", "ACTIVE_URLS", "DUPLICATES", "LAST_UPDATED_TIMESTAMP",</span></span>
+<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a><span class="in">    "NAICS2", "NAICS3", "NAICS4", "NAICS5", "NAICS6",</span></span>
+<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a><span class="in">    "SOC_2", "SOC_2_NAME", "SOC_3", "SOC_3_NAME", "SOC_4", "SOC_4_NAME", "SOC_5", "SOC_5_NAME", "SOC_2021_2", "SOC_2021_2_NAME", "SOC_2021_3", "SOC_2021_3_NAME", "SOC_2021_5", "SOC_2021_5_NAME",</span></span>
+<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a><span class="in">    'NAICS_2022_2', 'NAICS_2022_2_NAME', 'NAICS_2022_3',</span></span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a><span class="in">       'NAICS_2022_3_NAME', 'NAICS_2022_4', 'NAICS_2022_4_NAME','NAICS_2022_5', 'NAICS_2022_5_NAME', 'SOC_2_NAME', 'SOC_3_NAME', 'SOC_4', 'SOC_4_NAME', 'SOC_5_NAME'</span></span>
+<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a><span class="in">]</span></span>
+<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a><span class="in">data_drop = data.drop(columns=columns_to_drop)</span></span>
+<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-61"><a href="#cb15-61" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb15-62"><a href="#cb15-62" aria-hidden="true" tabindex="-1"></a><span class="co">#pd.set_option('display.max_rows', None)</span></span>
+<span id="cb15-63"><a href="#cb15-63" aria-hidden="true" tabindex="-1"></a><span class="co">#pd.set_option('display.max_columns', None)</span></span>
+<span id="cb15-64"><a href="#cb15-64" aria-hidden="true" tabindex="-1"></a><span class="co">#data_drop.columns</span></span>
+<span id="cb15-65"><a href="#cb15-65" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-66"><a href="#cb15-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-69"><a href="#cb15-69" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-70"><a href="#cb15-70" aria-hidden="true" tabindex="-1"></a><span class="co">#Replace salary with median</span></span>
+<span id="cb15-71"><a href="#cb15-71" aria-hidden="true" tabindex="-1"></a>salary_median <span class="op">=</span> data_drop[<span class="st">'SALARY'</span>].median()</span>
+<span id="cb15-72"><a href="#cb15-72" aria-hidden="true" tabindex="-1"></a>salary_to_median <span class="op">=</span> data_drop[<span class="st">'SALARY_TO'</span>].median()</span>
+<span id="cb15-73"><a href="#cb15-73" aria-hidden="true" tabindex="-1"></a>salary_from_median <span class="op">=</span> data_drop[<span class="st">'SALARY_FROM'</span>].median()</span>
+<span id="cb15-74"><a href="#cb15-74" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'SALARY'</span>] <span class="op">=</span> data_drop[<span class="st">'SALARY'</span>].fillna(salary_median)</span>
+<span id="cb15-75"><a href="#cb15-75" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'SALARY_TO'</span>] <span class="op">=</span> data_drop[<span class="st">'SALARY_TO'</span>].fillna(salary_to_median)</span>
+<span id="cb15-76"><a href="#cb15-76" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'SALARY_FROM'</span>] <span class="op">=</span> data_drop[<span class="st">'SALARY_FROM'</span>].fillna(salary_from_median)</span>
+<span id="cb15-77"><a href="#cb15-77" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-78"><a href="#cb15-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-81"><a href="#cb15-81" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-82"><a href="#cb15-82" aria-hidden="true" tabindex="-1"></a><span class="co">#Replace NA Values with 0 and -1</span></span>
+<span id="cb15-83"><a href="#cb15-83" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'MIN_YEARS_EXPERIENCE'</span>] <span class="op">=</span> data_drop[<span class="st">'MIN_YEARS_EXPERIENCE'</span>].fillna(<span class="dv">0</span>)</span>
+<span id="cb15-84"><a href="#cb15-84" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'DURATION'</span>] <span class="op">=</span> data_drop[<span class="st">'DURATION'</span>].fillna(<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb15-85"><a href="#cb15-85" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'MODELED_DURATION'</span>] <span class="op">=</span> data_drop[<span class="st">'MODELED_DURATION'</span>].fillna(<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb15-86"><a href="#cb15-86" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-87"><a href="#cb15-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-90"><a href="#cb15-90" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-91"><a href="#cb15-91" aria-hidden="true" tabindex="-1"></a><span class="co">#Replace Missing Dates with Reasonable Values, and convert to date time format</span></span>
+<span id="cb15-92"><a href="#cb15-92" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'POSTED'</span>] <span class="op">=</span> pd.to_datetime(data[<span class="st">'POSTED'</span>], errors<span class="op">=</span><span class="st">'coerce'</span>)</span>
+<span id="cb15-93"><a href="#cb15-93" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'EXPIRED'</span>] <span class="op">=</span> pd.to_datetime(data[<span class="st">'EXPIRED'</span>], errors<span class="op">=</span><span class="st">'coerce'</span>)</span>
+<span id="cb15-94"><a href="#cb15-94" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'LAST_UPDATED_DATE'</span>] <span class="op">=</span> pd.to_datetime(data[<span class="st">'LAST_UPDATED_DATE'</span>], errors<span class="op">=</span><span class="st">'coerce'</span>)</span>
+<span id="cb15-95"><a href="#cb15-95" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'MODELED_EXPIRED'</span>] <span class="op">=</span> pd.to_datetime(data_drop[<span class="st">'MODELED_EXPIRED'</span>], errors<span class="op">=</span><span class="st">'coerce'</span>)</span>
+<span id="cb15-96"><a href="#cb15-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-97"><a href="#cb15-97" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'EXPIRED'</span>] <span class="op">=</span> data_drop[<span class="st">'EXPIRED'</span>].fillna(pd.to_datetime(<span class="st">'2100-12-31'</span>))</span>
+<span id="cb15-98"><a href="#cb15-98" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'MODELED_EXPIRED'</span>] <span class="op">=</span> data_drop[<span class="st">'MODELED_EXPIRED'</span>].fillna(pd.to_datetime(<span class="st">'2100-12-31'</span>))</span>
+<span id="cb15-99"><a href="#cb15-99" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-100"><a href="#cb15-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-103"><a href="#cb15-103" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-104"><a href="#cb15-104" aria-hidden="true" tabindex="-1"></a><span class="co">#Handle the remaining missing values</span></span>
+<span id="cb15-105"><a href="#cb15-105" aria-hidden="true" tabindex="-1"></a>string_cols <span class="op">=</span> data_drop.select_dtypes(include<span class="op">=</span><span class="st">'object'</span>).columns</span>
+<span id="cb15-106"><a href="#cb15-106" aria-hidden="true" tabindex="-1"></a>data_drop[string_cols] <span class="op">=</span> data_drop[string_cols].fillna(<span class="st">"Unknown"</span>)</span>
+<span id="cb15-107"><a href="#cb15-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-108"><a href="#cb15-108" aria-hidden="true" tabindex="-1"></a>numeric_cols <span class="op">=</span> data_drop.select_dtypes(include<span class="op">=</span>[<span class="st">'float64'</span>, <span class="st">'int64'</span>]).columns</span>
+<span id="cb15-109"><a href="#cb15-109" aria-hidden="true" tabindex="-1"></a>data_drop[numeric_cols] <span class="op">=</span> data_drop[numeric_cols].fillna(<span class="dv">0</span>)</span>
+<span id="cb15-110"><a href="#cb15-110" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-111"><a href="#cb15-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-112"><a href="#cb15-112" aria-hidden="true" tabindex="-1"></a><span class="in">```{python include=false}</span></span>
+<span id="cb15-113"><a href="#cb15-113" aria-hidden="true" tabindex="-1"></a><span class="in">#Remove Duplicates</span></span>
+<span id="cb15-114"><a href="#cb15-114" aria-hidden="true" tabindex="-1"></a><span class="in">data_cleaned = data_drop.drop_duplicates(subset=["TITLE", "COMPANY", "LOCATION", "POSTED"], keep="first")</span></span>
+<span id="cb15-115"><a href="#cb15-115" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-116"><a href="#cb15-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-117"><a href="#cb15-117" aria-hidden="true" tabindex="-1"></a><span class="in">```{python include=false}</span></span>
+<span id="cb15-118"><a href="#cb15-118" aria-hidden="true" tabindex="-1"></a><span class="in">data_cleaned[data_cleaned.isna().any(axis=1)]</span></span>
+<span id="cb15-119"><a href="#cb15-119" aria-hidden="true" tabindex="-1"></a><span class="in">data_cleaned = data_cleaned.drop(index=478)</span></span>
+<span id="cb15-120"><a href="#cb15-120" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-121"><a href="#cb15-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-122"><a href="#cb15-122" aria-hidden="true" tabindex="-1"></a><span class="in">```{python include=false}</span></span>
+<span id="cb15-123"><a href="#cb15-123" aria-hidden="true" tabindex="-1"></a><span class="in">data_cleaned.isna().sum()</span></span>
+<span id="cb15-124"><a href="#cb15-124" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-125"><a href="#cb15-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-128"><a href="#cb15-128" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-129"><a href="#cb15-129" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb15-130"><a href="#cb15-130" aria-hidden="true" tabindex="-1"></a>folder <span class="op">=</span> <span class="st">"files"</span></span>
+<span id="cb15-131"><a href="#cb15-131" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> <span class="st">"cleaned_job_postings.csv"</span></span>
+<span id="cb15-132"><a href="#cb15-132" aria-hidden="true" tabindex="-1"></a>file_path <span class="op">=</span> os.path.join(folder, file_name)</span>
+<span id="cb15-133"><a href="#cb15-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-134"><a href="#cb15-134" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the DataFrame to CSV in the files folder</span></span>
+<span id="cb15-135"><a href="#cb15-135" aria-hidden="true" tabindex="-1"></a>data_cleaned.to_csv(file_path, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb15-136"><a href="#cb15-136" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-137"><a href="#cb15-137" aria-hidden="true" tabindex="-1"></a><span class="fu"># Data Visualization</span></span>
+<span id="cb15-140"><a href="#cb15-140" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-141"><a href="#cb15-141" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb15-142"><a href="#cb15-142" aria-hidden="true" tabindex="-1"></a>industry_counts <span class="op">=</span> data_cleaned[<span class="st">"NAICS_2022_6_NAME"</span>].value_counts().head(<span class="dv">11</span>).reset_index()</span>
+<span id="cb15-143"><a href="#cb15-143" aria-hidden="true" tabindex="-1"></a>industry_counts.columns <span class="op">=</span> [<span class="st">'Industry'</span>, <span class="st">'Count'</span>]</span>
+<span id="cb15-144"><a href="#cb15-144" aria-hidden="true" tabindex="-1"></a>industry_counts <span class="op">=</span> industry_counts[industry_counts[<span class="st">'Industry'</span>] <span class="op">!=</span> <span class="st">'Unclassified Industry'</span>]</span>
+<span id="cb15-145"><a href="#cb15-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-146"><a href="#cb15-146" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.bar(industry_counts, x<span class="op">=</span><span class="st">'Industry'</span>, y<span class="op">=</span><span class="st">'Count'</span>, title<span class="op">=</span><span class="st">"Top 10 Job Postings by Industry"</span>)</span>
+<span id="cb15-147"><a href="#cb15-147" aria-hidden="true" tabindex="-1"></a>fig.update_layout(xaxis_tickangle<span class="op">=</span><span class="dv">45</span>, height<span class="op">=</span><span class="dv">800</span>, margin<span class="op">=</span><span class="bu">dict</span>(b<span class="op">=</span><span class="dv">200</span>))</span>
+<span id="cb15-148"><a href="#cb15-148" aria-hidden="true" tabindex="-1"></a>fig.write_html(<span class="st">"industry_plot.html"</span>)</span>
+<span id="cb15-149"><a href="#cb15-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-150"><a href="#cb15-150" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-151"><a href="#cb15-151" aria-hidden="true" tabindex="-1"></a>&lt;iframe src="industry_plot.html" width="100%" height="500"&gt;&lt;/iframe&gt;</span>
+<span id="cb15-152"><a href="#cb15-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-155"><a href="#cb15-155" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-156"><a href="#cb15-156" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb15-157"><a href="#cb15-157" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The bar plot is used to display the top 10 highest number of job posting industries. </span><span class="ch">\n</span><span class="st">The graph shows that computer related services are standing out, management services and employment placement agencies also have double the amount of job postings than others in this category."</span>)</span>
+<span id="cb15-158"><a href="#cb15-158" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-161"><a href="#cb15-161" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-162"><a href="#cb15-162" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb15-163"><a href="#cb15-163" aria-hidden="true" tabindex="-1"></a>top_industries <span class="op">=</span> data_cleaned[<span class="st">"NAICS_2022_6_NAME"</span>].value_counts().head(<span class="dv">11</span>).index</span>
+<span id="cb15-164"><a href="#cb15-164" aria-hidden="true" tabindex="-1"></a>filtered_data <span class="op">=</span> data_cleaned[data_cleaned[<span class="st">"NAICS_2022_6_NAME"</span>].isin(top_industries)]</span>
+<span id="cb15-165"><a href="#cb15-165" aria-hidden="true" tabindex="-1"></a>filtered_data <span class="op">=</span> filtered_data[filtered_data[<span class="st">'NAICS_2022_6_NAME'</span>] <span class="op">!=</span> <span class="st">'Unclassified Industry'</span>]</span>
+<span id="cb15-166"><a href="#cb15-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-167"><a href="#cb15-167" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.box(</span>
+<span id="cb15-168"><a href="#cb15-168" aria-hidden="true" tabindex="-1"></a>    filtered_data,</span>
+<span id="cb15-169"><a href="#cb15-169" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"NAICS_2022_6_NAME"</span>,</span>
+<span id="cb15-170"><a href="#cb15-170" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">"SALARY"</span>,</span>
+<span id="cb15-171"><a href="#cb15-171" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"Salary Distribution by Industry"</span>,</span>
+<span id="cb15-172"><a href="#cb15-172" aria-hidden="true" tabindex="-1"></a>    labels<span class="op">=</span>{<span class="st">"NAICS_2022_6_NAME"</span>: <span class="st">"Industry"</span>, <span class="st">"SALARY"</span>: <span class="st">"Salary"</span>},</span>
+<span id="cb15-173"><a href="#cb15-173" aria-hidden="true" tabindex="-1"></a>    points<span class="op">=</span><span class="st">"outliers"</span>,</span>
+<span id="cb15-174"><a href="#cb15-174" aria-hidden="true" tabindex="-1"></a>    category_orders<span class="op">=</span>{<span class="st">"NAICS_2022_6_NAME"</span>: top_industries}</span>
+<span id="cb15-175"><a href="#cb15-175" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb15-176"><a href="#cb15-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-179"><a href="#cb15-179" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb15-180"><a href="#cb15-180" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb15-181"><a href="#cb15-181" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The box plot presents the salary distribution across the top 10 industries with the highest number of job postings. </span><span class="ch">\n</span><span class="st">"</span></span>
-<span id="cb15-182"><a href="#cb15-182" aria-hidden="true" tabindex="-1"></a>      <span class="st">"By reducing the number of categories and adjusting the axis labels, we improve readability."</span>)</span>
-<span id="cb15-183"><a href="#cb15-183" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-184"><a href="#cb15-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-187"><a href="#cb15-187" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb15-188"><a href="#cb15-188" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb15-189"><a href="#cb15-189" aria-hidden="true" tabindex="-1"></a>remote_counts <span class="op">=</span> data_cleaned[<span class="st">"REMOTE_TYPE_NAME"</span>].value_counts().reset_index()</span>
-<span id="cb15-190"><a href="#cb15-190" aria-hidden="true" tabindex="-1"></a>remote_counts.columns <span class="op">=</span> [<span class="st">"REMOTE_TYPE"</span>, <span class="st">"Count"</span>]</span>
-<span id="cb15-191"><a href="#cb15-191" aria-hidden="true" tabindex="-1"></a>remote_counts <span class="op">=</span> remote_counts[remote_counts[<span class="st">'REMOTE_TYPE'</span>] <span class="op">!=</span> <span class="st">'[None]'</span>]</span>
-<span id="cb15-192"><a href="#cb15-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-193"><a href="#cb15-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-194"><a href="#cb15-194" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.pie(</span>
-<span id="cb15-195"><a href="#cb15-195" aria-hidden="true" tabindex="-1"></a>    remote_counts,</span>
-<span id="cb15-196"><a href="#cb15-196" aria-hidden="true" tabindex="-1"></a>    names<span class="op">=</span><span class="st">"REMOTE_TYPE"</span>,</span>
-<span id="cb15-197"><a href="#cb15-197" aria-hidden="true" tabindex="-1"></a>    values<span class="op">=</span><span class="st">"Count"</span>,</span>
-<span id="cb15-198"><a href="#cb15-198" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"Remote vs. On-Site Jobs"</span>,</span>
-<span id="cb15-199"><a href="#cb15-199" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">"REMOTE_TYPE"</span>,</span>
-<span id="cb15-200"><a href="#cb15-200" aria-hidden="true" tabindex="-1"></a>    color_discrete_map<span class="op">=</span>{<span class="st">"Remote"</span>: <span class="st">"blue"</span>, <span class="st">"On-Site"</span>: <span class="st">"green"</span>, <span class="st">"Hybrid"</span>: <span class="st">"purple"</span>}</span>
-<span id="cb15-201"><a href="#cb15-201" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb15-202"><a href="#cb15-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-203"><a href="#cb15-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-204"><a href="#cb15-204" aria-hidden="true" tabindex="-1"></a>fig.update_traces(textinfo<span class="op">=</span><span class="st">"percent+label"</span>)</span>
-<span id="cb15-205"><a href="#cb15-205" aria-hidden="true" tabindex="-1"></a>fig.update_layout(height<span class="op">=</span><span class="dv">400</span>)</span>
+<span id="cb15-177"><a href="#cb15-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-178"><a href="#cb15-178" aria-hidden="true" tabindex="-1"></a>fig.update_layout(</span>
+<span id="cb15-179"><a href="#cb15-179" aria-hidden="true" tabindex="-1"></a>    xaxis_tickangle<span class="op">=</span><span class="dv">45</span>,</span>
+<span id="cb15-180"><a href="#cb15-180" aria-hidden="true" tabindex="-1"></a>    xaxis_title<span class="op">=</span><span class="st">"Top 10 Industries"</span>,</span>
+<span id="cb15-181"><a href="#cb15-181" aria-hidden="true" tabindex="-1"></a>    yaxis_title<span class="op">=</span><span class="st">"Salary ($)"</span>,</span>
+<span id="cb15-182"><a href="#cb15-182" aria-hidden="true" tabindex="-1"></a>    height<span class="op">=</span><span class="dv">700</span>,</span>
+<span id="cb15-183"><a href="#cb15-183" aria-hidden="true" tabindex="-1"></a>    margin<span class="op">=</span><span class="bu">dict</span>(b<span class="op">=</span><span class="dv">150</span>)</span>
+<span id="cb15-184"><a href="#cb15-184" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-185"><a href="#cb15-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-186"><a href="#cb15-186" aria-hidden="true" tabindex="-1"></a>fig.write_html(<span class="st">"salary_distribution_by_industry.html"</span>)</span>
+<span id="cb15-187"><a href="#cb15-187" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-188"><a href="#cb15-188" aria-hidden="true" tabindex="-1"></a>&lt;iframe src="salary_distribution_by_industry.html" width="100%" height="500"&gt;&lt;/iframe&gt;</span>
+<span id="cb15-189"><a href="#cb15-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-192"><a href="#cb15-192" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-193"><a href="#cb15-193" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb15-194"><a href="#cb15-194" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The box plot presents the salary distribution across the top 10 industries with the highest number of job postings. </span><span class="ch">\n</span><span class="st">"</span></span>
+<span id="cb15-195"><a href="#cb15-195" aria-hidden="true" tabindex="-1"></a>      <span class="st">"By reducing the number of categories and adjusting the axis labels, we improve readability."</span>)</span>
+<span id="cb15-196"><a href="#cb15-196" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-197"><a href="#cb15-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-200"><a href="#cb15-200" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-201"><a href="#cb15-201" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb15-202"><a href="#cb15-202" aria-hidden="true" tabindex="-1"></a>remote_counts <span class="op">=</span> data_cleaned[<span class="st">"REMOTE_TYPE_NAME"</span>].value_counts().reset_index()</span>
+<span id="cb15-203"><a href="#cb15-203" aria-hidden="true" tabindex="-1"></a>remote_counts.columns <span class="op">=</span> [<span class="st">"REMOTE_TYPE"</span>, <span class="st">"Count"</span>]</span>
+<span id="cb15-204"><a href="#cb15-204" aria-hidden="true" tabindex="-1"></a>remote_counts <span class="op">=</span> remote_counts[remote_counts[<span class="st">'REMOTE_TYPE'</span>] <span class="op">!=</span> <span class="st">'[None]'</span>]</span>
+<span id="cb15-205"><a href="#cb15-205" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-206"><a href="#cb15-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-207"><a href="#cb15-207" aria-hidden="true" tabindex="-1"></a>fig.write_html(<span class="st">"remote_vs_onsite_jobs.html"</span>)</span>
-<span id="cb15-208"><a href="#cb15-208" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-209"><a href="#cb15-209" aria-hidden="true" tabindex="-1"></a>&lt;iframe src="remote_vs_onsite_jobs.html" width="100%" height="500"&gt;&lt;/iframe&gt;</span>
-<span id="cb15-210"><a href="#cb15-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-213"><a href="#cb15-213" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb15-214"><a href="#cb15-214" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb15-215"><a href="#cb15-215" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The pie chart represents the distribution of remote, on-site, and hybrid job postings. </span><span class="ch">\n</span><span class="st">"</span></span>
-<span id="cb15-216"><a href="#cb15-216" aria-hidden="true" tabindex="-1"></a>      <span class="st">"It helps visualize the proportion of different work arrangements in the job market."</span>)</span>
-<span id="cb15-217"><a href="#cb15-217" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-207"><a href="#cb15-207" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.pie(</span>
+<span id="cb15-208"><a href="#cb15-208" aria-hidden="true" tabindex="-1"></a>    remote_counts,</span>
+<span id="cb15-209"><a href="#cb15-209" aria-hidden="true" tabindex="-1"></a>    names<span class="op">=</span><span class="st">"REMOTE_TYPE"</span>,</span>
+<span id="cb15-210"><a href="#cb15-210" aria-hidden="true" tabindex="-1"></a>    values<span class="op">=</span><span class="st">"Count"</span>,</span>
+<span id="cb15-211"><a href="#cb15-211" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"Remote vs. On-Site Jobs"</span>,</span>
+<span id="cb15-212"><a href="#cb15-212" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">"REMOTE_TYPE"</span>,</span>
+<span id="cb15-213"><a href="#cb15-213" aria-hidden="true" tabindex="-1"></a>    color_discrete_map<span class="op">=</span>{<span class="st">"Remote"</span>: <span class="st">"blue"</span>, <span class="st">"On-Site"</span>: <span class="st">"green"</span>, <span class="st">"Hybrid"</span>: <span class="st">"purple"</span>}</span>
+<span id="cb15-214"><a href="#cb15-214" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-215"><a href="#cb15-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-216"><a href="#cb15-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-217"><a href="#cb15-217" aria-hidden="true" tabindex="-1"></a>fig.update_traces(textinfo<span class="op">=</span><span class="st">"percent+label"</span>)</span>
+<span id="cb15-218"><a href="#cb15-218" aria-hidden="true" tabindex="-1"></a>fig.update_layout(height<span class="op">=</span><span class="dv">400</span>)</span>
+<span id="cb15-219"><a href="#cb15-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-220"><a href="#cb15-220" aria-hidden="true" tabindex="-1"></a>fig.write_html(<span class="st">"remote_vs_onsite_jobs.html"</span>)</span>
+<span id="cb15-221"><a href="#cb15-221" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-222"><a href="#cb15-222" aria-hidden="true" tabindex="-1"></a>&lt;iframe src="remote_vs_onsite_jobs.html" width="100%" height="500"&gt;&lt;/iframe&gt;</span>
+<span id="cb15-223"><a href="#cb15-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-226"><a href="#cb15-226" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-227"><a href="#cb15-227" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb15-228"><a href="#cb15-228" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The pie chart represents the distribution of remote, on-site, and hybrid job postings. </span><span class="ch">\n</span><span class="st">"</span></span>
+<span id="cb15-229"><a href="#cb15-229" aria-hidden="true" tabindex="-1"></a>      <span class="st">"It helps visualize the proportion of different work arrangements in the job market."</span>)</span>
+<span id="cb15-230"><a href="#cb15-230" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

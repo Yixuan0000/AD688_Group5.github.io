@@ -1,0 +1,84 @@
+---
+title: "Skill Gap Analysis"
+subtitle: ""
+
+bibliography: references.bib
+csl: csl/econometrica.csl
+format: 
+  html:
+    toc: true
+    number-sections: true
+    df-print: paged
+    code: false
+    code-tools: true
+    section-divs: true
+---
+
+
+
+```{python}
+#| echo: false
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import plotly.express as px
+import plotly.offline as pyo
+import plotly.io as pio
+from collections import Counter
+```
+```{python}
+data = pd.read_csv("files/cleaned_job_postings.csv")
+```
+```{python}
+skills_data = {
+    "Name": ["Yixuan", "Arohit", "Chengjie"],
+    "Python": [5, 3, 4],
+    "SQL": [4, 2, 5],
+    "Machine Learning": [3, 1, 4],
+    "Cloud Computing": [2, 2, 3]
+}
+
+df_skills = pd.DataFrame(skills_data)
+df_skills.set_index("Name", inplace=True)
+df_skills
+```
+```{python}
+plt.figure(figsize=(8, 6))
+sns.heatmap(df_skills, annot=True, cmap="coolwarm", linewidths=0.5)
+plt.title("Team Skill Levels Heatmap")
+plt.show()
+```
+
+```{python}
+skill_keywords = [
+    "Python", "R", "SQL", "Data Analysis", "Machine Learning",
+    "Statistics", "Data Visualization", "Excel", "Tableau", "Power BI",
+    "Java", "C++", "JavaScript", "HTML/CSS", "Cloud Computing",
+    "Cybersecurity", "Network Administration", "Database Management",
+    "Communication", "Problem-Solving", "Teamwork", "Project Management",
+    "Leadership", "Time Management", "Adaptability", "Financial Analysis",
+    "Marketing Strategy", "Customer Relationship Management", "Supply Chain Management",
+    "Regulatory Compliance"
+]
+```
+```{python}
+def extract_skills(body_text):
+    if pd.isna(body_text) or not body_text:
+        return []
+    body_text = body_text.lower()
+    # Extract skills present in the text
+    skills = [skill for skill in skill_keywords if skill.lower() in body_text]
+    return skills
+```
+```{python}
+data['extracted_skills'] = data['BODY'].apply(extract_skills)
+```
+```{python}
+all_skills = set()
+for skills in data['extracted_skills']:
+    all_skills.update(skills)
+print(all_skills)
+```
+```{python}
+
+```
