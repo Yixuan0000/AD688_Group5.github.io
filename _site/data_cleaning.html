@@ -227,16 +227,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="data-preparation-and-cleaning" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Data Preparation and Cleaning</h1>
-<div id="d6bc339a" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_csv(<span class="st">"files/lightcast_job_postings.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="9aa3e229" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_csv(<span class="st">"files/lightcast_job_postings_new.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/8c/3l15xlrn78x5217gdqdbbnc00000gn/T/ipykernel_90719/1234429101.py:1: DtypeWarning:
+<pre><code>/var/folders/8c/3l15xlrn78x5217gdqdbbnc00000gn/T/ipykernel_97002/3367646316.py:1: DtypeWarning:
 
 Columns (19,30) have mixed types. Specify dtype option on import or set low_memory=False.
 </code></pre>
 </div>
 </div>
-<div id="b9e43d48" class="cell" data-execution_count="3">
+<div id="e24e3968" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>columns_to_drop <span class="op">=</span> [</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>   <span class="st">"ID"</span>, <span class="st">"URL"</span>, <span class="st">"ACTIVE_URLS"</span>, <span class="st">"DUPLICATES"</span>, <span class="st">"LAST_UPDATED_TIMESTAMP"</span>,</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"NAICS2"</span>, <span class="st">"NAICS3"</span>, <span class="st">"NAICS4"</span>, <span class="st">"NAICS5"</span>, <span class="st">"NAICS6"</span>,</span>
@@ -246,7 +246,7 @@ Columns (19,30) have mixed types. Specify dtype option on import or set low_memo
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>]</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>data_drop <span class="op">=</span> data.drop(columns<span class="op">=</span>columns_to_drop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="30880b63" class="cell" data-execution_count="5">
+<div id="7a5c8d78" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Replace salary with median</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>salary_median <span class="op">=</span> data_drop[<span class="st">'SALARY'</span>].median()</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>salary_to_median <span class="op">=</span> data_drop[<span class="st">'SALARY_TO'</span>].median()</span>
@@ -255,13 +255,13 @@ Columns (19,30) have mixed types. Specify dtype option on import or set low_memo
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'SALARY_TO'</span>] <span class="op">=</span> data_drop[<span class="st">'SALARY_TO'</span>].fillna(salary_to_median)</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'SALARY_FROM'</span>] <span class="op">=</span> data_drop[<span class="st">'SALARY_FROM'</span>].fillna(salary_from_median)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="c00f9684" class="cell" data-execution_count="6">
+<div id="e2ed6d78" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Replace NA Values with 0 and -1</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'MIN_YEARS_EXPERIENCE'</span>] <span class="op">=</span> data_drop[<span class="st">'MIN_YEARS_EXPERIENCE'</span>].fillna(<span class="dv">0</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'DURATION'</span>] <span class="op">=</span> data_drop[<span class="st">'DURATION'</span>].fillna(<span class="op">-</span><span class="dv">1</span>)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'MODELED_DURATION'</span>] <span class="op">=</span> data_drop[<span class="st">'MODELED_DURATION'</span>].fillna(<span class="op">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="f16f646e" class="cell" data-execution_count="7">
+<div id="d071f5ad" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Replace Missing Dates with Reasonable Values, and convert to date time format</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'POSTED'</span>] <span class="op">=</span> pd.to_datetime(data[<span class="st">'POSTED'</span>], errors<span class="op">=</span><span class="st">'coerce'</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'EXPIRED'</span>] <span class="op">=</span> pd.to_datetime(data[<span class="st">'EXPIRED'</span>], errors<span class="op">=</span><span class="st">'coerce'</span>)</span>
@@ -271,7 +271,7 @@ Columns (19,30) have mixed types. Specify dtype option on import or set low_memo
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'EXPIRED'</span>] <span class="op">=</span> data_drop[<span class="st">'EXPIRED'</span>].fillna(pd.to_datetime(<span class="st">'2100-12-31'</span>))</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'MODELED_EXPIRED'</span>] <span class="op">=</span> data_drop[<span class="st">'MODELED_EXPIRED'</span>].fillna(pd.to_datetime(<span class="st">'2100-12-31'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="c6049340" class="cell" data-execution_count="8">
+<div id="d0b8d311" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Handle the remaining missing values</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>string_cols <span class="op">=</span> data_drop.select_dtypes(include<span class="op">=</span><span class="st">'object'</span>).columns</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>data_drop[string_cols] <span class="op">=</span> data_drop[string_cols].fillna(<span class="st">"Unknown"</span>)</span>
@@ -279,7 +279,7 @@ Columns (19,30) have mixed types. Specify dtype option on import or set low_memo
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>numeric_cols <span class="op">=</span> data_drop.select_dtypes(include<span class="op">=</span>[<span class="st">'float64'</span>, <span class="st">'int64'</span>]).columns</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>data_drop[numeric_cols] <span class="op">=</span> data_drop[numeric_cols].fillna(<span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="a51e0440" class="cell" data-execution_count="9">
+<div id="ec2768f9" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>data_drop.isna().<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>LAST_UPDATED_DATE          22
@@ -296,7 +296,7 @@ NAICS_2022_6_NAME           0
 Length: 99, dtype: int64</code></pre>
 </div>
 </div>
-<div id="27b85586" class="cell" data-execution_count="10">
+<div id="b938745f" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Remove Duplicates</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="op">=</span> data_drop.drop_duplicates(subset<span class="op">=</span>[<span class="st">"TITLE"</span>, <span class="st">"COMPANY"</span>, <span class="st">"LOCATION"</span>, <span class="st">"POSTED"</span>], keep<span class="op">=</span><span class="st">"first"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -305,7 +305,7 @@ Length: 99, dtype: int64</code></pre>
 <h1 data-number="2"><span class="header-section-number">2</span> Data Visualization</h1>
 <iframe src="industry_plot.html" width="100%" height="500">
 </iframe>
-<div id="05a22a74" class="cell" data-execution_count="12">
+<div id="fcb757c8" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-stdout">
 <pre><code>The bar plot is used to display the top 10 highest number of job posting industries. 
 The graph shows that computer related services are standing out, management services and employment placement agencies also have double the amount of job postings than others in this category.</code></pre>
@@ -313,7 +313,7 @@ The graph shows that computer related services are standing out, management serv
 </div>
 <iframe src="salary_distribution_by_industry.html" width="100%" height="500">
 </iframe>
-<div id="edc5f339" class="cell" data-execution_count="14">
+<div id="a0105504" class="cell" data-execution_count="14">
 <div class="cell-output cell-output-stdout">
 <pre><code>The box plot presents the salary distribution across the top 10 industries with the highest number of job postings. 
 By reducing the number of categories and adjusting the axis labels, we improve readability.</code></pre>
@@ -321,7 +321,7 @@ By reducing the number of categories and adjusting the axis labels, we improve r
 </div>
 <iframe src="remote_vs_onsite_jobs.html" width="100%" height="500">
 </iframe>
-<div id="2f176820" class="cell" data-execution_count="16">
+<div id="49f51d31" class="cell" data-execution_count="16">
 <div class="cell-output cell-output-stdout">
 <pre><code>The pie chart represents the distribution of remote, on-site, and hybrid job postings. 
 It helps visualize the proportion of different work arrangements in the job market.</code></pre>
@@ -841,7 +841,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.io <span class="im">as</span> pio</span>
 <span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_csv(<span class="st">"files/lightcast_job_postings.csv"</span>)</span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_csv(<span class="st">"files/lightcast_job_postings_new.csv"</span>)</span>
 <span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a><span class="in">```{python include=false}</span></span>

@@ -37,7 +37,7 @@ import plotly.offline as pyo
 import plotly.io as pio
 ```
 ```{python}
-data = pd.read_csv("files/lightcast_job_postings.csv")
+data = pd.read_csv("files/lightcast_job_postings_new.csv")
 ```
 
 ```{python include=false}
@@ -95,14 +95,18 @@ data_drop[numeric_cols] = data_drop[numeric_cols].fillna(0)
 ```
 
 ```{python include=false}
-data_drop.isna().sum()
-```
-
-```{python include=false}
 #Remove Duplicates
 data_cleaned = data_drop.drop_duplicates(subset=["TITLE", "COMPANY", "LOCATION", "POSTED"], keep="first")
 ```
 
+```{python include=false}
+data_cleaned[data_cleaned.isna().any(axis=1)]
+data_cleaned = data_cleaned.drop(index=478)
+```
+
+```{python include=false}
+data_cleaned.isna().sum()
+```
 # Data Visualization
 ```{python}
 #| echo: false

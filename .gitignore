@@ -174,3 +174,5 @@ cython_debug/
 lightcast_cleaned.csv
 lightcast_job_postings.csv
 data_analysis.quarto_ipynb
+lightcast_job_postings_new.csv
+files/

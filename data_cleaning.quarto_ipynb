@@ -1,0 +1,349 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Data Analysis\"\n",
+        "subtitle: \"Comprehensive Data Cleaning & Exploratory Analysis of Job Market Trends\"\n",
+        "author:\n",
+        "  - name: Yixuan Yang\n",
+        "    affiliations:\n",
+        "      - id: bu\n",
+        "        name: Boston University\n",
+        "        city: Boston\n",
+        "        state: MA\n",
+        "  - name: Arohit Talari\n",
+        "    affiliations:\n",
+        "      - ref: bu\n",
+        "  - name: Chengjie Lu\n",
+        "    affiliations:\n",
+        "      - ref: bu\n",
+        "\n",
+        "bibliography: references.bib\n",
+        "csl: csl/econometrica.csl\n",
+        "format: \n",
+        "  html:\n",
+        "    toc: true\n",
+        "    number-sections: true\n",
+        "    df-print: paged\n",
+        "    code: false\n",
+        "    code-tools: true\n",
+        "    section-divs: true\n",
+        "---\n",
+        "\n",
+        "\n",
+        "\n",
+        "# Data Preparation and Cleaning \n"
+      ],
+      "id": "cfee485e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| echo: false\n",
+        "import pandas as pd\n",
+        "import seaborn as sns\n",
+        "import matplotlib.pyplot as plt\n",
+        "import plotly.express as px\n",
+        "import plotly.offline as pyo\n",
+        "import plotly.io as pio"
+      ],
+      "id": "a45a5d28",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "data = pd.read_csv(\"files/lightcast_job_postings_new.csv\")"
+      ],
+      "id": "2d6936c5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "columns_to_drop = [\n",
+        "   \"ID\", \"URL\", \"ACTIVE_URLS\", \"DUPLICATES\", \"LAST_UPDATED_TIMESTAMP\",\n",
+        "    \"NAICS2\", \"NAICS3\", \"NAICS4\", \"NAICS5\", \"NAICS6\",\n",
+        "    \"SOC_2\", \"SOC_2_NAME\", \"SOC_3\", \"SOC_3_NAME\", \"SOC_4\", \"SOC_4_NAME\", \"SOC_5\", \"SOC_5_NAME\", \"SOC_2021_2\", \"SOC_2021_2_NAME\", \"SOC_2021_3\", \"SOC_2021_3_NAME\", \"SOC_2021_5\", \"SOC_2021_5_NAME\",\n",
+        "    'NAICS_2022_2', 'NAICS_2022_2_NAME', 'NAICS_2022_3',\n",
+        "       'NAICS_2022_3_NAME', 'NAICS_2022_4', 'NAICS_2022_4_NAME','NAICS_2022_5', 'NAICS_2022_5_NAME', 'SOC_2_NAME', 'SOC_3_NAME', 'SOC_4', 'SOC_4_NAME', 'SOC_5_NAME'\n",
+        "]\n",
+        "data_drop = data.drop(columns=columns_to_drop)"
+      ],
+      "id": "190f955a",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| echo: false\n",
+        "#pd.set_option('display.max_rows', None)\n",
+        "#pd.set_option('display.max_columns', None)\n",
+        "#data_drop.columns"
+      ],
+      "id": "1425b731",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#Replace salary with median\n",
+        "salary_median = data_drop['SALARY'].median()\n",
+        "salary_to_median = data_drop['SALARY_TO'].median()\n",
+        "salary_from_median = data_drop['SALARY_FROM'].median()\n",
+        "data_drop['SALARY'] = data_drop['SALARY'].fillna(salary_median)\n",
+        "data_drop['SALARY_TO'] = data_drop['SALARY_TO'].fillna(salary_to_median)\n",
+        "data_drop['SALARY_FROM'] = data_drop['SALARY_FROM'].fillna(salary_from_median)"
+      ],
+      "id": "b9e546af",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#Replace NA Values with 0 and -1\n",
+        "data_drop['MIN_YEARS_EXPERIENCE'] = data_drop['MIN_YEARS_EXPERIENCE'].fillna(0)\n",
+        "data_drop['DURATION'] = data_drop['DURATION'].fillna(-1)\n",
+        "data_drop['MODELED_DURATION'] = data_drop['MODELED_DURATION'].fillna(-1)"
+      ],
+      "id": "12280049",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#Replace Missing Dates with Reasonable Values, and convert to date time format\n",
+        "data_drop['POSTED'] = pd.to_datetime(data['POSTED'], errors='coerce')\n",
+        "data_drop['EXPIRED'] = pd.to_datetime(data['EXPIRED'], errors='coerce')\n",
+        "data_drop['LAST_UPDATED_DATE'] = pd.to_datetime(data['LAST_UPDATED_DATE'], errors='coerce')\n",
+        "data_drop['MODELED_EXPIRED'] = pd.to_datetime(data_drop['MODELED_EXPIRED'], errors='coerce')\n",
+        "\n",
+        "data_drop['EXPIRED'] = data_drop['EXPIRED'].fillna(pd.to_datetime('2100-12-31'))\n",
+        "data_drop['MODELED_EXPIRED'] = data_drop['MODELED_EXPIRED'].fillna(pd.to_datetime('2100-12-31'))"
+      ],
+      "id": "17cabaf4",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#Handle the remaining missing values\n",
+        "string_cols = data_drop.select_dtypes(include='object').columns\n",
+        "data_drop[string_cols] = data_drop[string_cols].fillna(\"Unknown\")\n",
+        "\n",
+        "numeric_cols = data_drop.select_dtypes(include=['float64', 'int64']).columns\n",
+        "data_drop[numeric_cols] = data_drop[numeric_cols].fillna(0)"
+      ],
+      "id": "eb882a80",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#Remove Duplicates\n",
+        "data_cleaned = data_drop.drop_duplicates(subset=[\"TITLE\", \"COMPANY\", \"LOCATION\", \"POSTED\"], keep=\"first\")"
+      ],
+      "id": "9874d4da",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "data_cleaned[data_cleaned.isna().any(axis=1)]\n",
+        "data_cleaned = data_cleaned.drop(index=478)"
+      ],
+      "id": "4c107bbe",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "data_cleaned.isna().sum()"
+      ],
+      "id": "c661898c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Data Visualization\n"
+      ],
+      "id": "dc2fa7ab"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| echo: false\n",
+        "industry_counts = data_cleaned[\"NAICS_2022_6_NAME\"].value_counts().head(11).reset_index()\n",
+        "industry_counts.columns = ['Industry', 'Count']\n",
+        "industry_counts = industry_counts[industry_counts['Industry'] != 'Unclassified Industry']\n",
+        "\n",
+        "fig = px.bar(industry_counts, x='Industry', y='Count', title=\"Top 10 Job Postings by Industry\")\n",
+        "fig.update_layout(xaxis_tickangle=45, height=800, margin=dict(b=200))\n",
+        "fig.write_html(\"industry_plot.html\")"
+      ],
+      "id": "63893d7f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "<iframe src=\"industry_plot.html\" width=\"100%\" height=\"500\"></iframe>\n"
+      ],
+      "id": "ee829642"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| echo: false\n",
+        "print(\"The bar plot is used to display the top 10 highest number of job posting industries. \\nThe graph shows that computer related services are standing out, management services and employment placement agencies also have double the amount of job postings than others in this category.\")"
+      ],
+      "id": "bddcb3f3",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| echo: false\n",
+        "top_industries = data_cleaned[\"NAICS_2022_6_NAME\"].value_counts().head(11).index\n",
+        "filtered_data = data_cleaned[data_cleaned[\"NAICS_2022_6_NAME\"].isin(top_industries)]\n",
+        "filtered_data = filtered_data[filtered_data['NAICS_2022_6_NAME'] != 'Unclassified Industry']\n",
+        "\n",
+        "fig = px.box(\n",
+        "    filtered_data,\n",
+        "    x=\"NAICS_2022_6_NAME\",\n",
+        "    y=\"SALARY\",\n",
+        "    title=\"Salary Distribution by Industry\",\n",
+        "    labels={\"NAICS_2022_6_NAME\": \"Industry\", \"SALARY\": \"Salary\"},\n",
+        "    points=\"outliers\",\n",
+        "    category_orders={\"NAICS_2022_6_NAME\": top_industries}\n",
+        ")\n",
+        "\n",
+        "\n",
+        "fig.update_layout(\n",
+        "    xaxis_tickangle=45,\n",
+        "    xaxis_title=\"Top 10 Industries\",\n",
+        "    yaxis_title=\"Salary ($)\",\n",
+        "    height=700,\n",
+        "    margin=dict(b=150)\n",
+        ")\n",
+        "\n",
+        "fig.write_html(\"salary_distribution_by_industry.html\")"
+      ],
+      "id": "3ea6122c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "<iframe src=\"salary_distribution_by_industry.html\" width=\"100%\" height=\"500\"></iframe>\n"
+      ],
+      "id": "c6749012"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| echo: false\n",
+        "print(\"The box plot presents the salary distribution across the top 10 industries with the highest number of job postings. \\n\"\n",
+        "      \"By reducing the number of categories and adjusting the axis labels, we improve readability.\")"
+      ],
+      "id": "0b4d0528",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| echo: false\n",
+        "remote_counts = data_cleaned[\"REMOTE_TYPE_NAME\"].value_counts().reset_index()\n",
+        "remote_counts.columns = [\"REMOTE_TYPE\", \"Count\"]\n",
+        "remote_counts = remote_counts[remote_counts['REMOTE_TYPE'] != '[None]']\n",
+        "\n",
+        "\n",
+        "fig = px.pie(\n",
+        "    remote_counts,\n",
+        "    names=\"REMOTE_TYPE\",\n",
+        "    values=\"Count\",\n",
+        "    title=\"Remote vs. On-Site Jobs\",\n",
+        "    color=\"REMOTE_TYPE\",\n",
+        "    color_discrete_map={\"Remote\": \"blue\", \"On-Site\": \"green\", \"Hybrid\": \"purple\"}\n",
+        ")\n",
+        "\n",
+        "\n",
+        "fig.update_traces(textinfo=\"percent+label\")\n",
+        "fig.update_layout(height=400)\n",
+        "\n",
+        "fig.write_html(\"remote_vs_onsite_jobs.html\")"
+      ],
+      "id": "b3366bab",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "<iframe src=\"remote_vs_onsite_jobs.html\" width=\"100%\" height=\"500\"></iframe>\n"
+      ],
+      "id": "3ab6d9fa"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| echo: false\n",
+        "print(\"The pie chart represents the distribution of remote, on-site, and hybrid job postings. \\n\"\n",
+        "      \"It helps visualize the proportion of different work arrangements in the job market.\")"
+      ],
+      "id": "ff9edde2",
+      "execution_count": null,
+      "outputs": []
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/Users/jack/Desktop/Github/AD688_Group5.github.io-1/AD688_Group5.github.io-2/.venv/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}
