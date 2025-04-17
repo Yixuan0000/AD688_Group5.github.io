@@ -47,10 +47,13 @@ keep_num  = ["exp_mid", "MODELED_DURATION", "skill_count",
              "has_python", "edu_ge_bachelors"]
 
 keep_cat  = ["EMPLOYMENT_TYPE_NAME", "REMOTE_TYPE_NAME",
-             "STATE_NAME", "LIGHTCAST_SECTORS_NAME",
-             "SOC_2021_4_NAME", "TITLE_CLEAN"]
+             "STATE_NAME", 
+             "SOC_2021_4_NAME"]
 
-df_model = df.dropna(subset=["SALARY"])[keep_cols + ["SALARY"]]
+df_model = (
+    df.dropna(subset=["SALARY"])      
+      .loc[:, keep_num + keep_cat + ["SALARY"]]  
+)
 ```
 
 ```{python}
@@ -86,6 +89,7 @@ y_pred = model.predict(X_test)
 ```
 
 ```{python}
+df_dummies.columns
 ```
 
 ```{python}
