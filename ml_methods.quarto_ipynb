@@ -1,0 +1,394 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Multiple Linear Regression - Salary Predition\"\n",
+        "subtitle: \"\"\n",
+        "\n",
+        "bibliography: references.bib\n",
+        "csl: csl/econometrica.csl\n",
+        "format: \n",
+        "  html:\n",
+        "    toc: true\n",
+        "    number-sections: true\n",
+        "    df-print: paged\n",
+        "    code: false\n",
+        "    code-tools: true\n",
+        "    section-divs: true\n",
+        "---\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "# Mutiple Linear Regression\n"
+      ],
+      "id": "2c9afd7d"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| echo: false\n",
+        "import os, json\n",
+        "import pandas as pd\n",
+        "import numpy as np\n",
+        "import matplotlib.pyplot as plt\n",
+        "from sklearn.linear_model import LinearRegression\n",
+        "from sklearn.model_selection import train_test_split\n",
+        "from sklearn.metrics import mean_squared_error, r2_score\n",
+        "from sklearn.preprocessing import StandardScaler\n",
+        "from sklearn.cluster import KMeans\n",
+        "from sklearn.linear_model import LinearRegression\n",
+        "from sklearn.ensemble import RandomForestRegressor\n",
+        "import plotly.graph_objects as go"
+      ],
+      "id": "4eee45e1",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| echo: false\n",
+        "df = pd.read_csv('files/cleaned_job_postings.csv')"
+      ],
+      "id": "38b7b89c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| echo: false\n",
+        "df.head()"
+      ],
+      "id": "278674c4",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| echo: false\n",
+        "#df.columns"
+      ],
+      "id": "9244ceeb",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df[\"exp_mid\"] = df[[\"MIN_YEARS_EXPERIENCE\", \"MAX_YEARS_EXPERIENCE\"]].mean(axis=1)\n",
+        "\n",
+        "df[\"skill_count\"] = df[\"SPECIALIZED_SKILLS_NAME\"].fillna(\"\").str.count(\",\") + 1\n",
+        "\n",
+        "df[\"has_python\"] = df[\"SPECIALIZED_SKILLS_NAME\"].str.contains(\"Python\", case=False, na=False).astype(int)\n",
+        "\n",
+        "df[\"edu_ge_bachelors\"] = df[\"MIN_EDULEVELS_NAME\"].isin(\n",
+        "    [\"Bachelor's Degree\", \"Master's Degree\", \"Doctoral Degree\"]\n",
+        ").astype(int)\n",
+        "\n",
+        "keep_num  = [\"exp_mid\", \"MODELED_DURATION\", \"skill_count\",\n",
+        "             \"has_python\", \"edu_ge_bachelors\"]\n",
+        "\n",
+        "keep_cat  = [\"EMPLOYMENT_TYPE_NAME\", \"REMOTE_TYPE_NAME\",\n",
+        "             \"STATE_NAME\", \n",
+        "             \"SOC_2021_4_NAME\"]\n",
+        "\n",
+        "df_model = (\n",
+        "    df.dropna(subset=[\"SALARY\"])      \n",
+        "      .loc[:, keep_num + keep_cat + [\"SALARY\"]]  \n",
+        ")"
+      ],
+      "id": "80bbcd6c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df_dummies = pd.get_dummies(\n",
+        "    df_model,\n",
+        "    columns = keep_cat,   \n",
+        "    drop_first = True,   \n",
+        "    dtype = float        \n",
+        ")"
+      ],
+      "id": "b35c82e3",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| echo: false\n",
+        "print(df_dummies.shape)\n",
+        "print(df_dummies.dtypes.head(10))"
+      ],
+      "id": "aad3e130",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Drop salary to form features\n",
+        "X = df_dummies.drop('SALARY', axis = 1)\n",
+        "y = df_dummies['SALARY']\n",
+        "\n",
+        "X_train, X_test, y_train, y_test = train_test_split(X, y ,test_size = 0.3, random_state = 688)"
+      ],
+      "id": "ca5c83ff",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "model = LinearRegression()\n",
+        "model.fit(X_train, y_train)"
+      ],
+      "id": "252cb705",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "y_pred = model.predict(X_test)\n",
+        "pd.Series(y_pred).describe()"
+      ],
+      "id": "0f103753",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "rmse = mean_squared_error(y_test, y_pred)\n",
+        "r2 = r2_score(y_test, y_pred)\n",
+        "\n",
+        "print(f\"RMSE: {rmse:.2f}\")\n",
+        "print(f\"R-squared: {r2:.4f}\")"
+      ],
+      "id": "e883a310",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "coef_df = pd.DataFrame({\n",
+        "    \"Feature\": X.columns,\n",
+        "    \"Coefficient\": model.coef_\n",
+        "}).sort_values(by=\"Coefficient\", ascending=False)\n",
+        "\n",
+        "coef_df.head(10)"
+      ],
+      "id": "53e52c23",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "coef_cleaned = coef_df[~coef_df['Feature'].str.contains(\"Unknown|\\[None\\]\", regex=True)]\n",
+        "\n",
+        "coef_cleaned.head(10)"
+      ],
+      "id": "4d5e5fa1",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Random Forest\n"
+      ],
+      "id": "3450ca86"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "lm  = LinearRegression().fit(X_train, y_train)"
+      ],
+      "id": "cb9249f8",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "rf   = RandomForestRegressor(n_estimators=300, random_state=688).fit(X_train, y_train)"
+      ],
+      "id": "8522edf1",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Visualization \n"
+      ],
+      "id": "5d0ed466"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| echo: false\n",
+        "figures_folder = \"figures\"\n",
+        "if not os.path.exists(figures_folder):\n",
+        "    os.makedirs(figures_folder)"
+      ],
+      "id": "f45418b9",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# 1. Coefficient bar chart\n",
+        "#coef = pd.Series(lm.coef_, index=X_train.columns).sort_values()\n",
+        "#fig = coef.tail(15).plot(kind=\"barh\", figsize=(6,5))\n",
+        "#plt.title(\"Top 15 Positive MLR Coefficients\")\n",
+        "#plt.tight_layout()\n",
+        "\n",
+        "#fig.write_html(os.path.join(figures_folder, \"MLR_Coefficients.html\"))"
+      ],
+      "id": "502bf0eb",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Unsupervised Learning - Kmeans \n"
+      ],
+      "id": "967e7a8f"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "scaler = StandardScaler()\n",
+        "X_scaled = scaler.fit_transform(df_dummies)"
+      ],
+      "id": "45bc9ab2",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "wcss = []\n",
+        "K_range = range(2, 11)\n",
+        "\n",
+        "for k in K_range:\n",
+        "    km = KMeans(n_clusters=k, n_init=10, random_state=688)\n",
+        "    km.fit(X_scaled)\n",
+        "    wcss.append(km.inertia_)"
+      ],
+      "id": "7961952e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Elbow Plot\n",
+        "fig = go.Figure()\n",
+        "\n",
+        "fig.add_trace(go.Scatter(\n",
+        "    x=list(K_range),\n",
+        "    y=wcss,\n",
+        "    mode='lines+markers',\n",
+        "    marker=dict(size=8),\n",
+        "    line=dict(width=2),\n",
+        "    name='WCSS'\n",
+        "))\n",
+        "\n",
+        "fig.update_layout(\n",
+        "    title='Elbow Method - Within-Cluster Sum of Squares',\n",
+        "    xaxis_title='Number of Clusters (k)',\n",
+        "    yaxis_title='WCSS',\n",
+        "    template='plotly_white',\n",
+        "    width=800,\n",
+        "    height=500\n",
+        ")\n",
+        "\n",
+        "fig.write_html(os.path.join(figures_folder, \"Elbow_Chart.html\"))"
+      ],
+      "id": "de626952",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "<iframe src=\"figures/Elbow_Chart.html\" width=\"100%\" height=\"500\"></iframe>\n"
+      ],
+      "id": "4fc88012"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# From the elbow Plot, we take k = 4\n",
+        "kmeans = KMeans(n_clusters=4, n_init=10, random_state=688)\n",
+        "\n",
+        "cluster_labels = kmeans.fit_predict(X_scaled)\n",
+        "\n",
+        "df['cluster'] = cluster_labels"
+      ],
+      "id": "f64563f6",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "print(df['cluster'].value_counts().sort_index())"
+      ],
+      "id": "3b0dc63f",
+      "execution_count": null,
+      "outputs": []
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/Users/jack/Desktop/Github/AD688_Group5.github.io-1/AD688_Group5.github.io-3/venv/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}
