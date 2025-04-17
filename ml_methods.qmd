@@ -14,12 +14,16 @@ format:
     section-divs: true
 ---
 
+# Mutiple Linear Regression
 ```{python}
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans
 
 ```
 
@@ -69,6 +73,7 @@ df_dummies = pd.get_dummies(
 ```{python}
 print(df_dummies.shape)
 print(df_dummies.dtypes.head(10))
+print(df_dummies.columns)
 ```
 
 ```{python}
@@ -76,7 +81,7 @@ print(df_dummies.dtypes.head(10))
 X = df_dummies.drop('SALARY', axis = 1)
 y = df_dummies['SALARY']
 
-X_train, X_test, y_train, y_text = train_test_split(X, y ,test_size = 0.3, random_state = 688)
+X_train, X_test, y_train, y_test = train_test_split(X, y ,test_size = 0.3, random_state = 688)
 ```
 
 ```{python}
@@ -86,11 +91,69 @@ model.fit(X_train, y_train)
 
 ```{python}
 y_pred = model.predict(X_test)
+pd.Series(y_pred).describe()
 ```
 
 ```{python}
-df_dummies.columns
+rmse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print(f"RMSE: {rmse:.2f}")
+print(f"R-squared: {r2:.4f}")
 ```
 
 ```{python}
+coef_df = pd.DataFrame({
+    "Feature": X.columns,
+    "Coefficient": model.coef_
+}).sort_values(by="Coefficient", ascending=False)
+
+coef_df.head(10)
+```
+
+```{python}
+coef_cleaned = coef_df[~coef_df['Feature'].str.contains("Unknown|\[None\]", regex=True)]
+
+coef_cleaned.head(10)
+```
+
+# Unsupervised Learning - Kmeans 
+
+```{python}
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(df_dummies)
+```
+
+```{python}
+wcss = []
+K_range = range(2, 11)
+
+for k in K_range:
+    km = KMeans(n_clusters=k, n_init=10, random_state=42)
+    km.fit(X_scaled)
+    wcss.append(km.inertia_)
+```
+
+```{python}
+# Elbow Plot
+plt.figure(figsize=(8, 4))
+plt.plot(K_range, wcss, marker='o')
+plt.title('Elbow Method - Within-Cluster Sum of Squares')
+plt.xlabel('Number of Clusters (k)')
+plt.ylabel('WCSS')
+plt.grid(True)
+plt.show()
+```
+
+```{python}
+# From the elbow Plot, we take k = 4
+kmeans = KMeans(n_clusters=4, n_init=10, random_state=688)
+
+cluster_labels = kmeans.fit_predict(X_scaled)
+
+df['cluster'] = cluster_labels
+```
+
+```{python}
+print(df['cluster'].value_counts().sort_index())
 ```
