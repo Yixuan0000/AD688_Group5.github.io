@@ -16,6 +16,8 @@ format:
 
 # Mutiple Linear Regression
 ```{python}
+#| echo: false
+import os, json
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -24,18 +26,25 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
-
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
+import plotly.graph_objects as go
 ```
 
 ```{python}
+#| echo: false
 df = pd.read_csv('files/cleaned_job_postings.csv')
 ```
 
 ```{python}
+#| echo: false
 df.head()
-df.columns
 ```
 
+```{python}
+#| echo: false
+#df.columns
+```
 ```{python}
 df["exp_mid"] = df[["MIN_YEARS_EXPERIENCE", "MAX_YEARS_EXPERIENCE"]].mean(axis=1)
 
@@ -71,9 +80,9 @@ df_dummies = pd.get_dummies(
 
 
 ```{python}
+#| echo: false
 print(df_dummies.shape)
 print(df_dummies.dtypes.head(10))
-print(df_dummies.columns)
 ```
 
 ```{python}
@@ -117,6 +126,36 @@ coef_cleaned = coef_df[~coef_df['Feature'].str.contains("Unknown|\[None\]", rege
 coef_cleaned.head(10)
 ```
 
+# Random Forest
+```{python}
+lm  = LinearRegression().fit(X_train, y_train)
+```
+
+```{python}
+rf   = RandomForestRegressor(n_estimators=300, random_state=688).fit(X_train, y_train)
+```
+
+# Visualization 
+
+```{python}
+#| echo: false
+figures_folder = "figures"
+if not os.path.exists(figures_folder):
+    os.makedirs(figures_folder)
+```
+```{python}
+# 1. Coefficient bar chart
+#coef = pd.Series(lm.coef_, index=X_train.columns).sort_values()
+#fig = coef.tail(15).plot(kind="barh", figsize=(6,5))
+#plt.title("Top 15 Positive MLR Coefficients")
+#plt.tight_layout()
+
+#fig.write_html(os.path.join(figures_folder, "MLR_Coefficients.html"))
+
+```
+
+
+
 # Unsupervised Learning - Kmeans 
 
 ```{python}
@@ -129,22 +168,36 @@ wcss = []
 K_range = range(2, 11)
 
 for k in K_range:
-    km = KMeans(n_clusters=k, n_init=10, random_state=42)
+    km = KMeans(n_clusters=k, n_init=10, random_state=688)
     km.fit(X_scaled)
     wcss.append(km.inertia_)
 ```
 
 ```{python}
 # Elbow Plot
-plt.figure(figsize=(8, 4))
-plt.plot(K_range, wcss, marker='o')
-plt.title('Elbow Method - Within-Cluster Sum of Squares')
-plt.xlabel('Number of Clusters (k)')
-plt.ylabel('WCSS')
-plt.grid(True)
-plt.show()
-```
+fig = go.Figure()
 
+fig.add_trace(go.Scatter(
+    x=list(K_range),
+    y=wcss,
+    mode='lines+markers',
+    marker=dict(size=8),
+    line=dict(width=2),
+    name='WCSS'
+))
+
+fig.update_layout(
+    title='Elbow Method - Within-Cluster Sum of Squares',
+    xaxis_title='Number of Clusters (k)',
+    yaxis_title='WCSS',
+    template='plotly_white',
+    width=800,
+    height=500
+)
+
+fig.write_html(os.path.join(figures_folder, "Elbow_Chart.html"))
+```
+<iframe src="figures/Elbow_Chart.html" width="100%" height="500"></iframe>
 ```{python}
 # From the elbow Plot, we take k = 4
 kmeans = KMeans(n_clusters=4, n_init=10, random_state=688)
