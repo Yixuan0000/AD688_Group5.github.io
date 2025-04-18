@@ -30,6 +30,7 @@ from sklearn.cluster import KMeans
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
 import plotly.graph_objects as go
+from sklearn.metrics import silhouette_score
 ```
 
 ```{python}
@@ -41,7 +42,10 @@ df = pd.read_csv('files/cleaned_job_postings.csv')
 #| echo: false
 df.head()
 ```
-
+```{python}
+na_values = ["Unknown", "[None]", "", "None", "unknown"]
+df = df.replace(na_values, np.nan)
+```
 ```{python}
 #| echo: false
 #df.columns
@@ -70,6 +74,7 @@ df_model = (
 )
 ```
 
+## Feature Engineering
 ```{python}
 df_dummies = pd.get_dummies(
     df_model,
@@ -122,7 +127,10 @@ coef_df.head(10)
 ```
 
 ```{python}
-coef_cleaned = coef_df[~coef_df['Feature'].str.contains("Unknown|\[None\]", regex=True)]
+coef_cleaned = coef_df[~coef_df["Feature"].str.contains(
+    r"Unknown|\[None\]",  
+    na=False              
+)]
 
 coef_cleaned.head(10)
 ```
@@ -181,7 +189,6 @@ fig = px.histogram(resid, nbins=40,
                    labels={"value":"Error (Actual – Predicted)"},
                    template="plotly_white", width=800, height=500)
 fig.write_html(os.path.join(figures_folder, "MLR_Residuals.html"))
-fig
 ```
 <iframe src="figures/MLR_Residuals.html" width="100%" height="550"></iframe>
 
@@ -205,6 +212,7 @@ print(f"Random Forest  •  RMSE = {rf_rmse:.2f}  |  R² = {rf_r2:.3f}")
 
 ## Rank Importance
 ```{python}
+#| echo: false
 imp_df = (pd.Series(rf_model.feature_importances_, index=X_train.columns)
             .sort_values(ascending=False)
             .head(15)
@@ -230,13 +238,14 @@ X_scaled = scaler.fit_transform(df_dummies)
 
 ```{python}
 #| echo: false
-wcss = []
-K_range = range(2, 11)
+inertias, silhouettes = [], []
+k_range = range(2, 11)
 
-for k in K_range:
-    km = KMeans(n_clusters=k, n_init=10, random_state=688)
+for k in k_range:
+    km = KMeans(n_clusters=k, random_state=688, n_init="auto")
     km.fit(X_scaled)
-    wcss.append(km.inertia_)
+    inertias.append(km.inertia_)
+    silhouettes.append(silhouette_score(X_scaled, km.labels_))
 ```
 
 ## Elbow Plot
@@ -244,38 +253,49 @@ for k in K_range:
 ```{python}
 #| echo: false
 # Elbow Plot
-fig = go.Figure()
-
-fig.add_trace(go.Scatter(
-    x=list(K_range),
-    y=wcss,
-    mode='lines+markers',
+fig_elbow = go.Figure()
+fig_elbow.add_trace(go.Scatter(
+    x=list(k_range),
+    y=inertias,
+    mode="lines+markers",
     marker=dict(size=8),
     line=dict(width=2),
-    name='WCSS'
+    name="WCSS"
 ))
-
-fig.update_layout(
-    title='Elbow Method - Within-Cluster Sum of Squares',
-    xaxis_title='Number of Clusters (k)',
-    yaxis_title='WCSS',
-    template='plotly_white',
+fig_elbow.update_layout(
+    title="Elbow Method – Within‑Cluster Sum of Squares",
+    xaxis_title="Number of Clusters (k)",
+    yaxis_title="WCSS",
+    template="plotly_white",
     width=800,
     height=500
 )
-
-fig.write_html(os.path.join(figures_folder, "Elbow_Chart.html"))
+fig_elbow.write_html(
+    os.path.join(figures_folder, "Elbow_Chart.html"),
+    include_plotlyjs="cdn"
+)
+fig_elbow
 ```
 <iframe src="figures/Elbow_Chart.html" width="100%" height="500"></iframe>
-```{python}
-# From the elbow Plot, we take k = 4
-kmeans = KMeans(n_clusters=4, n_init=10, random_state=688)
-
-cluster_labels = kmeans.fit_predict(X_scaled)
-
-df['cluster'] = cluster_labels
-```
 
 ```{python}
-print(df['cluster'].value_counts().sort_index())
+fig_sil = go.Figure()
+fig_sil.add_trace(go.Bar(
+    x=list(k_range),
+    y=silhouettes,
+    name="Silhouette"
+))
+fig_sil.update_layout(
+    title="Silhouette Score by k",
+    xaxis_title="Number of Clusters (k)",
+    yaxis_title="Average Silhouette",
+    template="plotly_white",
+    width=800,
+    height=500
+)
+fig_sil.write_html(
+    os.path.join(figures_folder, "Silhouette_Chart.html"),
+    include_plotlyjs="cdn"
+)
+fig_sil
 ```
