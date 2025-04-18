@@ -274,11 +274,12 @@ fig_elbow.write_html(
     os.path.join(figures_folder, "Elbow_Chart.html"),
     include_plotlyjs="cdn"
 )
-fig_elbow
 ```
 <iframe src="figures/Elbow_Chart.html" width="100%" height="500"></iframe>
 
+## Silhouette Score 
 ```{python}
+#| echo: false
 fig_sil = go.Figure()
 fig_sil.add_trace(go.Bar(
     x=list(k_range),
@@ -297,5 +298,5 @@ fig_sil.write_html(
     os.path.join(figures_folder, "Silhouette_Chart.html"),
     include_plotlyjs="cdn"
 )
-fig_sil
 ```
+<iframe src="figures/Silhouette_Chart.html" width="100%" height="500"></iframe>
