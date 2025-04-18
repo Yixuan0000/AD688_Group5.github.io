@@ -21,11 +21,9 @@
         "---\n",
         "\n",
         "\n",
-        "\n",
-        "\n",
-        "# Mutiple Linear Regression\n"
+        "# Mutiple Linear Regression"
       ],
-      "id": "2c9afd7d"
+      "id": "61bbbaaa"
     },
     {
       "cell_type": "code",
@@ -35,6 +33,7 @@
         "import os, json\n",
         "import pandas as pd\n",
         "import numpy as np\n",
+        "import plotly.express as px\n",
         "import matplotlib.pyplot as plt\n",
         "from sklearn.linear_model import LinearRegression\n",
         "from sklearn.model_selection import train_test_split\n",
@@ -45,7 +44,7 @@
         "from sklearn.ensemble import RandomForestRegressor\n",
         "import plotly.graph_objects as go"
       ],
-      "id": "4eee45e1",
+      "id": "5a0e1fec",
       "execution_count": null,
       "outputs": []
     },
@@ -56,7 +55,7 @@
         "#| echo: false\n",
         "df = pd.read_csv('files/cleaned_job_postings.csv')"
       ],
-      "id": "38b7b89c",
+      "id": "929cadf8",
       "execution_count": null,
       "outputs": []
     },
@@ -67,7 +66,7 @@
         "#| echo: false\n",
         "df.head()"
       ],
-      "id": "278674c4",
+      "id": "4a2a7bc1",
       "execution_count": null,
       "outputs": []
     },
@@ -78,7 +77,7 @@
         "#| echo: false\n",
         "#df.columns"
       ],
-      "id": "9244ceeb",
+      "id": "278145f2",
       "execution_count": null,
       "outputs": []
     },
@@ -108,7 +107,7 @@
         "      .loc[:, keep_num + keep_cat + [\"SALARY\"]]  \n",
         ")"
       ],
-      "id": "80bbcd6c",
+      "id": "9cf6d8bf",
       "execution_count": null,
       "outputs": []
     },
@@ -123,7 +122,7 @@
         "    dtype = float        \n",
         ")"
       ],
-      "id": "b35c82e3",
+      "id": "c45e27c3",
       "execution_count": null,
       "outputs": []
     },
@@ -135,7 +134,7 @@
         "print(df_dummies.shape)\n",
         "print(df_dummies.dtypes.head(10))"
       ],
-      "id": "aad3e130",
+      "id": "7bb6e756",
       "execution_count": null,
       "outputs": []
     },
@@ -149,7 +148,7 @@
         "\n",
         "X_train, X_test, y_train, y_test = train_test_split(X, y ,test_size = 0.3, random_state = 688)"
       ],
-      "id": "ca5c83ff",
+      "id": "3036f1de",
       "execution_count": null,
       "outputs": []
     },
@@ -160,7 +159,7 @@
         "model = LinearRegression()\n",
         "model.fit(X_train, y_train)"
       ],
-      "id": "252cb705",
+      "id": "882f2c0d",
       "execution_count": null,
       "outputs": []
     },
@@ -171,7 +170,7 @@
         "y_pred = model.predict(X_test)\n",
         "pd.Series(y_pred).describe()"
       ],
-      "id": "0f103753",
+      "id": "6ad18838",
       "execution_count": null,
       "outputs": []
     },
@@ -185,7 +184,7 @@
         "print(f\"RMSE: {rmse:.2f}\")\n",
         "print(f\"R-squared: {r2:.4f}\")"
       ],
-      "id": "e883a310",
+      "id": "a4a56c49",
       "execution_count": null,
       "outputs": []
     },
@@ -200,7 +199,7 @@
         "\n",
         "coef_df.head(10)"
       ],
-      "id": "53e52c23",
+      "id": "8b0394b8",
       "execution_count": null,
       "outputs": []
     },
@@ -212,7 +211,7 @@
         "\n",
         "coef_cleaned.head(10)"
       ],
-      "id": "4d5e5fa1",
+      "id": "b323b638",
       "execution_count": null,
       "outputs": []
     },
@@ -220,9 +219,9 @@
       "cell_type": "markdown",
       "metadata": {},
       "source": [
-        "# Random Forest\n"
+        "# Random Forest"
       ],
-      "id": "3450ca86"
+      "id": "70e1f960"
     },
     {
       "cell_type": "code",
@@ -230,7 +229,7 @@
       "source": [
         "lm  = LinearRegression().fit(X_train, y_train)"
       ],
-      "id": "cb9249f8",
+      "id": "56074baf",
       "execution_count": null,
       "outputs": []
     },
@@ -240,7 +239,7 @@
       "source": [
         "rf   = RandomForestRegressor(n_estimators=300, random_state=688).fit(X_train, y_train)"
       ],
-      "id": "8522edf1",
+      "id": "ebbde8df",
       "execution_count": null,
       "outputs": []
     },
@@ -250,7 +249,7 @@
       "source": [
         "# Visualization \n"
       ],
-      "id": "5d0ed466"
+      "id": "401185d5"
     },
     {
       "cell_type": "code",
@@ -261,7 +260,7 @@
         "if not os.path.exists(figures_folder):\n",
         "    os.makedirs(figures_folder)"
       ],
-      "id": "f45418b9",
+      "id": "2b6854b7",
       "execution_count": null,
       "outputs": []
     },
@@ -270,14 +269,13 @@
       "metadata": {},
       "source": [
         "# 1. Coefficient bar chart\n",
-        "#coef = pd.Series(lm.coef_, index=X_train.columns).sort_values()\n",
-        "#fig = coef.tail(15).plot(kind=\"barh\", figsize=(6,5))\n",
-        "#plt.title(\"Top 15 Positive MLR Coefficients\")\n",
-        "#plt.tight_layout()\n",
-        "\n",
-        "#fig.write_html(os.path.join(figures_folder, \"MLR_Coefficients.html\"))"
+        "fig = px.bar(coef_df, x=\"Coefficient\", y=\"Feature\", orientation=\"h\",\n",
+        "             title=\"Top 15 Positive/Negative MLR Coefficients\",\n",
+        "             template=\"plotly_white\", width=800, height=550)\n",
+        "fig.update_yaxes(autorange=\"reversed\")\n",
+        "fig.write_html(os.path.join(figures_folder, \"MLR_Coefficients.html\"))"
       ],
-      "id": "502bf0eb",
+      "id": "d55df745",
       "execution_count": null,
       "outputs": []
     },
@@ -285,9 +283,70 @@
       "cell_type": "markdown",
       "metadata": {},
       "source": [
+        "<iframe src=\"figures/MLR_Coefficients.html\" width=\"100%\" height=\"550\"></iframe>\n"
+      ],
+      "id": "b1df42e3"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# 2. Actual vs. Predicted\n",
+        "fig = go.Figure()\n",
+        "fig.add_trace(go.Scatter(\n",
+        "    x=y_test, y=y_pred, mode=\"markers\", name=\"Observations\",\n",
+        "    marker=dict(size=6, opacity=0.6)\n",
+        "))\n",
+        "lims = [min(y_test.min(), y_pred.min()), max(y_test.max(), y_pred.max())]\n",
+        "fig.add_shape(type=\"line\", x0=lims[0], y0=lims[0],\n",
+        "              x1=lims[1], y1=lims[1],\n",
+        "              line=dict(dash=\"dash\", width=2, color=\"red\"))\n",
+        "fig.update_layout(\n",
+        "    title=\"MLR – Actual vs. Predicted\",\n",
+        "    xaxis_title=\"Actual Salary\",\n",
+        "    yaxis_title=\"Predicted Salary\",\n",
+        "    template=\"plotly_white\", width=800, height=550\n",
+        ")\n",
+        "fig.write_html(os.path.join(figures_folder, \"MLR_AVP.html\"))"
+      ],
+      "id": "e065371b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "<iframe src=\"figures/MLR_AVP.html\" width=\"100%\" height=\"550\"></iframe>\n"
+      ],
+      "id": "3c58b3ae"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# 3. Residual histogram\n",
+        "resid = y_test - y_pred\n",
+        "fig = px.histogram(resid, nbins=40,\n",
+        "                   title=\"MLR Residual Distribution\",\n",
+        "                   labels={\"value\":\"Error (Actual – Predicted)\"},\n",
+        "                   template=\"plotly_white\", width=800, height=500)\n",
+        "fig.write_html(os.path.join(figures_folder, \"MLR_Residuals.html\"))\n",
+        "fig"
+      ],
+      "id": "8f20add8",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "<iframe src=\"figures/MLR_Residuals.html\" width=\"100%\" height=\"550\"></iframe>\n",
+        "\n",
         "# Unsupervised Learning - Kmeans \n"
       ],
-      "id": "967e7a8f"
+      "id": "567fc2fd"
     },
     {
       "cell_type": "code",
@@ -296,7 +355,7 @@
         "scaler = StandardScaler()\n",
         "X_scaled = scaler.fit_transform(df_dummies)"
       ],
-      "id": "45bc9ab2",
+      "id": "383ead03",
       "execution_count": null,
       "outputs": []
     },
@@ -312,7 +371,7 @@
         "    km.fit(X_scaled)\n",
         "    wcss.append(km.inertia_)"
       ],
-      "id": "7961952e",
+      "id": "3223683b",
       "execution_count": null,
       "outputs": []
     },
@@ -343,7 +402,7 @@
         "\n",
         "fig.write_html(os.path.join(figures_folder, \"Elbow_Chart.html\"))"
       ],
-      "id": "de626952",
+      "id": "ccd5f6da",
       "execution_count": null,
       "outputs": []
     },
@@ -351,9 +410,9 @@
       "cell_type": "markdown",
       "metadata": {},
       "source": [
-        "<iframe src=\"figures/Elbow_Chart.html\" width=\"100%\" height=\"500\"></iframe>\n"
+        "<iframe src=\"figures/Elbow_Chart.html\" width=\"100%\" height=\"500\"></iframe>"
       ],
-      "id": "4fc88012"
+      "id": "7a3e1a38"
     },
     {
       "cell_type": "code",
@@ -366,7 +425,7 @@
         "\n",
         "df['cluster'] = cluster_labels"
       ],
-      "id": "f64563f6",
+      "id": "29fc7ccc",
       "execution_count": null,
       "outputs": []
     },
@@ -376,7 +435,7 @@
       "source": [
         "print(df['cluster'].value_counts().sort_index())"
       ],
-      "id": "3b0dc63f",
+      "id": "43b13f7b",
       "execution_count": null,
       "outputs": []
     }
@@ -386,7 +445,7 @@
       "name": "python3",
       "language": "python",
       "display_name": "Python 3 (ipykernel)",
-      "path": "/Users/jack/Desktop/Github/AD688_Group5.github.io-1/AD688_Group5.github.io-3/venv/share/jupyter/kernels/python3"
+      "path": "/opt/anaconda3/share/jupyter/kernels/python3"
     }
   },
   "nbformat": 4,

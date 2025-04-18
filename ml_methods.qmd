@@ -20,6 +20,7 @@ format:
 import os, json
 import pandas as pd
 import numpy as np
+import plotly.express as px
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
@@ -126,15 +127,6 @@ coef_cleaned = coef_df[~coef_df['Feature'].str.contains("Unknown|\[None\]", rege
 coef_cleaned.head(10)
 ```
 
-# Random Forest
-```{python}
-lm  = LinearRegression().fit(X_train, y_train)
-```
-
-```{python}
-rf   = RandomForestRegressor(n_estimators=300, random_state=688).fit(X_train, y_train)
-```
-
 # Visualization 
 
 ```{python}
@@ -143,27 +135,101 @@ figures_folder = "figures"
 if not os.path.exists(figures_folder):
     os.makedirs(figures_folder)
 ```
+## Coefficient bar chart
 ```{python}
+#| echo: false
 # 1. Coefficient bar chart
-#coef = pd.Series(lm.coef_, index=X_train.columns).sort_values()
-#fig = coef.tail(15).plot(kind="barh", figsize=(6,5))
-#plt.title("Top 15 Positive MLR Coefficients")
-#plt.tight_layout()
+fig = px.bar(coef_df, x="Coefficient", y="Feature", orientation="h",
+             title="Top 15 Positive/Negative MLR Coefficients",
+             template="plotly_white", width=800, height=550)
+fig.update_yaxes(autorange="reversed")
+fig.write_html(os.path.join(figures_folder, "MLR_Coefficients.html"))
+```
+<iframe src="figures/MLR_Coefficients.html" width="100%" height="550"></iframe>
 
-#fig.write_html(os.path.join(figures_folder, "MLR_Coefficients.html"))
+## Actual vs. Predicted
 
+```{python}
+#| echo: false
+# 2. Actual vs. Predicted
+fig = go.Figure()
+fig.add_trace(go.Scatter(
+    x=y_test, y=y_pred, mode="markers", name="Observations",
+    marker=dict(size=6, opacity=0.6)
+))
+lims = [min(y_test.min(), y_pred.min()), max(y_test.max(), y_pred.max())]
+fig.add_shape(type="line", x0=lims[0], y0=lims[0],
+              x1=lims[1], y1=lims[1],
+              line=dict(dash="dash", width=2, color="red"))
+fig.update_layout(
+    title="MLR – Actual vs. Predicted",
+    xaxis_title="Actual Salary",
+    yaxis_title="Predicted Salary",
+    template="plotly_white", width=800, height=550
+)
+fig.write_html(os.path.join(figures_folder, "MLR_AVP.html"))
+```
+<iframe src="figures/MLR_AVP.html" width="100%" height="550"></iframe>
+
+## Residual histogram
+```{python}
+#| echo: false
+# 3. Residual histogram
+resid = y_test - y_pred
+fig = px.histogram(resid, nbins=40,
+                   title="MLR Residual Distribution",
+                   labels={"value":"Error (Actual – Predicted)"},
+                   template="plotly_white", width=800, height=500)
+fig.write_html(os.path.join(figures_folder, "MLR_Residuals.html"))
+fig
+```
+<iframe src="figures/MLR_Residuals.html" width="100%" height="550"></iframe>
+
+# Random Forest
+```{python}
+rf_model = RandomForestRegressor(
+    n_estimators     = 300,
+    min_samples_leaf = 2,
+    random_state     = 688,
+    n_jobs           = -1
+)
+rf_model.fit(X_train, y_train)
 ```
 
+```{python}
+rf_pred = rf_model.predict(X_test)
+rf_rmse = mean_squared_error(y_test, rf_pred)
+rf_r2   = r2_score(y_test, rf_pred)
+print(f"Random Forest  •  RMSE = {rf_rmse:.2f}  |  R² = {rf_r2:.3f}")
+```
+
+## Rank Importance
+```{python}
+imp_df = (pd.Series(rf_model.feature_importances_, index=X_train.columns)
+            .sort_values(ascending=False)
+            .head(15)
+            .reset_index()
+            .rename(columns={"index": "Feature", 0: "Importance"}))
+
+fig = px.bar(imp_df, x="Importance", y="Feature", orientation="h",
+             title="Top 15 Random Forest Importances",
+             template="plotly_white", width=800, height=550)
+fig.update_yaxes(autorange="reversed")
+fig.write_html(os.path.join(figures_folder, "RF_Importance.html"))
+```
+<iframe src="figures/RF_Importance.html" width="100%" height="550"></iframe>
 
 
 # Unsupervised Learning - Kmeans 
 
 ```{python}
+#| echo: false
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(df_dummies)
 ```
 
 ```{python}
+#| echo: false
 wcss = []
 K_range = range(2, 11)
 
@@ -173,7 +239,10 @@ for k in K_range:
     wcss.append(km.inertia_)
 ```
 
+## Elbow Plot
+
 ```{python}
+#| echo: false
 # Elbow Plot
 fig = go.Figure()
 

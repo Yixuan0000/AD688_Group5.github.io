@@ -1,0 +1,221 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Skill Gap Analysis\"\n",
+        "subtitle: \"\"\n",
+        "\n",
+        "bibliography: references.bib\n",
+        "csl: csl/econometrica.csl\n",
+        "format: \n",
+        "  html:\n",
+        "    toc: true\n",
+        "    number-sections: true\n",
+        "    df-print: paged\n",
+        "    code: false\n",
+        "    code-tools: true\n",
+        "    section-divs: true\n",
+        "---"
+      ],
+      "id": "8ef53fd5"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| echo: false\n",
+        "import pandas as pd\n",
+        "import seaborn as sns\n",
+        "import matplotlib.pyplot as plt\n",
+        "import plotly.express as px\n",
+        "import plotly.offline as pyo\n",
+        "import plotly.io as pio\n",
+        "from collections import Counter\n",
+        "import os"
+      ],
+      "id": "dfdb3192",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| echo: false\n",
+        "data = pd.read_csv(\"files/cleaned_job_postings.csv\")"
+      ],
+      "id": "d898e9c8",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| echo: false\n",
+        "figures_folder = \"figures\"\n",
+        "if not os.path.exists(figures_folder):\n",
+        "    os.makedirs(figures_folder)"
+      ],
+      "id": "fdec66c4",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "skills_data = {\n",
+        "    \"Name\": [\"Yixuan\", \"Arohit\", \"Chengjie\"],\n",
+        "    \"Python\": [5, 3, 4],\n",
+        "    \"SQL\": [4, 2, 5],\n",
+        "    \"Machine Learning\": [3, 1, 4],\n",
+        "    \"Cloud Computing\": [2, 2, 3],\n",
+        "    \"Data Visualization\": [4, 3, 5],\n",
+        "    \"Statistics\": [5, 2, 4],\n",
+        "    \"Project Management\": [3, 4, 3],\n",
+        "    \"Communication\": [2, 5, 4],\n",
+        "    \"Problem-Solving\": [4, 4, 5],\n",
+        "    \"Teamwork\": [5, 5, 5],\n",
+        "    \"Excel\" :[4, 4, 4],\n",
+        "    \"Adaptability\": [4, 5, 3],\n",
+        "    \"Data Analysis\": [4, 3, 4],\n",
+        "    \"Leadership\": [3, 4, 2],\n",
+        "    \"R\": [3, 5, 4]\n",
+        "\n",
+        "}\n",
+        "\n",
+        "df_skills = pd.DataFrame(skills_data)\n",
+        "df_skills.set_index(\"Name\", inplace=True)\n",
+        "df_skills"
+      ],
+      "id": "8afc8b5e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| echo: false\n",
+        "fig = px.imshow(\n",
+        "    df_skills,\n",
+        "    labels=dict(x=\"Skills\", y=\"Team Members\", color=\"Skill Level\"),\n",
+        "    x=df_skills.columns,\n",
+        "    y=df_skills.index,\n",
+        "    color_continuous_scale=\"RdBu\",\n",
+        "    title=\"Team Skill Levels Heatmap\",\n",
+        "    text_auto=True\n",
+        ")\n",
+        "\n",
+        "fig.update_layout(\n",
+        "    width=800,\n",
+        "    height=600,\n",
+        "    margin=dict(l=100, r=100, t=100, b=100),\n",
+        "    xaxis_title=\"Skills\",\n",
+        "    yaxis_title=\"Team Members\",\n",
+        "    coloraxis_colorbar_title=\"Skill Level\"\n",
+        ")\n",
+        "\n",
+        "heatmap_file = os.path.join(figures_folder, \"team_skill_levels_heatmap.html\")\n",
+        "fig.write_html(heatmap_file)"
+      ],
+      "id": "b27771a6",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "<iframe src=\"figures/team_skill_levels_heatmap.html\" width=\"100%\" height=\"500\"></iframe>\n"
+      ],
+      "id": "696e97da"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "skill_keywords = [\n",
+        "    \"Python\", \"R\", \"SQL\", \"Data Analysis\", \"Machine Learning\",\n",
+        "    \"Statistics\", \"Data Visualization\", \"Excel\", \"Tableau\", \"Power BI\",\n",
+        "    \"Java\", \"C++\", \"JavaScript\", \"HTML/CSS\", \"Cloud Computing\",\n",
+        "    \"Cybersecurity\", \"Network Administration\", \"Database Management\",\n",
+        "    \"Communication\", \"Problem-Solving\", \"Teamwork\", \"Project Management\",\n",
+        "    \"Leadership\", \"Time Management\", \"Adaptability\", \"Financial Analysis\",\n",
+        "    \"Marketing Strategy\", \"Customer Relationship Management\", \"Supply Chain Management\",\n",
+        "    \"Regulatory Compliance\"\n",
+        "]"
+      ],
+      "id": "b7c53747",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "def extract_skills(body_text):\n",
+        "    if pd.isna(body_text) or not body_text:\n",
+        "        return []\n",
+        "    body_text = body_text.lower()\n",
+        "    # Extract skills present in the text\n",
+        "    skills = [skill for skill in skill_keywords if skill.lower() in body_text]\n",
+        "    return skills"
+      ],
+      "id": "e523cf66",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "data['extracted_skills'] = data['BODY'].apply(extract_skills)"
+      ],
+      "id": "f2c1a29c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "all_skills = set()\n",
+        "for skills in data['extracted_skills']:\n",
+        "    all_skills.update(skills)\n",
+        "print(all_skills)"
+      ],
+      "id": "50b6d1b2",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "for skill in all_skills:\n",
+        "    if skill not in df_skills.columns:\n",
+        "        df_skills[skill] = 0  \n",
+        "\n",
+        "df_skills"
+      ],
+      "id": "b006396f",
+      "execution_count": null,
+      "outputs": []
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/opt/anaconda3/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}
