@@ -188,7 +188,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="4fd4a517" class="cell" data-execution_count="4">
+<div id="7d37889b" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>skills_data <span class="op">=</span> {</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Name"</span>: [<span class="st">"Yixuan"</span>, <span class="st">"Arohit"</span>, <span class="st">"Chengjie"</span>],</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Python"</span>: [<span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">4</span>],</span>
@@ -318,7 +318,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <iframe src="figures/team_skill_levels_heatmap.html" width="100%" height="500">
 </iframe>
-<div id="d5118586" class="cell" data-execution_count="6">
+<div id="95e8bf4f" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>skill_keywords <span class="op">=</span> [</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Python"</span>, <span class="st">"R"</span>, <span class="st">"SQL"</span>, <span class="st">"Data Analysis"</span>, <span class="st">"Machine Learning"</span>,</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Statistics"</span>, <span class="st">"Data Visualization"</span>, <span class="st">"Excel"</span>, <span class="st">"Tableau"</span>, <span class="st">"Power BI"</span>,</span>
@@ -330,7 +330,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Regulatory Compliance"</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="7cbcac42" class="cell" data-execution_count="7">
+<div id="aafc8110" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> extract_skills(body_text):</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.isna(body_text) <span class="kw">or</span> <span class="kw">not</span> body_text:</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> []</span>
@@ -339,19 +339,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    skills <span class="op">=</span> [skill <span class="cf">for</span> skill <span class="kw">in</span> skill_keywords <span class="cf">if</span> skill.lower() <span class="kw">in</span> body_text]</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> skills</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cfe7401b" class="cell" data-execution_count="8">
+<div id="324e2414" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'extracted_skills'</span>] <span class="op">=</span> data[<span class="st">'BODY'</span>].<span class="bu">apply</span>(extract_skills)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="8738e407" class="cell" data-execution_count="9">
+<div id="68bff318" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>all_skills <span class="op">=</span> <span class="bu">set</span>()</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> skills <span class="kw">in</span> data[<span class="st">'extracted_skills'</span>]:</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    all_skills.update(skills)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(all_skills)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>{'Regulatory Compliance', 'Project Management', 'Python', 'R', 'HTML/CSS', 'Customer Relationship Management', 'Leadership', 'Time Management', 'Data Analysis', 'Network Administration', 'Database Management', 'Cloud Computing', 'Adaptability', 'Java', 'Data Visualization', 'C++', 'Machine Learning', 'Tableau', 'Power BI', 'Supply Chain Management', 'Statistics', 'Cybersecurity', 'Excel', 'Financial Analysis', 'Marketing Strategy', 'Problem-Solving', 'JavaScript', 'Communication', 'SQL', 'Teamwork'}</code></pre>
+<pre><code>{'Machine Learning', 'Tableau', 'SQL', 'Data Analysis', 'Problem-Solving', 'Time Management', 'Excel', 'Python', 'Cybersecurity', 'Leadership', 'Communication', 'Financial Analysis', 'C++', 'Statistics', 'Regulatory Compliance', 'Data Visualization', 'Power BI', 'HTML/CSS', 'Supply Chain Management', 'JavaScript', 'Teamwork', 'Network Administration', 'Marketing Strategy', 'Project Management', 'R', 'Adaptability', 'Customer Relationship Management', 'Java', 'Database Management', 'Cloud Computing'}</code></pre>
 </div>
 </div>
-<div id="a5abd9e8" class="cell" data-execution_count="10">
+<div id="6fe41a87" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> skill <span class="kw">in</span> all_skills:</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> skill <span class="kw">not</span> <span class="kw">in</span> df_skills.columns:</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        df_skills[skill] <span class="op">=</span> <span class="dv">0</span>  </span>
@@ -376,16 +376,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <th data-quarto-table-cell-role="th">Problem-Solving</th>
 <th data-quarto-table-cell-role="th">Teamwork</th>
 <th data-quarto-table-cell-role="th">...</th>
-<th data-quarto-table-cell-role="th">Database Management</th>
-<th data-quarto-table-cell-role="th">Java</th>
-<th data-quarto-table-cell-role="th">C++</th>
-<th data-quarto-table-cell-role="th">Tableau</th>
+<th data-quarto-table-cell-role="th">Regulatory Compliance</th>
 <th data-quarto-table-cell-role="th">Power BI</th>
+<th data-quarto-table-cell-role="th">HTML/CSS</th>
 <th data-quarto-table-cell-role="th">Supply Chain Management</th>
-<th data-quarto-table-cell-role="th">Cybersecurity</th>
-<th data-quarto-table-cell-role="th">Financial Analysis</th>
-<th data-quarto-table-cell-role="th">Marketing Strategy</th>
 <th data-quarto-table-cell-role="th">JavaScript</th>
+<th data-quarto-table-cell-role="th">Network Administration</th>
+<th data-quarto-table-cell-role="th">Marketing Strategy</th>
+<th data-quarto-table-cell-role="th">Customer Relationship Management</th>
+<th data-quarto-table-cell-role="th">Java</th>
+<th data-quarto-table-cell-role="th">Database Management</th>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">Name</th>
