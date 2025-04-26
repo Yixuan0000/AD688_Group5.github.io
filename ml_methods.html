@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.40">
+<meta name="generator" content="quarto-1.4.547">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Multiple Linear Regression - Salary Predition – Job Market Analysis 2024</title>
+<title>Job Market Analysis 2024 - Multiple Linear Regression - Salary Predition</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -69,10 +69,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -119,7 +119,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -154,7 +154,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-            <div class="quarto-navbar-tools">
+          <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -214,12 +214,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="mutiple-linear-regression" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Mutiple Linear Regression</h1>
-<div id="c2a060e1" class="cell" data-execution_count="3">
+<div id="3bf4d59e" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -260,15 +260,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>31-May-2024\n\nEnterprise Analyst (II-III)\n\n...</td>
 <td>2024-06-08</td>
 <td>...</td>
-<td>231010.0</td>
+<td>231010</td>
 <td>Business Intelligence Analyst</td>
-<td>2310.0</td>
+<td>2310</td>
 <td>Business Intelligence</td>
-<td>23.0</td>
+<td>23</td>
 <td>Information Technology and Computer Science</td>
 <td>[\n 7\n]</td>
 <td>[\n "Artificial Intelligence"\n]</td>
-<td>441330.0</td>
+<td>441330</td>
 <td>Automotive Parts and Accessories Retailers</td>
 </tr>
 <tr class="even">
@@ -284,15 +284,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Oracle Consultant - Reports (3592)\n\nat SMX i...</td>
 <td>2024-08-01</td>
 <td>...</td>
-<td>231010.0</td>
+<td>231010</td>
 <td>Business Intelligence Analyst</td>
-<td>2310.0</td>
+<td>2310</td>
 <td>Business Intelligence</td>
-<td>23.0</td>
+<td>23</td>
 <td>Information Technology and Computer Science</td>
 <td>Unknown</td>
 <td>Unknown</td>
-<td>561320.0</td>
+<td>561320</td>
 <td>Temporary Help Services</td>
 </tr>
 <tr class="odd">
@@ -308,15 +308,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Taking care of people is at the heart of every...</td>
 <td>2024-06-10</td>
 <td>...</td>
-<td>231113.0</td>
+<td>231113</td>
 <td>Data / Data Mining Analyst</td>
-<td>2311.0</td>
+<td>2311</td>
 <td>Data Analysis and Mathematics</td>
-<td>23.0</td>
+<td>23</td>
 <td>Information Technology and Computer Science</td>
 <td>Unknown</td>
 <td>Unknown</td>
-<td>524291.0</td>
+<td>524291</td>
 <td>Claims Adjusting</td>
 </tr>
 <tr class="even">
@@ -332,15 +332,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>About this role:\n\nWells Fargo is looking for...</td>
 <td>2024-06-12</td>
 <td>...</td>
-<td>231113.0</td>
+<td>231113</td>
 <td>Data / Data Mining Analyst</td>
-<td>2311.0</td>
+<td>2311</td>
 <td>Data Analysis and Mathematics</td>
-<td>23.0</td>
+<td>23</td>
 <td>Information Technology and Computer Science</td>
 <td>[\n 6\n]</td>
 <td>[\n "Data Privacy/Protection"\n]</td>
-<td>522110.0</td>
+<td>522110</td>
 <td>Commercial Banking</td>
 </tr>
 <tr class="odd">
@@ -356,15 +356,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Comisiones de $1000 - $3000 por semana... Comi...</td>
 <td>2024-06-17</td>
 <td>...</td>
-<td>231010.0</td>
+<td>231010</td>
 <td>Business Intelligence Analyst</td>
-<td>2310.0</td>
+<td>2310</td>
 <td>Business Intelligence</td>
-<td>23.0</td>
+<td>23</td>
 <td>Information Technology and Computer Science</td>
 <td>Unknown</td>
 <td>Unknown</td>
-<td>999999.0</td>
+<td>999999</td>
 <td>Unclassified Industry</td>
 </tr>
 </tbody>
@@ -374,11 +374,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="975d607a" class="cell" data-execution_count="4">
+<div id="12c85001" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>na_values <span class="op">=</span> [<span class="st">"Unknown"</span>, <span class="st">"[None]"</span>, <span class="st">""</span>, <span class="st">"None"</span>, <span class="st">"unknown"</span>]</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.replace(na_values, np.nan)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="c91c2b74" class="cell" data-execution_count="6">
+<div id="b3e2c6a8" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"exp_mid"</span>] <span class="op">=</span> df[[<span class="st">"MIN_YEARS_EXPERIENCE"</span>, <span class="st">"MAX_YEARS_EXPERIENCE"</span>]].mean(axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"skill_count"</span>] <span class="op">=</span> df[<span class="st">"SPECIALIZED_SKILLS_NAME"</span>].fillna(<span class="st">""</span>).<span class="bu">str</span>.count(<span class="st">","</span>) <span class="op">+</span> <span class="dv">1</span></span>
@@ -403,7 +403,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="feature-engineering" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="feature-engineering"><span class="header-section-number">1.1</span> Feature Engineering</h2>
-<div id="a8d9b9b3" class="cell" data-execution_count="7">
+<div id="84faf13c" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_dummies <span class="op">=</span> pd.get_dummies(</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    df_model,</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    columns <span class="op">=</span> keep_cat,   </span>
@@ -411,30 +411,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    dtype <span class="op">=</span> <span class="bu">float</span>        </span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="9251e2fd" class="cell" data-execution_count="8">
+<div id="a0bbec26" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-stdout">
-<pre><code>(69197, 60)
-exp_mid                                          float64
-MODELED_DURATION                                 float64
-skill_count                                        int64
-has_python                                         int64
-edu_ge_bachelors                                   int64
-SALARY                                           float64
-EMPLOYMENT_TYPE_NAME_Part-time (â‰¤ 32 hours)    float64
-EMPLOYMENT_TYPE_NAME_Part-time / full-time       float64
-REMOTE_TYPE_NAME_Not Remote                      float64
-REMOTE_TYPE_NAME_Remote                          float64
+<pre><code>(69199, 60)
+exp_mid                                        float64
+MODELED_DURATION                               float64
+skill_count                                      int64
+has_python                                       int64
+edu_ge_bachelors                                 int64
+SALARY                                         float64
+EMPLOYMENT_TYPE_NAME_Part-time (≤ 32 hours)    float64
+EMPLOYMENT_TYPE_NAME_Part-time / full-time     float64
+REMOTE_TYPE_NAME_Not Remote                    float64
+REMOTE_TYPE_NAME_Remote                        float64
 dtype: object</code></pre>
 </div>
 </div>
-<div id="f1fa4d63" class="cell" data-execution_count="9">
+<div id="9e623e37" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop salary to form features</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df_dummies.drop(<span class="st">'SALARY'</span>, axis <span class="op">=</span> <span class="dv">1</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df_dummies[<span class="st">'SALARY'</span>]</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y ,test_size <span class="op">=</span> <span class="fl">0.3</span>, random_state <span class="op">=</span> <span class="dv">688</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="82a1678a" class="cell" data-execution_count="10">
+<div id="3c23b4f9" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LinearRegression()</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>model.fit(X_train, y_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
@@ -853,36 +853,36 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-3);
 }
-</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>LinearRegression()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked=""><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>LinearRegression</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.linear_model.LinearRegression.html">?<span>Documentation for LinearRegression</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted"><pre>LinearRegression()</pre></div> </div></div></div></div>
+</a></style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>LinearRegression()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked=""><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>LinearRegression</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.linear_model.LinearRegression.html">?<span>Documentation for LinearRegression</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted"><pre>LinearRegression()</pre></div> </div></div></div></div>
 </div>
 </div>
-<div id="31dc4e9c" class="cell" data-execution_count="11">
+<div id="b30b7123" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> model.predict(X_test)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>pd.Series(y_pred).describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>count     20760.000000
-mean     116665.029362
-std        8791.894940
-min       88800.236917
-25%      109974.963777
-50%      115505.306864
-75%      122329.751484
-max      162401.095589
+mean     116858.597141
+std        8723.766929
+min       88939.521987
+25%      110186.143187
+50%      115748.686133
+75%      122510.993586
+max      163152.472089
 dtype: float64</code></pre>
 </div>
 </div>
-<div id="7f29518c" class="cell" data-execution_count="12">
+<div id="592bb96c" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>rmse <span class="op">=</span> mean_squared_error(y_test, y_pred)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>r2 <span class="op">=</span> r2_score(y_test, y_pred)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"RMSE: </span><span class="sc">{</span>rmse<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"R-squared: </span><span class="sc">{</span>r2<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>RMSE: 806814997.70
-R-squared: 0.0829</code></pre>
+<pre><code>RMSE: 777720416.43
+R-squared: 0.0874</code></pre>
 </div>
 </div>
-<div id="ef7d3b2d" class="cell" data-execution_count="13">
+<div id="419aa05d" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>coef_df <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Feature"</span>: X.columns,</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Coefficient"</span>: model.coef_</span>
@@ -893,7 +893,7 @@ R-squared: 0.0829</code></pre>
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -903,54 +903,54 @@ R-squared: 0.0829</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">12</td>
-<td>STATE_NAME_California</td>
-<td>5190.928636</td>
+<td data-quarto-table-cell-role="th">54</td>
+<td>STATE_NAME_Washington</td>
+<td>5135.856412</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">52</td>
 <td>STATE_NAME_Vermont</td>
-<td>4496.118897</td>
+<td>4992.125928</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">54</td>
-<td>STATE_NAME_Washington</td>
-<td>4472.008952</td>
+<td data-quarto-table-cell-role="th">12</td>
+<td>STATE_NAME_California</td>
+<td>4810.124902</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">14</td>
 <td>STATE_NAME_Connecticut</td>
-<td>4331.075349</td>
+<td>4240.562772</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>exp_mid</td>
-<td>3285.573906</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">37</td>
-<td>STATE_NAME_New Jersey</td>
-<td>2969.753458</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">20</td>
-<td>STATE_NAME_Illinois</td>
-<td>2593.946072</td>
-</tr>
-<tr class="even">
 <td data-quarto-table-cell-role="th">11</td>
 <td>STATE_NAME_Arkansas</td>
-<td>2567.848230</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">53</td>
-<td>STATE_NAME_Virginia</td>
-<td>2547.821596</td>
+<td>3933.241423</td>
 </tr>
 <tr class="even">
+<td data-quarto-table-cell-role="th">0</td>
+<td>exp_mid</td>
+<td>3319.050797</td>
+</tr>
+<tr class="odd">
 <td data-quarto-table-cell-role="th">15</td>
 <td>STATE_NAME_Delaware</td>
-<td>2302.284166</td>
+<td>2997.204286</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">20</td>
+<td>STATE_NAME_Illinois</td>
+<td>2777.969965</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">37</td>
+<td>STATE_NAME_New Jersey</td>
+<td>2739.092860</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">53</td>
+<td>STATE_NAME_Virginia</td>
+<td>2287.668518</td>
 </tr>
 </tbody>
 </table>
@@ -958,7 +958,7 @@ R-squared: 0.0829</code></pre>
 </div>
 </div>
 </div>
-<div id="b9b96e2c" class="cell" data-execution_count="14">
+<div id="9d373556" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>coef_cleaned <span class="op">=</span> coef_df[<span class="op">~</span>coef_df[<span class="st">"Feature"</span>].<span class="bu">str</span>.contains(</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="vs">r"Unknown|\[None\]"</span>,  </span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    na<span class="op">=</span><span class="va">False</span>              </span>
@@ -969,7 +969,7 @@ R-squared: 0.0829</code></pre>
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -979,54 +979,54 @@ R-squared: 0.0829</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">12</td>
-<td>STATE_NAME_California</td>
-<td>5190.928636</td>
+<td data-quarto-table-cell-role="th">54</td>
+<td>STATE_NAME_Washington</td>
+<td>5135.856412</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">52</td>
 <td>STATE_NAME_Vermont</td>
-<td>4496.118897</td>
+<td>4992.125928</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">54</td>
-<td>STATE_NAME_Washington</td>
-<td>4472.008952</td>
+<td data-quarto-table-cell-role="th">12</td>
+<td>STATE_NAME_California</td>
+<td>4810.124902</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">14</td>
 <td>STATE_NAME_Connecticut</td>
-<td>4331.075349</td>
+<td>4240.562772</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>exp_mid</td>
-<td>3285.573906</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">37</td>
-<td>STATE_NAME_New Jersey</td>
-<td>2969.753458</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">20</td>
-<td>STATE_NAME_Illinois</td>
-<td>2593.946072</td>
-</tr>
-<tr class="even">
 <td data-quarto-table-cell-role="th">11</td>
 <td>STATE_NAME_Arkansas</td>
-<td>2567.848230</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">53</td>
-<td>STATE_NAME_Virginia</td>
-<td>2547.821596</td>
+<td>3933.241423</td>
 </tr>
 <tr class="even">
+<td data-quarto-table-cell-role="th">0</td>
+<td>exp_mid</td>
+<td>3319.050797</td>
+</tr>
+<tr class="odd">
 <td data-quarto-table-cell-role="th">15</td>
 <td>STATE_NAME_Delaware</td>
-<td>2302.284166</td>
+<td>2997.204286</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">20</td>
+<td>STATE_NAME_Illinois</td>
+<td>2777.969965</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">37</td>
+<td>STATE_NAME_New Jersey</td>
+<td>2739.092860</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">53</td>
+<td>STATE_NAME_Virginia</td>
+<td>2287.668518</td>
 </tr>
 </tbody>
 </table>
@@ -1056,7 +1056,7 @@ R-squared: 0.0829</code></pre>
 </section>
 <section id="random-forest" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Random Forest</h1>
-<div id="aac104ef" class="cell" data-execution_count="19">
+<div id="fdbcbe5f" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>rf_model <span class="op">=</span> RandomForestRegressor(</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    n_estimators     <span class="op">=</span> <span class="dv">300</span>,</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    min_samples_leaf <span class="op">=</span> <span class="dv">2</span>,</span>
@@ -1480,18 +1480,18 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-3);
 }
-</style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>RandomForestRegressor(min_samples_leaf=2, n_estimators=300, n_jobs=-1,
+</a></style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>RandomForestRegressor(min_samples_leaf=2, n_estimators=300, n_jobs=-1,
                       random_state=688)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" checked=""><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>RandomForestRegressor</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.RandomForestRegressor.html">?<span>Documentation for RandomForestRegressor</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted"><pre>RandomForestRegressor(min_samples_leaf=2, n_estimators=300, n_jobs=-1,
                       random_state=688)</pre></div> </div></div></div></div>
 </div>
 </div>
-<div id="3861c403" class="cell" data-execution_count="20">
+<div id="b18332ef" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>rf_pred <span class="op">=</span> rf_model.predict(X_test)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>rf_rmse <span class="op">=</span> mean_squared_error(y_test, rf_pred)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>rf_r2   <span class="op">=</span> r2_score(y_test, rf_pred)</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Random&nbsp;Forest  •  RMSE = </span><span class="sc">{</span>rf_rmse<span class="sc">:.2f}</span><span class="ss">  |  R² = </span><span class="sc">{</span>rf_r2<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Random&nbsp;Forest  •  RMSE = 672612626.37  |  R² = 0.235</code></pre>
+<pre><code>Random&nbsp;Forest  •  RMSE = 637552503.24  |  R² = 0.252</code></pre>
 </div>
 </div>
 <section id="rank-importance" class="level2" data-number="3.1">
@@ -1554,7 +1554,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1586,27 +1597,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
   const viewSource = window.document.getElementById('quarto-view-source') ||
                      window.document.getElementById('quarto-code-tools-source');
   if (viewSource) {
@@ -1658,24 +1649,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/Yixuan0000\.github\.io\/AD688_Group5\.github\.io\/");
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -1710,11 +1683,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
+      return note.innerHTML;
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -1762,6 +1731,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
+      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
@@ -2289,7 +2259,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb16-350"><a href="#cb16-350" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb16-351"><a href="#cb16-351" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb16-352"><a href="#cb16-352" aria-hidden="true" tabindex="-1"></a>&lt;iframe src="figures/Silhouette_Chart.html" width="100%" height="500"&gt;&lt;/iframe&gt;</span>
-</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
