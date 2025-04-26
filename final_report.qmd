@@ -1,0 +1,45 @@
+---
+title: "Evaluating Personal Job Market Prospects in 2024"
+subtitle: "Final Report"
+author:
+  - name: Yixuan Yang
+    affiliations:
+      - name: Boston University
+        city: Boston
+        state: MA
+  - name: Chengjie Lu
+    affiliations:
+      - name: Boston University
+        city: Boston
+        state: MA
+  - name: Arohit Talari
+    affiliations:
+      - name: Boston University
+        city: Boston
+        state: MA
+date: today
+date-modified: today
+date-format: long
+format:
+  docx: default
+---
+
+{{< include introduction.qmd >}}
+
+{{< include research_introduction.qmd >}}
+
+{{< include data_cleaning.qmd >}}
+
+{{< include eda.qmd >}}
+
+{{< embed skill_gap_analysis.qmd >}}
+
+{{< include career_plan.qmd >}}
+
+{{< embed ml_methods.qmd >}}
+
+{{< include ml_methods_summary.qmd >}}
+
+{{< embed nlp_methods.qmd >}}
+
+{{< include conclusion.qmd >}}

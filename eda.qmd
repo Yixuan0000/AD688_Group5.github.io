@@ -4,23 +4,30 @@ subtitle: "Enhanced Visuals"
 
 bibliography: references.bib
 csl: csl/econometrica.csl
-format: 
+format:
   html:
     toc: true
     number-sections: true
     df-print: paged
     code: false
     code-tools: true
+    code-fold: true
     section-divs: true
+    theme: cosmo
 ---
 # Top 10 Job Postings by Industry
 <iframe src="figures/industry_plot.html" width="100%" height="500"></iframe>
+> The most frequently advertised job postings come from Custom Computer Programming Services, Accounting Services, and Employment Placement Agencies. These industries are consistently hiring across roles, suggesting a high demand for software developers, finance professionals, and recruiters. This indicates strong hiring momentum in tech and support functions.
 
 # Salary Distribution by Industry
 <iframe src="figures/salary_distribution_by_industry.html" width="100%" height="500"></iframe>
+> Salary distribution varies widely across industries. While most sectors show a median salary between $80K and $120K, certain fields like Commercial Banking and Offices of Certified Public Accountants show higher outliers, indicating potential for high-earning roles. The variation within each industry also reflects differing job levels and skill demands.
 
 # Remote vs. On-Site Jobs
 <iframe src="figures/remote_vs_onsite_jobs.html" width="100%" height="500"></iframe>
+> Over 78% of job postings offer remote work options, either fully or in hybrid mode. This highlights the growing normalization of flexible work arrangements post-pandemic. Only 7% of jobs are strictly on-site, indicating a permanent shift in job design and workplace expectations.
 
 # Team Skill Levels Heatmap
 <iframe src="figures/team_skill_levels_heatmap.html" width="100%" height="500"></iframe>
+> The team demonstrates strong skill levels in Communication, Problem-Solving, and Teamwork, all scoring 5 across members. However, there are visible gaps in Machine Learning and Cloud Computing, particularly for Arohit. These gaps highlight potential areas for upskilling to align with industry demands in data and engineering roles.
+

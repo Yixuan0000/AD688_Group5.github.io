@@ -1,0 +1,14 @@
+---
+title: "Research Introduction"
+---
+
+## Research Questions
+
+1. Which industries are generating the highest number of job postings in 2024?
+2. How does salary distribution vary across industries and job types?
+3. What is the current skill gap between our team and the market demands?
+4. How can we use machine learning models to estimate job market value and identify important predictors?
+
+## Contribution
+
+By linking data-driven market insights with personalized upskilling recommendations, this project provides both a strategic career roadmap and a framework for future job market analytics.

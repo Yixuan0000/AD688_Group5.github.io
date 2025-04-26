@@ -1,0 +1,16 @@
+---
+title: "Introduction"
+---
+
+## Background
+
+In recent years, the job market has undergone significant transformation driven by technological advancements and changes in work dynamics. As graduate students preparing to enter a competitive job landscape, understanding these trends and aligning our skills accordingly is critical.
+
+## Project Goal
+
+This project aims to assess personal job market readiness by analyzing industry trends, identifying skill gaps, and applying machine learning techniques to predict salary outcomes. Our ultimate objective is to propose personalized learning paths that enhance employability in the evolving market.
+
+## Methods Overview
+
+The project combines data cleaning, exploratory analysis, machine learning modeling, and skill assessment. Publicly available job posting data was used to explore patterns, build predictive models, and benchmark team capabilities against market expectations.
+
