@@ -195,7 +195,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="cc0764e4" class="cell" data-execution_count="4">
+<div id="02b175cf" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>skills_data <span class="op">=</span> {</span>
@@ -337,7 +337,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Chengjie</strong>: Should enhance <strong>Leadership</strong> and <strong>Adaptability</strong> skills, which are essential for project coordination and dynamic environments.</li>
 </ul>
 <p>Courses on platforms such as <strong>Coursera</strong>, <strong>edX</strong>, or <strong>LinkedIn Learning</strong> can be recommended to address these gaps effectively.</p>
-<div id="2585bfab" class="cell" data-execution_count="6">
+<div id="ba939e60" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>skill_keywords <span class="op">=</span> [</span>
@@ -352,7 +352,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="9603883d" class="cell" data-execution_count="7">
+<div id="ec7284f0" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> extract_skills(body_text):</span>
@@ -364,13 +364,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> skills</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="cb6e0368" class="cell" data-execution_count="8">
+<div id="0dd0b009" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'extracted_skills'</span>] <span class="op">=</span> data[<span class="st">'BODY'</span>].<span class="bu">apply</span>(extract_skills)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="d0a26e05" class="cell" data-execution_count="9">
+<div id="3ed90878" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>all_skills <span class="op">=</span> <span class="bu">set</span>()</span>
@@ -379,10 +379,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(all_skills)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>{'R', 'Statistics', 'Communication', 'Network Administration', 'Machine Learning', 'C++', 'Time Management', 'Regulatory Compliance', 'Power BI', 'Cloud Computing', 'Problem-Solving', 'Python', 'SQL', 'Teamwork', 'JavaScript', 'Financial Analysis', 'Marketing Strategy', 'Data Visualization', 'Adaptability', 'Leadership', 'Supply Chain Management', 'Excel', 'Tableau', 'HTML/CSS', 'Database Management', 'Data Analysis', 'Project Management', 'Java', 'Customer Relationship Management', 'Cybersecurity'}</code></pre>
+<pre><code>{'HTML/CSS', 'Excel', 'Tableau', 'Machine Learning', 'Supply Chain Management', 'Statistics', 'Customer Relationship Management', 'Leadership', 'Regulatory Compliance', 'Adaptability', 'Project Management', 'JavaScript', 'Database Management', 'Problem-Solving', 'Teamwork', 'Power BI', 'Cloud Computing', 'SQL', 'Data Analysis', 'Network Administration', 'Java', 'Cybersecurity', 'Financial Analysis', 'Python', 'C++', 'Marketing Strategy', 'Communication', 'Time Management', 'Data Visualization', 'R'}</code></pre>
 </div>
 </div>
-<div id="85fcbd7d" class="cell" data-execution_count="10">
+<div id="fb8ae7da" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> skill <span class="kw">in</span> all_skills:</span>
@@ -411,15 +411,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <th data-quarto-table-cell-role="th">Teamwork</th>
 <th data-quarto-table-cell-role="th">...</th>
 <th data-quarto-table-cell-role="th">JavaScript</th>
-<th data-quarto-table-cell-role="th">Financial Analysis</th>
-<th data-quarto-table-cell-role="th">Marketing Strategy</th>
-<th data-quarto-table-cell-role="th">Supply Chain Management</th>
-<th data-quarto-table-cell-role="th">Tableau</th>
-<th data-quarto-table-cell-role="th">HTML/CSS</th>
 <th data-quarto-table-cell-role="th">Database Management</th>
+<th data-quarto-table-cell-role="th">Power BI</th>
+<th data-quarto-table-cell-role="th">Network Administration</th>
 <th data-quarto-table-cell-role="th">Java</th>
-<th data-quarto-table-cell-role="th">Customer Relationship Management</th>
 <th data-quarto-table-cell-role="th">Cybersecurity</th>
+<th data-quarto-table-cell-role="th">Financial Analysis</th>
+<th data-quarto-table-cell-role="th">C++</th>
+<th data-quarto-table-cell-role="th">Marketing Strategy</th>
+<th data-quarto-table-cell-role="th">Time Management</th>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Name</th>

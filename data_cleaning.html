@@ -227,7 +227,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="data-preparation-and-cleaning" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Data Preparation and Cleaning</h1>
-<div id="2cb2e596" class="cell" data-execution_count="3">
+<div id="4683c8b2" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>columns_to_drop <span class="op">=</span> [</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>   <span class="st">"ID"</span>, <span class="st">"URL"</span>, <span class="st">"ACTIVE_URLS"</span>, <span class="st">"DUPLICATES"</span>, <span class="st">"LAST_UPDATED_TIMESTAMP"</span>,</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"NAICS2"</span>, <span class="st">"NAICS3"</span>, <span class="st">"NAICS4"</span>, <span class="st">"NAICS5"</span>, <span class="st">"NAICS6"</span>,</span>
@@ -237,7 +237,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>]</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>data_drop <span class="op">=</span> data.drop(columns<span class="op">=</span>columns_to_drop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="5e217512" class="cell" data-execution_count="5">
+<div id="c959f1c8" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Replace salary with median</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>salary_median <span class="op">=</span> data_drop[<span class="st">'SALARY'</span>].median()</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>salary_to_median <span class="op">=</span> data_drop[<span class="st">'SALARY_TO'</span>].median()</span>
@@ -246,13 +246,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'SALARY_TO'</span>] <span class="op">=</span> data_drop[<span class="st">'SALARY_TO'</span>].fillna(salary_to_median)</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'SALARY_FROM'</span>] <span class="op">=</span> data_drop[<span class="st">'SALARY_FROM'</span>].fillna(salary_from_median)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="7557a3a5" class="cell" data-execution_count="6">
+<div id="bf8c5cc4" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Replace NA Values with 0 and -1</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'MIN_YEARS_EXPERIENCE'</span>] <span class="op">=</span> data_drop[<span class="st">'MIN_YEARS_EXPERIENCE'</span>].fillna(<span class="dv">0</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'DURATION'</span>] <span class="op">=</span> data_drop[<span class="st">'DURATION'</span>].fillna(<span class="op">-</span><span class="dv">1</span>)</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'MODELED_DURATION'</span>] <span class="op">=</span> data_drop[<span class="st">'MODELED_DURATION'</span>].fillna(<span class="op">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="a17e56e3" class="cell" data-execution_count="7">
+<div id="e137db6e" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Replace Missing Dates with Reasonable Values, and convert to date time format</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'POSTED'</span>] <span class="op">=</span> pd.to_datetime(data[<span class="st">'POSTED'</span>], errors<span class="op">=</span><span class="st">'coerce'</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'EXPIRED'</span>] <span class="op">=</span> pd.to_datetime(data[<span class="st">'EXPIRED'</span>], errors<span class="op">=</span><span class="st">'coerce'</span>)</span>
@@ -262,7 +262,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'EXPIRED'</span>] <span class="op">=</span> data_drop[<span class="st">'EXPIRED'</span>].fillna(pd.to_datetime(<span class="st">'2100-12-31'</span>))</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>data_drop[<span class="st">'MODELED_EXPIRED'</span>] <span class="op">=</span> data_drop[<span class="st">'MODELED_EXPIRED'</span>].fillna(pd.to_datetime(<span class="st">'2100-12-31'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="6d4923d1" class="cell" data-execution_count="8">
+<div id="1ba9b63f" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Handle the remaining missing values</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>string_cols <span class="op">=</span> data_drop.select_dtypes(include<span class="op">=</span><span class="st">'object'</span>).columns</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>data_drop[string_cols] <span class="op">=</span> data_drop[string_cols].fillna(<span class="st">"Unknown"</span>)</span>
@@ -270,15 +270,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>numeric_cols <span class="op">=</span> data_drop.select_dtypes(include<span class="op">=</span>[<span class="st">'float64'</span>, <span class="st">'int64'</span>]).columns</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>data_drop[numeric_cols] <span class="op">=</span> data_drop[numeric_cols].fillna(<span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="a5b53b93" class="cell" data-execution_count="9">
+<div id="2456c56c" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Remove Duplicates</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="op">=</span> data_drop.drop_duplicates(subset<span class="op">=</span>[<span class="st">"TITLE"</span>, <span class="st">"COMPANY"</span>, <span class="st">"LOCATION"</span>, <span class="st">"POSTED"</span>], keep<span class="op">=</span><span class="st">"first"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="e8b4236d" class="cell" data-execution_count="10">
+<div id="526489a8" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>data_cleaned[data_cleaned.isna().<span class="bu">any</span>(axis<span class="op">=</span><span class="dv">1</span>)]</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>data_cleaned <span class="op">=</span> data_cleaned.drop(index<span class="op">=</span><span class="dv">478</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="b379da3e" class="cell" data-execution_count="11">
+<div id="85f48701" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>data_cleaned.isna().<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>LAST_UPDATED_DATE          0
@@ -300,7 +300,7 @@ Length: 99, dtype: int64</code></pre>
 <h1 data-number="2"><span class="header-section-number">2</span> Data Visualization</h1>
 <iframe src="figures/industry_plot.html" width="100%" height="500">
 </iframe>
-<div id="67285af0" class="cell" data-execution_count="14">
+<div id="b832ea83" class="cell" data-execution_count="14">
 <div class="cell-output cell-output-stdout">
 <pre><code>The bar plot is used to display the top 10 highest number of job posting industries. 
 The graph shows that computer related services are standing out, management services and employment placement agencies also have double the amount of job postings than others in this category.</code></pre>
@@ -308,7 +308,7 @@ The graph shows that computer related services are standing out, management serv
 </div>
 <iframe src="figures/salary_distribution_by_industry.html" width="100%" height="500">
 </iframe>
-<div id="9928c817" class="cell" data-execution_count="16">
+<div id="df8a486f" class="cell" data-execution_count="16">
 <div class="cell-output cell-output-stdout">
 <pre><code>The box plot presents the salary distribution across the top 10 industries with the highest number of job postings. 
 By reducing the number of categories and adjusting the axis labels, we improve readability.</code></pre>
@@ -316,7 +316,7 @@ By reducing the number of categories and adjusting the axis labels, we improve r
 </div>
 <iframe src="figures/remote_vs_onsite_jobs.html" width="100%" height="500">
 </iframe>
-<div id="09290d69" class="cell" data-execution_count="18">
+<div id="b92e7d07" class="cell" data-execution_count="18">
 <div class="cell-output cell-output-stdout">
 <pre><code>The pie chart represents the distribution of remote, on-site, and hybrid job postings. 
 It helps visualize the proportion of different work arrangements in the job market.</code></pre>

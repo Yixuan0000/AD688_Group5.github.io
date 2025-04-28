@@ -35,67 +35,32 @@
     "text": "This is a Quarto website.\n\nGroup Project 1\nYixuan Yang, Arohit Talari, Chengjie Lu"
   },
   {
-    "objectID": "ml_methods_summary.html",
-    "href": "ml_methods_summary.html",
-    "title": "ML Methods Summary",
+    "objectID": "skill_gap_analysis.html",
+    "href": "skill_gap_analysis.html",
+    "title": "Skill Gap Analysis",
     "section": "",
-    "text": "We used MLR to examine the relationship between job attributes and salary. After feature engineering and one-hot encoding, the model achieved an \\(R^2\\) of 0.87, indicating strong predictive ability. Key variables influencing salary included state, experience level, and educational background."
+    "text": "Code\nskills_data = {\n    \"Name\": [\"Yixuan\", \"Arohit\", \"Chengjie\"],\n    \"Python\": [5, 3, 4],\n    \"SQL\": [4, 2, 5],\n    \"Machine Learning\": [3, 1, 4],\n    \"Cloud Computing\": [2, 2, 3],\n    \"Data Visualization\": [4, 3, 5],\n    \"Statistics\": [5, 2, 4],\n    \"Project Management\": [3, 4, 3],\n    \"Communication\": [2, 5, 4],\n    \"Problem-Solving\": [4, 4, 5],\n    \"Teamwork\": [5, 5, 5],\n    \"Excel\" :[4, 4, 4],\n    \"Adaptability\": [4, 5, 3],\n    \"Data Analysis\": [4, 3, 4],\n    \"Leadership\": [3, 4, 2],\n    \"R\": [3, 5, 4]\n\n}\n\ndf_skills = pd.DataFrame(skills_data)\ndf_skills.set_index(\"Name\", inplace=True)\ndf_skills\n\n\n\n\n\n\n\n\n\nPython\nSQL\nMachine Learning\nCloud Computing\nData Visualization\nStatistics\nProject Management\nCommunication\nProblem-Solving\nTeamwork\nExcel\nAdaptability\nData Analysis\nLeadership\nR\n\n\nName\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nYixuan\n5\n4\n3\n2\n4\n5\n3\n2\n4\n5\n4\n4\n4\n3\n3\n\n\nArohit\n3\n2\n1\n2\n3\n2\n4\n5\n4\n5\n4\n5\n3\n4\n5\n\n\nChengjie\n4\n5\n4\n3\n5\n4\n3\n4\n5\n5\n4\n3\n4\n2\n4"
   },
   {
-    "objectID": "ml_methods_summary.html#multiple-linear-regression-mlr",
-    "href": "ml_methods_summary.html#multiple-linear-regression-mlr",
-    "title": "ML Methods Summary",
+    "objectID": "skill_gap_analysis.html#personalized-learning-plan",
+    "href": "skill_gap_analysis.html#personalized-learning-plan",
+    "title": "Skill Gap Analysis",
+    "section": "1 Personalized Learning Plan",
+    "text": "1 Personalized Learning Plan\nBased on the heatmap and extracted job skill requirements, the following areas are recommended for improvement:\n\nYixuan: Should focus on improving Communication and Cloud Computing, which are below average and frequently required by employers.\nArohit: Needs significant upskilling in Machine Learning, Statistics, and Data Visualization, which are critical for data-centric roles.\nChengjie: Should enhance Leadership and Adaptability skills, which are essential for project coordination and dynamic environments.\n\nCourses on platforms such as Coursera, edX, or LinkedIn Learning can be recommended to address these gaps effectively.\n\n\nCode\nskill_keywords = [\n    \"Python\", \"R\", \"SQL\", \"Data Analysis\", \"Machine Learning\",\n    \"Statistics\", \"Data Visualization\", \"Excel\", \"Tableau\", \"Power BI\",\n    \"Java\", \"C++\", \"JavaScript\", \"HTML/CSS\", \"Cloud Computing\",\n    \"Cybersecurity\", \"Network Administration\", \"Database Management\",\n    \"Communication\", \"Problem-Solving\", \"Teamwork\", \"Project Management\",\n    \"Leadership\", \"Time Management\", \"Adaptability\", \"Financial Analysis\",\n    \"Marketing Strategy\", \"Customer Relationship Management\", \"Supply Chain Management\",\n    \"Regulatory Compliance\"\n]\n\n\n\n\nCode\ndef extract_skills(body_text):\n    if pd.isna(body_text) or not body_text:\n        return []\n    body_text = body_text.lower()\n    # Extract skills present in the text\n    skills = [skill for skill in skill_keywords if skill.lower() in body_text]\n    return skills\n\n\n\n\nCode\ndata['extracted_skills'] = data['BODY'].apply(extract_skills)\n\n\n\n\nCode\nall_skills = set()\nfor skills in data['extracted_skills']:\n    all_skills.update(skills)\nprint(all_skills)\n\n\n{'HTML/CSS', 'Excel', 'Tableau', 'Machine Learning', 'Supply Chain Management', 'Statistics', 'Customer Relationship Management', 'Leadership', 'Regulatory Compliance', 'Adaptability', 'Project Management', 'JavaScript', 'Database Management', 'Problem-Solving', 'Teamwork', 'Power BI', 'Cloud Computing', 'SQL', 'Data Analysis', 'Network Administration', 'Java', 'Cybersecurity', 'Financial Analysis', 'Python', 'C++', 'Marketing Strategy', 'Communication', 'Time Management', 'Data Visualization', 'R'}\n\n\n\n\nCode\nfor skill in all_skills:\n    if skill not in df_skills.columns:\n        df_skills[skill] = 0\n\ndf_skills\n\n\n\n\n\n\n\n\n\nPython\nSQL\nMachine Learning\nCloud Computing\nData Visualization\nStatistics\nProject Management\nCommunication\nProblem-Solving\nTeamwork\n...\nJavaScript\nDatabase Management\nPower BI\nNetwork Administration\nJava\nCybersecurity\nFinancial Analysis\nC++\nMarketing Strategy\nTime Management\n\n\nName\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nYixuan\n5\n4\n3\n2\n4\n5\n3\n2\n4\n5\n...\n0\n0\n0\n0\n0\n0\n0\n0\n0\n0\n\n\nArohit\n3\n2\n1\n2\n3\n2\n4\n5\n4\n5\n...\n0\n0\n0\n0\n0\n0\n0\n0\n0\n0\n\n\nChengjie\n4\n5\n4\n3\n5\n4\n3\n4\n5\n5\n...\n0\n0\n0\n0\n0\n0\n0\n0\n0\n0\n\n\n\n\n3 rows × 30 columns"
+  },
+  {
+    "objectID": "skill_gap_analysis.html#conclusion",
+    "href": "skill_gap_analysis.html#conclusion",
+    "title": "Skill Gap Analysis",
+    "section": "2 Conclusion",
+    "text": "2 Conclusion\nThis skill gap analysis reveals critical strengths in collaboration, problem-solving, and communication within the team. However, technical gaps—particularly in Machine Learning, Cloud Computing, and Leadership—need to be addressed to align with job market demands. The personalized learning plans are tailored to ensure all members enhance relevant skills for competitive employability in the data and tech sectors."
+  },
+  {
+    "objectID": "data_cleaning.html",
+    "href": "data_cleaning.html",
+    "title": "Data Analysis",
     "section": "",
-    "text": "We used MLR to examine the relationship between job attributes and salary. After feature engineering and one-hot encoding, the model achieved an \\(R^2\\) of 0.87, indicating strong predictive ability. Key variables influencing salary included state, experience level, and educational background."
-  },
-  {
-    "objectID": "ml_methods_summary.html#random-forest-regressor",
-    "href": "ml_methods_summary.html#random-forest-regressor",
-    "title": "ML Methods Summary",
-    "section": "Random Forest Regressor",
-    "text": "Random Forest Regressor\nTo compare with a non-linear approach, we implemented a Random Forest Regressor. Despite its flexibility, the model achieved a lower \\(R^2\\) of 0.25, highlighting its limitations with high-dimensional sparse data. Feature importance showed that skill count and experience dominated predictions."
-  },
-  {
-    "objectID": "ml_methods_summary.html#model-comparison",
-    "href": "ml_methods_summary.html#model-comparison",
-    "title": "ML Methods Summary",
-    "section": "Model Comparison",
-    "text": "Model Comparison\n\n\n\nMetric\nMLR\nRandom Forest\n\n\n\n\nRMSE\n77,772\n63,755\n\n\nR-squared\n0.87\n0.25\n\n\n\nMLR provided more reliable insights for interpreting salary trends, while Random Forest offered useful feature ranking."
-  },
-  {
-    "objectID": "conclusion.html",
-    "href": "conclusion.html",
-    "title": "Conclusion",
-    "section": "",
-    "text": "This project integrates market trend analysis, skill benchmarking, and machine learning modeling to assess personal job readiness. Key findings reveal: - High demand in tech, consulting, and support service industries. - Salary disparities driven by experience, skill count, and location. - Team strengths in communication and problem-solving, with notable gaps in cloud computing and machine learning."
-  },
-  {
-    "objectID": "conclusion.html#summary",
-    "href": "conclusion.html#summary",
-    "title": "Conclusion",
-    "section": "",
-    "text": "This project integrates market trend analysis, skill benchmarking, and machine learning modeling to assess personal job readiness. Key findings reveal: - High demand in tech, consulting, and support service industries. - Salary disparities driven by experience, skill count, and location. - Team strengths in communication and problem-solving, with notable gaps in cloud computing and machine learning."
-  },
-  {
-    "objectID": "conclusion.html#future-directions",
-    "href": "conclusion.html#future-directions",
-    "title": "Conclusion",
-    "section": "Future Directions",
-    "text": "Future Directions\nBy implementing the learning plans and staying attuned to evolving trends, each member can strategically improve their employability. The methods developed here can be scaled to assist broader groups of job seekers and applied across diverse career planning scenarios."
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site"
-  },
-  {
-    "objectID": "eda.html",
-    "href": "eda.html",
-    "title": "Exploratory Data Analysis",
-    "section": "",
-    "text": "1 Top 10 Job Postings by Industry\n\n\n\nThe most frequently advertised job postings come from Custom Computer Programming Services, Accounting Services, and Employment Placement Agencies. These industries are consistently hiring across roles, suggesting a high demand for software developers, finance professionals, and recruiters. This indicates strong hiring momentum in tech and support functions.\n\n\n\n2 Salary Distribution by Industry\n\n\n\nSalary distribution varies widely across industries. While most sectors show a median salary between $80K and $120K, certain fields like Commercial Banking and Offices of Certified Public Accountants show higher outliers, indicating potential for high-earning roles. The variation within each industry also reflects differing job levels and skill demands.\n\n\n\n3 Remote vs. On-Site Jobs\n\n\n\nOver 78% of job postings offer remote work options, either fully or in hybrid mode. This highlights the growing normalization of flexible work arrangements post-pandemic. Only 7% of jobs are strictly on-site, indicating a permanent shift in job design and workplace expectations.\n\n\n\n4 Team Skill Levels Heatmap\n\n\n\nThe team demonstrates strong skill levels in Communication, Problem-Solving, and Teamwork, all scoring 5 across members. However, there are visible gaps in Machine Learning and Cloud Computing, particularly for Arohit. These gaps highlight potential areas for upskilling to align with industry demands in data and engineering roles."
+    "text": "1 Data Preparation and Cleaning\n\ncolumns_to_drop = [\n   \"ID\", \"URL\", \"ACTIVE_URLS\", \"DUPLICATES\", \"LAST_UPDATED_TIMESTAMP\",\n    \"NAICS2\", \"NAICS3\", \"NAICS4\", \"NAICS5\", \"NAICS6\",\n    \"SOC_2\", \"SOC_2_NAME\", \"SOC_3\", \"SOC_3_NAME\", \"SOC_4\", \"SOC_4_NAME\", \"SOC_5\", \"SOC_5_NAME\", \"SOC_2021_2\", \"SOC_2021_2_NAME\", \"SOC_2021_3\", \"SOC_2021_3_NAME\", \"SOC_2021_5\", \"SOC_2021_5_NAME\",\n    'NAICS_2022_2', 'NAICS_2022_2_NAME', 'NAICS_2022_3',\n       'NAICS_2022_3_NAME', 'NAICS_2022_4', 'NAICS_2022_4_NAME','NAICS_2022_5', 'NAICS_2022_5_NAME', 'SOC_2_NAME', 'SOC_3_NAME', 'SOC_4', 'SOC_4_NAME', 'SOC_5_NAME'\n]\ndata_drop = data.drop(columns=columns_to_drop)\n\n\n#Replace salary with median\nsalary_median = data_drop['SALARY'].median()\nsalary_to_median = data_drop['SALARY_TO'].median()\nsalary_from_median = data_drop['SALARY_FROM'].median()\ndata_drop['SALARY'] = data_drop['SALARY'].fillna(salary_median)\ndata_drop['SALARY_TO'] = data_drop['SALARY_TO'].fillna(salary_to_median)\ndata_drop['SALARY_FROM'] = data_drop['SALARY_FROM'].fillna(salary_from_median)\n\n\n#Replace NA Values with 0 and -1\ndata_drop['MIN_YEARS_EXPERIENCE'] = data_drop['MIN_YEARS_EXPERIENCE'].fillna(0)\ndata_drop['DURATION'] = data_drop['DURATION'].fillna(-1)\ndata_drop['MODELED_DURATION'] = data_drop['MODELED_DURATION'].fillna(-1)\n\n\n#Replace Missing Dates with Reasonable Values, and convert to date time format\ndata_drop['POSTED'] = pd.to_datetime(data['POSTED'], errors='coerce')\ndata_drop['EXPIRED'] = pd.to_datetime(data['EXPIRED'], errors='coerce')\ndata_drop['LAST_UPDATED_DATE'] = pd.to_datetime(data['LAST_UPDATED_DATE'], errors='coerce')\ndata_drop['MODELED_EXPIRED'] = pd.to_datetime(data_drop['MODELED_EXPIRED'], errors='coerce')\n\ndata_drop['EXPIRED'] = data_drop['EXPIRED'].fillna(pd.to_datetime('2100-12-31'))\ndata_drop['MODELED_EXPIRED'] = data_drop['MODELED_EXPIRED'].fillna(pd.to_datetime('2100-12-31'))\n\n\n#Handle the remaining missing values\nstring_cols = data_drop.select_dtypes(include='object').columns\ndata_drop[string_cols] = data_drop[string_cols].fillna(\"Unknown\")\n\nnumeric_cols = data_drop.select_dtypes(include=['float64', 'int64']).columns\ndata_drop[numeric_cols] = data_drop[numeric_cols].fillna(0)\n\n\n#Remove Duplicates\ndata_cleaned = data_drop.drop_duplicates(subset=[\"TITLE\", \"COMPANY\", \"LOCATION\", \"POSTED\"], keep=\"first\")\n\n\ndata_cleaned[data_cleaned.isna().any(axis=1)]\ndata_cleaned = data_cleaned.drop(index=478)\n\n\ndata_cleaned.isna().sum()\n\nLAST_UPDATED_DATE          0\nPOSTED                     0\nEXPIRED                    0\nDURATION                   0\nSOURCE_TYPES               0\n                          ..\nLOT_V6_CAREER_AREA_NAME    0\nLIGHTCAST_SECTORS          0\nLIGHTCAST_SECTORS_NAME     0\nNAICS_2022_6               0\nNAICS_2022_6_NAME          0\nLength: 99, dtype: int64\n\n\n\n\n2 Data Visualization\n\n\n\n\nThe bar plot is used to display the top 10 highest number of job posting industries. \nThe graph shows that computer related services are standing out, management services and employment placement agencies also have double the amount of job postings than others in this category.\n\n\n\n\n\n\nThe box plot presents the salary distribution across the top 10 industries with the highest number of job postings. \nBy reducing the number of categories and adjusting the axis labels, we improve readability.\n\n\n\n\n\n\nThe pie chart represents the distribution of remote, on-site, and hybrid job postings. \nIt helps visualize the proportion of different work arrangements in the job market."
   },
   {
     "objectID": "research_introduction.html",
@@ -119,46 +84,39 @@
     "text": "Contribution\nBy linking data-driven market insights with personalized upskilling recommendations, this project provides both a strategic career roadmap and a framework for future job market analytics."
   },
   {
-    "objectID": "data_cleaning.html",
-    "href": "data_cleaning.html",
-    "title": "Data Analysis",
+    "objectID": "eda.html",
+    "href": "eda.html",
+    "title": "Exploratory Data Analysis",
     "section": "",
-    "text": "1 Data Preparation and Cleaning\n\ncolumns_to_drop = [\n   \"ID\", \"URL\", \"ACTIVE_URLS\", \"DUPLICATES\", \"LAST_UPDATED_TIMESTAMP\",\n    \"NAICS2\", \"NAICS3\", \"NAICS4\", \"NAICS5\", \"NAICS6\",\n    \"SOC_2\", \"SOC_2_NAME\", \"SOC_3\", \"SOC_3_NAME\", \"SOC_4\", \"SOC_4_NAME\", \"SOC_5\", \"SOC_5_NAME\", \"SOC_2021_2\", \"SOC_2021_2_NAME\", \"SOC_2021_3\", \"SOC_2021_3_NAME\", \"SOC_2021_5\", \"SOC_2021_5_NAME\",\n    'NAICS_2022_2', 'NAICS_2022_2_NAME', 'NAICS_2022_3',\n       'NAICS_2022_3_NAME', 'NAICS_2022_4', 'NAICS_2022_4_NAME','NAICS_2022_5', 'NAICS_2022_5_NAME', 'SOC_2_NAME', 'SOC_3_NAME', 'SOC_4', 'SOC_4_NAME', 'SOC_5_NAME'\n]\ndata_drop = data.drop(columns=columns_to_drop)\n\n\n#Replace salary with median\nsalary_median = data_drop['SALARY'].median()\nsalary_to_median = data_drop['SALARY_TO'].median()\nsalary_from_median = data_drop['SALARY_FROM'].median()\ndata_drop['SALARY'] = data_drop['SALARY'].fillna(salary_median)\ndata_drop['SALARY_TO'] = data_drop['SALARY_TO'].fillna(salary_to_median)\ndata_drop['SALARY_FROM'] = data_drop['SALARY_FROM'].fillna(salary_from_median)\n\n\n#Replace NA Values with 0 and -1\ndata_drop['MIN_YEARS_EXPERIENCE'] = data_drop['MIN_YEARS_EXPERIENCE'].fillna(0)\ndata_drop['DURATION'] = data_drop['DURATION'].fillna(-1)\ndata_drop['MODELED_DURATION'] = data_drop['MODELED_DURATION'].fillna(-1)\n\n\n#Replace Missing Dates with Reasonable Values, and convert to date time format\ndata_drop['POSTED'] = pd.to_datetime(data['POSTED'], errors='coerce')\ndata_drop['EXPIRED'] = pd.to_datetime(data['EXPIRED'], errors='coerce')\ndata_drop['LAST_UPDATED_DATE'] = pd.to_datetime(data['LAST_UPDATED_DATE'], errors='coerce')\ndata_drop['MODELED_EXPIRED'] = pd.to_datetime(data_drop['MODELED_EXPIRED'], errors='coerce')\n\ndata_drop['EXPIRED'] = data_drop['EXPIRED'].fillna(pd.to_datetime('2100-12-31'))\ndata_drop['MODELED_EXPIRED'] = data_drop['MODELED_EXPIRED'].fillna(pd.to_datetime('2100-12-31'))\n\n\n#Handle the remaining missing values\nstring_cols = data_drop.select_dtypes(include='object').columns\ndata_drop[string_cols] = data_drop[string_cols].fillna(\"Unknown\")\n\nnumeric_cols = data_drop.select_dtypes(include=['float64', 'int64']).columns\ndata_drop[numeric_cols] = data_drop[numeric_cols].fillna(0)\n\n\n#Remove Duplicates\ndata_cleaned = data_drop.drop_duplicates(subset=[\"TITLE\", \"COMPANY\", \"LOCATION\", \"POSTED\"], keep=\"first\")\n\n\ndata_cleaned[data_cleaned.isna().any(axis=1)]\ndata_cleaned = data_cleaned.drop(index=478)\n\n\ndata_cleaned.isna().sum()\n\nLAST_UPDATED_DATE          0\nPOSTED                     0\nEXPIRED                    0\nDURATION                   0\nSOURCE_TYPES               0\n                          ..\nLOT_V6_CAREER_AREA_NAME    0\nLIGHTCAST_SECTORS          0\nLIGHTCAST_SECTORS_NAME     0\nNAICS_2022_6               0\nNAICS_2022_6_NAME          0\nLength: 99, dtype: int64\n\n\n\n\n2 Data Visualization\n\n\n\n\nThe bar plot is used to display the top 10 highest number of job posting industries. \nThe graph shows that computer related services are standing out, management services and employment placement agencies also have double the amount of job postings than others in this category.\n\n\n\n\n\n\nThe box plot presents the salary distribution across the top 10 industries with the highest number of job postings. \nBy reducing the number of categories and adjusting the axis labels, we improve readability.\n\n\n\n\n\n\nThe pie chart represents the distribution of remote, on-site, and hybrid job postings. \nIt helps visualize the proportion of different work arrangements in the job market."
+    "text": "1 Top 10 Job Postings by Industry\n\n\n\nThe most frequently advertised job postings come from Custom Computer Programming Services, Accounting Services, and Employment Placement Agencies. These industries are consistently hiring across roles, suggesting a high demand for software developers, finance professionals, and recruiters. This indicates strong hiring momentum in tech and support functions.\n\n\n\n2 Salary Distribution by Industry\n\n\n\nSalary distribution varies widely across industries. While most sectors show a median salary between $80K and $120K, certain fields like Commercial Banking and Offices of Certified Public Accountants show higher outliers, indicating potential for high-earning roles. The variation within each industry also reflects differing job levels and skill demands.\n\n\n\n3 Remote vs. On-Site Jobs\n\n\n\nOver 78% of job postings offer remote work options, either fully or in hybrid mode. This highlights the growing normalization of flexible work arrangements post-pandemic. Only 7% of jobs are strictly on-site, indicating a permanent shift in job design and workplace expectations.\n\n\n\n4 Team Skill Levels Heatmap\n\n\n\nThe team demonstrates strong skill levels in Communication, Problem-Solving, and Teamwork, all scoring 5 across members. However, there are visible gaps in Machine Learning and Cloud Computing, particularly for Arohit. These gaps highlight potential areas for upskilling to align with industry demands in data and engineering roles."
   },
   {
-    "objectID": "skill_gap_analysis.html",
-    "href": "skill_gap_analysis.html",
-    "title": "Skill Gap Analysis",
+    "objectID": "nlp_methods.html",
+    "href": "nlp_methods.html",
+    "title": "Natural Language Processing (NLP) Analysis",
     "section": "",
-    "text": "Code\nskills_data = {\n    \"Name\": [\"Yixuan\", \"Arohit\", \"Chengjie\"],\n    \"Python\": [5, 3, 4],\n    \"SQL\": [4, 2, 5],\n    \"Machine Learning\": [3, 1, 4],\n    \"Cloud Computing\": [2, 2, 3],\n    \"Data Visualization\": [4, 3, 5],\n    \"Statistics\": [5, 2, 4],\n    \"Project Management\": [3, 4, 3],\n    \"Communication\": [2, 5, 4],\n    \"Problem-Solving\": [4, 4, 5],\n    \"Teamwork\": [5, 5, 5],\n    \"Excel\" :[4, 4, 4],\n    \"Adaptability\": [4, 5, 3],\n    \"Data Analysis\": [4, 3, 4],\n    \"Leadership\": [3, 4, 2],\n    \"R\": [3, 5, 4]\n\n}\n\ndf_skills = pd.DataFrame(skills_data)\ndf_skills.set_index(\"Name\", inplace=True)\ndf_skills\n\n\n\n\n\n\n\n\n\nPython\nSQL\nMachine Learning\nCloud Computing\nData Visualization\nStatistics\nProject Management\nCommunication\nProblem-Solving\nTeamwork\nExcel\nAdaptability\nData Analysis\nLeadership\nR\n\n\nName\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nYixuan\n5\n4\n3\n2\n4\n5\n3\n2\n4\n5\n4\n4\n4\n3\n3\n\n\nArohit\n3\n2\n1\n2\n3\n2\n4\n5\n4\n5\n4\n5\n3\n4\n5\n\n\nChengjie\n4\n5\n4\n3\n5\n4\n3\n4\n5\n5\n4\n3\n4\n2\n4"
+    "text": "In this section, we conduct a basic Natural Language Processing (NLP) analysis based on job descriptions in our dataset (cleaned_job_postings.csv). The goal is to extract key topics and skills mentioned in job postings, enhancing our understanding of employer expectations in the market.\n\n# echo: false\nimport pandas as pd\nimport re\nfrom sklearn.feature_extraction.text import CountVectorizer, ENGLISH_STOP_WORDS\nfrom sklearn.decomposition import LatentDirichletAllocation\nimport plotly.express as px\nfrom collections import Counter\n\ndata = pd.read_csv(\"files/cleaned_job_postings.csv\")\n\ntext_data = data['BODY'].dropna().reset_index(drop=True)\n\ndef preprocess(text):\n    text = text.lower()\n    text = re.sub(r'[^a-z\\s]', '', text)\n    words = text.split()\n    words = [word for word in words if word not in ENGLISH_STOP_WORDS and len(word) &gt; 2]\n    return words\n\ndata['tokens'] = text_data.apply(preprocess)\n\nall_words = [word for tokens in data['tokens'] for word in tokens]\nword_freq = Counter(all_words)\n\nword_freq_df = pd.DataFrame(word_freq.most_common(20), columns=[\"word\", \"count\"])\n\nfig = px.bar(word_freq_df, x='word', y='count', title='Top 20 Most Frequent Words (After Removing Stopwords)')\nfig.show()\n\ncorpus = [\" \".join(tokens) for tokens in data['tokens']]\nvectorizer = CountVectorizer(max_df=0.9, min_df=10, stop_words='english')\ndtm = vectorizer.fit_transform(corpus)\n\nlda = LatentDirichletAllocation(n_components=5, random_state=42)\nlda.fit(dtm)\n\nfeature_names = vectorizer.get_feature_names_out()\n\ndef display_topics(model, feature_names, no_top_words):\n    for idx, topic in enumerate(model.components_):\n        print(f\"Topic {idx + 1}:\")\n        print(\" | \".join([feature_names[i] for i in topic.argsort()[:-no_top_words - 1:-1]]))\n        print()\n\ndisplay_topics(lda, feature_names, 10)\n\n        \n        \n        \n\n\n                            \n                                            \n\n\nTopic 1:\nwork | health | data | information | benefits | required | position | insurance | time | employment\n\nTopic 2:\nbusiness | work | team | benefits | technology | skills | status | solutions | data | company\n\nTopic 3:\nbusiness | clients | oracle | work | sap | range | employment | role | solutions | client\n\nTopic 4:\nsap | business | management | oracle | skills | requirements | solutions | technical | years | systems\n\nTopic 5:\ndata | business | skills | analysis | work | analyst | analytics | management | ability | tools\n\n\n\n\n\nBased on the LDA topic modeling results, we can identify five major underlying themes within the job descriptions:\n\nTopic 1: Focuses on work, health, data, benefits, insurance, and employment terms, suggesting that many job postings emphasize hiring conditions, employee benefits, and information handling requirements.\nTopic 2: Centers around teamwork, technology, and skill development, highlighting the growing importance of collaboration and technical proficiency in hiring practices.\nTopic 3: Emphasizes client management, Oracle systems, and employment roles, reflecting strong demand for CRM (Customer Relationship Management) and ERP (Enterprise Resource Planning) system skills.\nTopic 4: Highlights SAP expertise, management skills, and technical requirements, indicating a sustained need for advanced management and systems integration capabilities.\nTopic 5: Concentrates on data analytics, business intelligence, and skill applications, showing a strong market preference for data-driven decision-making and analytical roles.\n\n\n\nCurrent job postings repeatedly emphasize technical competencies (such as Oracle and SAP), data analytics capabilities, and cross-functional communication skills.\nAdditionally, benefits, health insurance, and specific employment requirements are critical elements emphasized by employers during recruitment."
   },
   {
-    "objectID": "skill_gap_analysis.html#personalized-learning-plan",
-    "href": "skill_gap_analysis.html#personalized-learning-plan",
-    "title": "Skill Gap Analysis",
-    "section": "1 Personalized Learning Plan",
-    "text": "1 Personalized Learning Plan\nBased on the heatmap and extracted job skill requirements, the following areas are recommended for improvement:\n\nYixuan: Should focus on improving Communication and Cloud Computing, which are below average and frequently required by employers.\nArohit: Needs significant upskilling in Machine Learning, Statistics, and Data Visualization, which are critical for data-centric roles.\nChengjie: Should enhance Leadership and Adaptability skills, which are essential for project coordination and dynamic environments.\n\nCourses on platforms such as Coursera, edX, or LinkedIn Learning can be recommended to address these gaps effectively.\n\n\nCode\nskill_keywords = [\n    \"Python\", \"R\", \"SQL\", \"Data Analysis\", \"Machine Learning\",\n    \"Statistics\", \"Data Visualization\", \"Excel\", \"Tableau\", \"Power BI\",\n    \"Java\", \"C++\", \"JavaScript\", \"HTML/CSS\", \"Cloud Computing\",\n    \"Cybersecurity\", \"Network Administration\", \"Database Management\",\n    \"Communication\", \"Problem-Solving\", \"Teamwork\", \"Project Management\",\n    \"Leadership\", \"Time Management\", \"Adaptability\", \"Financial Analysis\",\n    \"Marketing Strategy\", \"Customer Relationship Management\", \"Supply Chain Management\",\n    \"Regulatory Compliance\"\n]\n\n\n\n\nCode\ndef extract_skills(body_text):\n    if pd.isna(body_text) or not body_text:\n        return []\n    body_text = body_text.lower()\n    # Extract skills present in the text\n    skills = [skill for skill in skill_keywords if skill.lower() in body_text]\n    return skills\n\n\n\n\nCode\ndata['extracted_skills'] = data['BODY'].apply(extract_skills)\n\n\n\n\nCode\nall_skills = set()\nfor skills in data['extracted_skills']:\n    all_skills.update(skills)\nprint(all_skills)\n\n\n{'R', 'Statistics', 'Communication', 'Network Administration', 'Machine Learning', 'C++', 'Time Management', 'Regulatory Compliance', 'Power BI', 'Cloud Computing', 'Problem-Solving', 'Python', 'SQL', 'Teamwork', 'JavaScript', 'Financial Analysis', 'Marketing Strategy', 'Data Visualization', 'Adaptability', 'Leadership', 'Supply Chain Management', 'Excel', 'Tableau', 'HTML/CSS', 'Database Management', 'Data Analysis', 'Project Management', 'Java', 'Customer Relationship Management', 'Cybersecurity'}\n\n\n\n\nCode\nfor skill in all_skills:\n    if skill not in df_skills.columns:\n        df_skills[skill] = 0\n\ndf_skills\n\n\n\n\n\n\n\n\n\nPython\nSQL\nMachine Learning\nCloud Computing\nData Visualization\nStatistics\nProject Management\nCommunication\nProblem-Solving\nTeamwork\n...\nJavaScript\nFinancial Analysis\nMarketing Strategy\nSupply Chain Management\nTableau\nHTML/CSS\nDatabase Management\nJava\nCustomer Relationship Management\nCybersecurity\n\n\nName\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nYixuan\n5\n4\n3\n2\n4\n5\n3\n2\n4\n5\n...\n0\n0\n0\n0\n0\n0\n0\n0\n0\n0\n\n\nArohit\n3\n2\n1\n2\n3\n2\n4\n5\n4\n5\n...\n0\n0\n0\n0\n0\n0\n0\n0\n0\n0\n\n\nChengjie\n4\n5\n4\n3\n5\n4\n3\n4\n5\n5\n...\n0\n0\n0\n0\n0\n0\n0\n0\n0\n0\n\n\n\n\n3 rows × 30 columns"
-  },
-  {
-    "objectID": "skill_gap_analysis.html#conclusion",
-    "href": "skill_gap_analysis.html#conclusion",
-    "title": "Skill Gap Analysis",
-    "section": "2 Conclusion",
-    "text": "2 Conclusion\nThis skill gap analysis reveals critical strengths in collaboration, problem-solving, and communication within the team. However, technical gaps—particularly in Machine Learning, Cloud Computing, and Leadership—need to be addressed to align with job market demands. The personalized learning plans are tailored to ensure all members enhance relevant skills for competitive employability in the data and tech sectors."
-  },
-  {
-    "objectID": "career_plan.html",
-    "href": "career_plan.html",
-    "title": "Career Plan",
+    "objectID": "nlp_methods.html#topic-modeling-summary",
+    "href": "nlp_methods.html#topic-modeling-summary",
+    "title": "Natural Language Processing (NLP) Analysis",
     "section": "",
-    "text": "Based on the heatmap and extracted job skill requirements, the following areas are recommended for improvement:\n\nYixuan: Should focus on improving Communication and Cloud Computing, which are below average and frequently required by employers.\nArohit: Needs significant upskilling in Machine Learning, Statistics, and Data Visualization, which are critical for data-centric roles.\nChengjie: Should enhance Leadership and Adaptability skills, which are essential for project coordination and dynamic environments.\n\n\nCourses on platforms such as Coursera, edX, or LinkedIn Learning can be recommended to address these gaps effectively."
+    "text": "Based on the LDA topic modeling results, we can identify five major underlying themes within the job descriptions:\n\nTopic 1: Focuses on work, health, data, benefits, insurance, and employment terms, suggesting that many job postings emphasize hiring conditions, employee benefits, and information handling requirements.\nTopic 2: Centers around teamwork, technology, and skill development, highlighting the growing importance of collaboration and technical proficiency in hiring practices.\nTopic 3: Emphasizes client management, Oracle systems, and employment roles, reflecting strong demand for CRM (Customer Relationship Management) and ERP (Enterprise Resource Planning) system skills.\nTopic 4: Highlights SAP expertise, management skills, and technical requirements, indicating a sustained need for advanced management and systems integration capabilities.\nTopic 5: Concentrates on data analytics, business intelligence, and skill applications, showing a strong market preference for data-driven decision-making and analytical roles.\n\n\n\nCurrent job postings repeatedly emphasize technical competencies (such as Oracle and SAP), data analytics capabilities, and cross-functional communication skills.\nAdditionally, benefits, health insurance, and specific employment requirements are critical elements emphasized by employers during recruitment."
   },
   {
-    "objectID": "career_plan.html#personalized-learning-plan",
-    "href": "career_plan.html#personalized-learning-plan",
-    "title": "Career Plan",
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
     "section": "",
-    "text": "Based on the heatmap and extracted job skill requirements, the following areas are recommended for improvement:\n\nYixuan: Should focus on improving Communication and Cloud Computing, which are below average and frequently required by employers.\nArohit: Needs significant upskilling in Machine Learning, Statistics, and Data Visualization, which are critical for data-centric roles.\nChengjie: Should enhance Leadership and Adaptability skills, which are essential for project coordination and dynamic environments.\n\n\nCourses on platforms such as Coursera, edX, or LinkedIn Learning can be recommended to address these gaps effectively."
+    "text": "About this site"
+  },
+  {
+    "objectID": "conclusion.html",
+    "href": "conclusion.html",
+    "title": "Conclusion",
+    "section": "",
+    "text": "1 1. Summary\nThis project integrates market trend analysis, skill benchmarking, and machine learning modeling to assess personal job readiness. Through rigorous data exploration and predictive modeling, we uncovered several important insights:\n\nIndustry Trends: High demand is concentrated in the technology, consulting, and support service industries.\nSalary Drivers: Salary disparities are largely influenced by years of experience, the number of skills possessed, and geographic location.\nTeam Skill Assessment: Team strengths are notable in areas of communication and problem-solving. However, skill gaps were identified in cloud computing and machine learning competencies.\n\nThese findings provide a grounded view of current labor market expectations and highlight actionable areas for professional development.\n\n\n2 2. Future Directions\nLooking ahead, several strategic pathways emerge:\n\nSkill Development: By implementing the personalized learning plans and focusing on closing the identified skill gaps, each member can substantially enhance their employability.\nContinuous Trend Monitoring: Staying attuned to evolving industry demands will ensure alignment between skills and market needs over time.\nScalability of Methods: The analytic framework and techniques developed in this project are adaptable. They can be scaled to assist broader populations of job seekers and can be applied to a variety of career planning and workforce development scenarios.\n\nOverall, this project demonstrates a robust approach to data-driven career readiness evaluation, setting a strong foundation for future strategic personal development."
   },
   {
     "objectID": "ml_methods.html",
@@ -215,5 +173,33 @@
     "title": "Multiple Linear Regression - Salary Predition",
     "section": "4.2 Silhouette Score",
     "text": "4.2 Silhouette Score"
+  },
+  {
+    "objectID": "ml_methods.html#visualizations",
+    "href": "ml_methods.html#visualizations",
+    "title": "Multiple Linear Regression - Salary Predition",
+    "section": "5.1 Visualizations",
+    "text": "5.1 Visualizations\n\n5.1.1 Coefficient Bar Chart\nA bar chart was used to visualize the top positive and negative influences on predicted salaries. Positive coefficients primarily relate to states with higher living costs.\n\n\n5.1.2 Actual vs. Predicted Plot\nA scatter plot comparing actual salaries against predicted salaries shows a wide dispersion, indicating prediction inaccuracies at extreme salary values.\n\n\n5.1.3 Residual Histogram\nThe histogram of residuals suggests a concentration of errors near zero but with some large deviations, reinforcing the need for model improvement."
+  },
+  {
+    "objectID": "ml_methods.html#rank-importance-chart",
+    "href": "ml_methods.html#rank-importance-chart",
+    "title": "Multiple Linear Regression - Salary Predition",
+    "section": "6.1 Rank Importance Chart",
+    "text": "6.1 Rank Importance Chart\nA bar chart displays the relative importance of the top 15 features, confirming the key role of skills and experience."
+  },
+  {
+    "objectID": "ml_methods.html#elbow-plot-1",
+    "href": "ml_methods.html#elbow-plot-1",
+    "title": "Multiple Linear Regression - Salary Predition",
+    "section": "7.1 Elbow Plot",
+    "text": "7.1 Elbow Plot\nThe elbow plot suggests that an optimal number of clusters is likely around 3 to 4, as the rate of decrease in within-cluster sum of squares slows beyond this point."
+  },
+  {
+    "objectID": "ml_methods.html#silhouette-score-1",
+    "href": "ml_methods.html#silhouette-score-1",
+    "title": "Multiple Linear Regression - Salary Predition",
+    "section": "7.2 Silhouette Score",
+    "text": "7.2 Silhouette Score\nSilhouette scores were plotted for different numbers of clusters. The highest silhouette score is achieved at k=2 (approximately 0.19), suggesting that two clusters provide the clearest separation."
   }
 ]
