@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.40">
+<meta name="generator" content="quarto-1.4.547">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Multiple Linear Regression - Salary Predition – Job Market Analysis 2024</title>
+<title>Job Market Analysis 2024 - Multiple Linear Regression - Salary Predition</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -69,10 +69,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -119,7 +119,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -154,7 +154,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-            <div class="quarto-navbar-tools">
+          <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -187,6 +187,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#elbow-plot" id="toc-elbow-plot" class="nav-link" data-scroll-target="#elbow-plot"><span class="header-section-number">4.1</span> Elbow Plot</a></li>
   <li><a href="#silhouette-score" id="toc-silhouette-score" class="nav-link" data-scroll-target="#silhouette-score"><span class="header-section-number">4.2</span> Silhouette Score</a></li>
   </ul></li>
+  <li><a href="#multiple-linear-regression" id="toc-multiple-linear-regression" class="nav-link" data-scroll-target="#multiple-linear-regression"><span class="header-section-number">5</span> Multiple Linear Regression</a>
+  <ul class="collapse">
+  <li><a href="#visualizations" id="toc-visualizations" class="nav-link" data-scroll-target="#visualizations"><span class="header-section-number">5.1</span> Visualizations</a>
+  <ul class="collapse">
+  <li><a href="#coefficient-bar-chart-1" id="toc-coefficient-bar-chart-1" class="nav-link" data-scroll-target="#coefficient-bar-chart-1"><span class="header-section-number">5.1.1</span> Coefficient Bar Chart</a></li>
+  <li><a href="#actual-vs.-predicted-plot" id="toc-actual-vs.-predicted-plot" class="nav-link" data-scroll-target="#actual-vs.-predicted-plot"><span class="header-section-number">5.1.2</span> Actual vs.&nbsp;Predicted Plot</a></li>
+  <li><a href="#residual-histogram-1" id="toc-residual-histogram-1" class="nav-link" data-scroll-target="#residual-histogram-1"><span class="header-section-number">5.1.3</span> Residual Histogram</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#random-forest-regression" id="toc-random-forest-regression" class="nav-link" data-scroll-target="#random-forest-regression"><span class="header-section-number">6</span> Random Forest Regression</a>
+  <ul class="collapse">
+  <li><a href="#rank-importance-chart" id="toc-rank-importance-chart" class="nav-link" data-scroll-target="#rank-importance-chart"><span class="header-section-number">6.1</span> Rank Importance Chart</a></li>
+  </ul></li>
+  <li><a href="#unsupervised-learning-kmeans-clustering" id="toc-unsupervised-learning-kmeans-clustering" class="nav-link" data-scroll-target="#unsupervised-learning-kmeans-clustering"><span class="header-section-number">7</span> Unsupervised Learning: KMeans Clustering</a>
+  <ul class="collapse">
+  <li><a href="#elbow-plot-1" id="toc-elbow-plot-1" class="nav-link" data-scroll-target="#elbow-plot-1"><span class="header-section-number">7.1</span> Elbow Plot</a></li>
+  <li><a href="#silhouette-score-1" id="toc-silhouette-score-1" class="nav-link" data-scroll-target="#silhouette-score-1"><span class="header-section-number">7.2</span> Silhouette Score</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">8</span> Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -214,12 +233,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="mutiple-linear-regression" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Mutiple Linear Regression</h1>
-<div id="c2a060e1" class="cell" data-execution_count="3">
+<div id="dee0842a" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -260,15 +279,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>31-May-2024\n\nEnterprise Analyst (II-III)\n\n...</td>
 <td>2024-06-08</td>
 <td>...</td>
-<td>231010.0</td>
+<td>231010</td>
 <td>Business Intelligence Analyst</td>
-<td>2310.0</td>
+<td>2310</td>
 <td>Business Intelligence</td>
-<td>23.0</td>
+<td>23</td>
 <td>Information Technology and Computer Science</td>
 <td>[\n 7\n]</td>
 <td>[\n "Artificial Intelligence"\n]</td>
-<td>441330.0</td>
+<td>441330</td>
 <td>Automotive Parts and Accessories Retailers</td>
 </tr>
 <tr class="even">
@@ -284,15 +303,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Oracle Consultant - Reports (3592)\n\nat SMX i...</td>
 <td>2024-08-01</td>
 <td>...</td>
-<td>231010.0</td>
+<td>231010</td>
 <td>Business Intelligence Analyst</td>
-<td>2310.0</td>
+<td>2310</td>
 <td>Business Intelligence</td>
-<td>23.0</td>
+<td>23</td>
 <td>Information Technology and Computer Science</td>
 <td>Unknown</td>
 <td>Unknown</td>
-<td>561320.0</td>
+<td>561320</td>
 <td>Temporary Help Services</td>
 </tr>
 <tr class="odd">
@@ -308,15 +327,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Taking care of people is at the heart of every...</td>
 <td>2024-06-10</td>
 <td>...</td>
-<td>231113.0</td>
+<td>231113</td>
 <td>Data / Data Mining Analyst</td>
-<td>2311.0</td>
+<td>2311</td>
 <td>Data Analysis and Mathematics</td>
-<td>23.0</td>
+<td>23</td>
 <td>Information Technology and Computer Science</td>
 <td>Unknown</td>
 <td>Unknown</td>
-<td>524291.0</td>
+<td>524291</td>
 <td>Claims Adjusting</td>
 </tr>
 <tr class="even">
@@ -332,15 +351,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>About this role:\n\nWells Fargo is looking for...</td>
 <td>2024-06-12</td>
 <td>...</td>
-<td>231113.0</td>
+<td>231113</td>
 <td>Data / Data Mining Analyst</td>
-<td>2311.0</td>
+<td>2311</td>
 <td>Data Analysis and Mathematics</td>
-<td>23.0</td>
+<td>23</td>
 <td>Information Technology and Computer Science</td>
 <td>[\n 6\n]</td>
 <td>[\n "Data Privacy/Protection"\n]</td>
-<td>522110.0</td>
+<td>522110</td>
 <td>Commercial Banking</td>
 </tr>
 <tr class="odd">
@@ -356,15 +375,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Comisiones de $1000 - $3000 por semana... Comi...</td>
 <td>2024-06-17</td>
 <td>...</td>
-<td>231010.0</td>
+<td>231010</td>
 <td>Business Intelligence Analyst</td>
-<td>2310.0</td>
+<td>2310</td>
 <td>Business Intelligence</td>
-<td>23.0</td>
+<td>23</td>
 <td>Information Technology and Computer Science</td>
 <td>Unknown</td>
 <td>Unknown</td>
-<td>999999.0</td>
+<td>999999</td>
 <td>Unclassified Industry</td>
 </tr>
 </tbody>
@@ -374,11 +393,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="975d607a" class="cell" data-execution_count="4">
+<div id="1610a145" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>na_values <span class="op">=</span> [<span class="st">"Unknown"</span>, <span class="st">"[None]"</span>, <span class="st">""</span>, <span class="st">"None"</span>, <span class="st">"unknown"</span>]</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.replace(na_values, np.nan)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="c91c2b74" class="cell" data-execution_count="6">
+<div id="fdd6f59d" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"exp_mid"</span>] <span class="op">=</span> df[[<span class="st">"MIN_YEARS_EXPERIENCE"</span>, <span class="st">"MAX_YEARS_EXPERIENCE"</span>]].mean(axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"skill_count"</span>] <span class="op">=</span> df[<span class="st">"SPECIALIZED_SKILLS_NAME"</span>].fillna(<span class="st">""</span>).<span class="bu">str</span>.count(<span class="st">","</span>) <span class="op">+</span> <span class="dv">1</span></span>
@@ -403,7 +422,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="feature-engineering" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="feature-engineering"><span class="header-section-number">1.1</span> Feature Engineering</h2>
-<div id="a8d9b9b3" class="cell" data-execution_count="7">
+<div id="0b0ae4d1" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_dummies <span class="op">=</span> pd.get_dummies(</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    df_model,</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    columns <span class="op">=</span> keep_cat,   </span>
@@ -411,30 +430,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    dtype <span class="op">=</span> <span class="bu">float</span>        </span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="9251e2fd" class="cell" data-execution_count="8">
+<div id="fc939101" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-stdout">
-<pre><code>(69197, 60)
-exp_mid                                          float64
-MODELED_DURATION                                 float64
-skill_count                                        int64
-has_python                                         int64
-edu_ge_bachelors                                   int64
-SALARY                                           float64
-EMPLOYMENT_TYPE_NAME_Part-time (â‰¤ 32 hours)    float64
-EMPLOYMENT_TYPE_NAME_Part-time / full-time       float64
-REMOTE_TYPE_NAME_Not Remote                      float64
-REMOTE_TYPE_NAME_Remote                          float64
+<pre><code>(69199, 60)
+exp_mid                                        float64
+MODELED_DURATION                               float64
+skill_count                                      int64
+has_python                                       int64
+edu_ge_bachelors                                 int64
+SALARY                                         float64
+EMPLOYMENT_TYPE_NAME_Part-time (≤ 32 hours)    float64
+EMPLOYMENT_TYPE_NAME_Part-time / full-time     float64
+REMOTE_TYPE_NAME_Not Remote                    float64
+REMOTE_TYPE_NAME_Remote                        float64
 dtype: object</code></pre>
 </div>
 </div>
-<div id="f1fa4d63" class="cell" data-execution_count="9">
+<div id="d5ac5ad1" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop salary to form features</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df_dummies.drop(<span class="st">'SALARY'</span>, axis <span class="op">=</span> <span class="dv">1</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df_dummies[<span class="st">'SALARY'</span>]</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y ,test_size <span class="op">=</span> <span class="fl">0.3</span>, random_state <span class="op">=</span> <span class="dv">688</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="82a1678a" class="cell" data-execution_count="10">
+<div id="8f00ded8" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LinearRegression()</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>model.fit(X_train, y_train)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
@@ -853,36 +872,36 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-3);
 }
-</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>LinearRegression()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked=""><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>LinearRegression</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.linear_model.LinearRegression.html">?<span>Documentation for LinearRegression</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted"><pre>LinearRegression()</pre></div> </div></div></div></div>
+</a></style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>LinearRegression()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked=""><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>LinearRegression</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.linear_model.LinearRegression.html">?<span>Documentation for LinearRegression</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted"><pre>LinearRegression()</pre></div> </div></div></div></div>
 </div>
 </div>
-<div id="31dc4e9c" class="cell" data-execution_count="11">
+<div id="5cb04741" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> model.predict(X_test)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>pd.Series(y_pred).describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>count     20760.000000
-mean     116665.029362
-std        8791.894940
-min       88800.236917
-25%      109974.963777
-50%      115505.306864
-75%      122329.751484
-max      162401.095589
+mean     116858.597141
+std        8723.766929
+min       88939.521987
+25%      110186.143187
+50%      115748.686133
+75%      122510.993586
+max      163152.472089
 dtype: float64</code></pre>
 </div>
 </div>
-<div id="7f29518c" class="cell" data-execution_count="12">
+<div id="465c24ca" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>rmse <span class="op">=</span> mean_squared_error(y_test, y_pred)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>r2 <span class="op">=</span> r2_score(y_test, y_pred)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"RMSE: </span><span class="sc">{</span>rmse<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"R-squared: </span><span class="sc">{</span>r2<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>RMSE: 806814997.70
-R-squared: 0.0829</code></pre>
+<pre><code>RMSE: 777720416.43
+R-squared: 0.0874</code></pre>
 </div>
 </div>
-<div id="ef7d3b2d" class="cell" data-execution_count="13">
+<div id="84bc336d" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>coef_df <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Feature"</span>: X.columns,</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Coefficient"</span>: model.coef_</span>
@@ -893,7 +912,7 @@ R-squared: 0.0829</code></pre>
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -903,54 +922,54 @@ R-squared: 0.0829</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">12</td>
-<td>STATE_NAME_California</td>
-<td>5190.928636</td>
+<td data-quarto-table-cell-role="th">54</td>
+<td>STATE_NAME_Washington</td>
+<td>5135.856412</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">52</td>
 <td>STATE_NAME_Vermont</td>
-<td>4496.118897</td>
+<td>4992.125928</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">54</td>
-<td>STATE_NAME_Washington</td>
-<td>4472.008952</td>
+<td data-quarto-table-cell-role="th">12</td>
+<td>STATE_NAME_California</td>
+<td>4810.124902</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">14</td>
 <td>STATE_NAME_Connecticut</td>
-<td>4331.075349</td>
+<td>4240.562772</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>exp_mid</td>
-<td>3285.573906</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">37</td>
-<td>STATE_NAME_New Jersey</td>
-<td>2969.753458</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">20</td>
-<td>STATE_NAME_Illinois</td>
-<td>2593.946072</td>
-</tr>
-<tr class="even">
 <td data-quarto-table-cell-role="th">11</td>
 <td>STATE_NAME_Arkansas</td>
-<td>2567.848230</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">53</td>
-<td>STATE_NAME_Virginia</td>
-<td>2547.821596</td>
+<td>3933.241423</td>
 </tr>
 <tr class="even">
+<td data-quarto-table-cell-role="th">0</td>
+<td>exp_mid</td>
+<td>3319.050797</td>
+</tr>
+<tr class="odd">
 <td data-quarto-table-cell-role="th">15</td>
 <td>STATE_NAME_Delaware</td>
-<td>2302.284166</td>
+<td>2997.204286</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">20</td>
+<td>STATE_NAME_Illinois</td>
+<td>2777.969965</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">37</td>
+<td>STATE_NAME_New Jersey</td>
+<td>2739.092860</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">53</td>
+<td>STATE_NAME_Virginia</td>
+<td>2287.668518</td>
 </tr>
 </tbody>
 </table>
@@ -958,7 +977,7 @@ R-squared: 0.0829</code></pre>
 </div>
 </div>
 </div>
-<div id="b9b96e2c" class="cell" data-execution_count="14">
+<div id="188ad638" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>coef_cleaned <span class="op">=</span> coef_df[<span class="op">~</span>coef_df[<span class="st">"Feature"</span>].<span class="bu">str</span>.contains(</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="vs">r"Unknown|\[None\]"</span>,  </span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    na<span class="op">=</span><span class="va">False</span>              </span>
@@ -969,7 +988,7 @@ R-squared: 0.0829</code></pre>
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -979,54 +998,54 @@ R-squared: 0.0829</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">12</td>
-<td>STATE_NAME_California</td>
-<td>5190.928636</td>
+<td data-quarto-table-cell-role="th">54</td>
+<td>STATE_NAME_Washington</td>
+<td>5135.856412</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">52</td>
 <td>STATE_NAME_Vermont</td>
-<td>4496.118897</td>
+<td>4992.125928</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">54</td>
-<td>STATE_NAME_Washington</td>
-<td>4472.008952</td>
+<td data-quarto-table-cell-role="th">12</td>
+<td>STATE_NAME_California</td>
+<td>4810.124902</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">14</td>
 <td>STATE_NAME_Connecticut</td>
-<td>4331.075349</td>
+<td>4240.562772</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>exp_mid</td>
-<td>3285.573906</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">37</td>
-<td>STATE_NAME_New Jersey</td>
-<td>2969.753458</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">20</td>
-<td>STATE_NAME_Illinois</td>
-<td>2593.946072</td>
-</tr>
-<tr class="even">
 <td data-quarto-table-cell-role="th">11</td>
 <td>STATE_NAME_Arkansas</td>
-<td>2567.848230</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">53</td>
-<td>STATE_NAME_Virginia</td>
-<td>2547.821596</td>
+<td>3933.241423</td>
 </tr>
 <tr class="even">
+<td data-quarto-table-cell-role="th">0</td>
+<td>exp_mid</td>
+<td>3319.050797</td>
+</tr>
+<tr class="odd">
 <td data-quarto-table-cell-role="th">15</td>
 <td>STATE_NAME_Delaware</td>
-<td>2302.284166</td>
+<td>2997.204286</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">20</td>
+<td>STATE_NAME_Illinois</td>
+<td>2777.969965</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">37</td>
+<td>STATE_NAME_New Jersey</td>
+<td>2739.092860</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">53</td>
+<td>STATE_NAME_Virginia</td>
+<td>2287.668518</td>
 </tr>
 </tbody>
 </table>
@@ -1056,7 +1075,7 @@ R-squared: 0.0829</code></pre>
 </section>
 <section id="random-forest" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Random Forest</h1>
-<div id="aac104ef" class="cell" data-execution_count="19">
+<div id="294fc639" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>rf_model <span class="op">=</span> RandomForestRegressor(</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    n_estimators     <span class="op">=</span> <span class="dv">300</span>,</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    min_samples_leaf <span class="op">=</span> <span class="dv">2</span>,</span>
@@ -1480,18 +1499,18 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-3);
 }
-</style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>RandomForestRegressor(min_samples_leaf=2, n_estimators=300, n_jobs=-1,
+</a></style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>RandomForestRegressor(min_samples_leaf=2, n_estimators=300, n_jobs=-1,
                       random_state=688)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" checked=""><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>RandomForestRegressor</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.6/modules/generated/sklearn.ensemble.RandomForestRegressor.html">?<span>Documentation for RandomForestRegressor</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted"><pre>RandomForestRegressor(min_samples_leaf=2, n_estimators=300, n_jobs=-1,
                       random_state=688)</pre></div> </div></div></div></div>
 </div>
 </div>
-<div id="3861c403" class="cell" data-execution_count="20">
+<div id="830180a8" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>rf_pred <span class="op">=</span> rf_model.predict(X_test)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>rf_rmse <span class="op">=</span> mean_squared_error(y_test, rf_pred)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>rf_r2   <span class="op">=</span> r2_score(y_test, rf_pred)</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Random&nbsp;Forest  •  RMSE = </span><span class="sc">{</span>rf_rmse<span class="sc">:.2f}</span><span class="ss">  |  R² = </span><span class="sc">{</span>rf_r2<span class="sc">:.3f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Random&nbsp;Forest  •  RMSE = 672612626.37  |  R² = 0.235</code></pre>
+<pre><code>Random&nbsp;Forest  •  RMSE = 637552503.24  |  R² = 0.252</code></pre>
 </div>
 </div>
 <section id="rank-importance" class="level2" data-number="3.1">
@@ -1511,11 +1530,63 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <h2 data-number="4.2" class="anchored" data-anchor-id="silhouette-score"><span class="header-section-number">4.2</span> Silhouette Score</h2>
 <iframe src="figures/Silhouette_Chart.html" width="100%" height="500">
 </iframe>
+</section>
+</section>
+<section id="multiple-linear-regression" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Multiple Linear Regression</h1>
+<p>In this section, we built a multiple linear regression model to predict salaries using a variety of features, including experience, skill counts, education, and employment type.</p>
+<p>Key results: - <strong>RMSE</strong>: 77724.06 - <strong>R-squared</strong>: 0.0874</p>
+<p>These metrics indicate that while the model provides some insight, there is significant unexplained variance, suggesting that salary prediction is complex and influenced by additional unobserved factors.</p>
+<p>Top features influencing salary (positive coefficients): - STATE_NAME_Washington (+$5135.86) - STATE_NAME_Vermont (+$4992.13) - STATE_NAME_California (+$4810.12) - STATE_NAME_Connecticut (+$4240.56)</p>
+<p>The results show that the location (state) plays a crucial role in determining salary.</p>
+<section id="visualizations" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="visualizations"><span class="header-section-number">5.1</span> Visualizations</h2>
+<section id="coefficient-bar-chart-1" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="coefficient-bar-chart-1"><span class="header-section-number">5.1.1</span> Coefficient Bar Chart</h3>
+<p>A bar chart was used to visualize the top positive and negative influences on predicted salaries. Positive coefficients primarily relate to states with higher living costs.</p>
+</section>
+<section id="actual-vs.-predicted-plot" class="level3" data-number="5.1.2">
+<h3 data-number="5.1.2" class="anchored" data-anchor-id="actual-vs.-predicted-plot"><span class="header-section-number">5.1.2</span> Actual vs.&nbsp;Predicted Plot</h3>
+<p>A scatter plot comparing actual salaries against predicted salaries shows a wide dispersion, indicating prediction inaccuracies at extreme salary values.</p>
+</section>
+<section id="residual-histogram-1" class="level3" data-number="5.1.3">
+<h3 data-number="5.1.3" class="anchored" data-anchor-id="residual-histogram-1"><span class="header-section-number">5.1.3</span> Residual Histogram</h3>
+<p>The histogram of residuals suggests a concentration of errors near zero but with some large deviations, reinforcing the need for model improvement.</p>
+</section>
+</section>
+</section>
+<section id="random-forest-regression" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Random Forest Regression</h1>
+<p>A random forest model was implemented to enhance prediction performance.</p>
+<p>Key results: - <strong>RMSE</strong>: 63755.28 - <strong>R-squared</strong>: 0.252</p>
+<p>Compared to multiple regression, random forest achieves better fit, although a large proportion of variance still remains unexplained.</p>
+<p>Top features by importance: - skill_count - MODELED_DURATION - exp_mid - REMOTE_TYPE_NAME_Remote</p>
+<p>Skill counts and modeled duration (likely representing experience) have the highest impact on salary predictions.</p>
+<section id="rank-importance-chart" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="rank-importance-chart"><span class="header-section-number">6.1</span> Rank Importance Chart</h2>
+<p>A bar chart displays the relative importance of the top 15 features, confirming the key role of skills and experience.</p>
+</section>
+</section>
+<section id="unsupervised-learning-kmeans-clustering" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Unsupervised Learning: KMeans Clustering</h1>
+<p>KMeans clustering was used to segment jobs into different clusters based on attributes.</p>
+<section id="elbow-plot-1" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="elbow-plot-1"><span class="header-section-number">7.1</span> Elbow Plot</h2>
+<p>The elbow plot suggests that an optimal number of clusters is likely around <strong>3</strong> to <strong>4</strong>, as the rate of decrease in within-cluster sum of squares slows beyond this point.</p>
+</section>
+<section id="silhouette-score-1" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="silhouette-score-1"><span class="header-section-number">7.2</span> Silhouette Score</h2>
+<p>Silhouette scores were plotted for different numbers of clusters. The highest silhouette score is achieved at <strong>k=2</strong> (approximately 0.19), suggesting that two clusters provide the clearest separation.</p>
+</section>
+</section>
+<section id="conclusion" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Conclusion</h1>
+<p>This analysis demonstrates that predicting salary is highly complex. Multiple regression and random forest models reveal that factors such as experience, skill count, and location significantly impact salary. Clustering analysis shows that job characteristics can be segmented into relatively clear groups, though the differences between some clusters are subtle.</p>
+<p>Future work should include exploring additional variables (e.g., company size, industry sector) and more advanced modeling techniques (e.g., gradient boosting, neural networks) to improve prediction accuracy.</p>
 
 
 <!-- -->
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -1554,7 +1625,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1586,27 +1668,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
   const viewSource = window.document.getElementById('quarto-view-source') ||
                      window.document.getElementById('quarto-code-tools-source');
   if (viewSource) {
@@ -1658,24 +1720,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/Yixuan0000\.github\.io\/AD688_Group5\.github\.io\/");
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -1710,11 +1754,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
+      return note.innerHTML;
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -1762,6 +1802,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
+      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
@@ -1993,7 +2034,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="an">bibliography:</span><span class="co"> references.bib</span></span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="an">csl:</span><span class="co"> csl/econometrica.csl</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> </span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
 <span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
 <span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co">    number-sections: true</span></span>
@@ -2289,7 +2330,74 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb16-350"><a href="#cb16-350" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb16-351"><a href="#cb16-351" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb16-352"><a href="#cb16-352" aria-hidden="true" tabindex="-1"></a>&lt;iframe src="figures/Silhouette_Chart.html" width="100%" height="500"&gt;&lt;/iframe&gt;</span>
-</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb16-353"><a href="#cb16-353" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-354"><a href="#cb16-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-355"><a href="#cb16-355" aria-hidden="true" tabindex="-1"></a><span class="fu"># Multiple Linear Regression</span></span>
+<span id="cb16-356"><a href="#cb16-356" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-357"><a href="#cb16-357" aria-hidden="true" tabindex="-1"></a>In this section, we built a multiple linear regression model to predict salaries using a variety of features, including experience, skill counts, education, and employment type. </span>
+<span id="cb16-358"><a href="#cb16-358" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-359"><a href="#cb16-359" aria-hidden="true" tabindex="-1"></a>Key results:</span>
+<span id="cb16-360"><a href="#cb16-360" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**RMSE**: 77724.06</span>
+<span id="cb16-361"><a href="#cb16-361" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**R-squared**: 0.0874</span>
+<span id="cb16-362"><a href="#cb16-362" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-363"><a href="#cb16-363" aria-hidden="true" tabindex="-1"></a>These metrics indicate that while the model provides some insight, there is significant unexplained variance, suggesting that salary prediction is complex and influenced by additional unobserved factors.</span>
+<span id="cb16-364"><a href="#cb16-364" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-365"><a href="#cb16-365" aria-hidden="true" tabindex="-1"></a>Top features influencing salary (positive coefficients):</span>
+<span id="cb16-366"><a href="#cb16-366" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>STATE_NAME_Washington (+\$5135.86)</span>
+<span id="cb16-367"><a href="#cb16-367" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>STATE_NAME_Vermont (+\$4992.13)</span>
+<span id="cb16-368"><a href="#cb16-368" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>STATE_NAME_California (+\$4810.12)</span>
+<span id="cb16-369"><a href="#cb16-369" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>STATE_NAME_Connecticut (+\$4240.56)</span>
+<span id="cb16-370"><a href="#cb16-370" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-371"><a href="#cb16-371" aria-hidden="true" tabindex="-1"></a>The results show that the location (state) plays a crucial role in determining salary.</span>
+<span id="cb16-372"><a href="#cb16-372" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-373"><a href="#cb16-373" aria-hidden="true" tabindex="-1"></a><span class="fu">## Visualizations</span></span>
+<span id="cb16-374"><a href="#cb16-374" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-375"><a href="#cb16-375" aria-hidden="true" tabindex="-1"></a><span class="fu">### Coefficient Bar Chart</span></span>
+<span id="cb16-376"><a href="#cb16-376" aria-hidden="true" tabindex="-1"></a>A bar chart was used to visualize the top positive and negative influences on predicted salaries. Positive coefficients primarily relate to states with higher living costs.</span>
+<span id="cb16-377"><a href="#cb16-377" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-378"><a href="#cb16-378" aria-hidden="true" tabindex="-1"></a><span class="fu">### Actual vs. Predicted Plot</span></span>
+<span id="cb16-379"><a href="#cb16-379" aria-hidden="true" tabindex="-1"></a>A scatter plot comparing actual salaries against predicted salaries shows a wide dispersion, indicating prediction inaccuracies at extreme salary values.</span>
+<span id="cb16-380"><a href="#cb16-380" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-381"><a href="#cb16-381" aria-hidden="true" tabindex="-1"></a><span class="fu">### Residual Histogram</span></span>
+<span id="cb16-382"><a href="#cb16-382" aria-hidden="true" tabindex="-1"></a>The histogram of residuals suggests a concentration of errors near zero but with some large deviations, reinforcing the need for model improvement.</span>
+<span id="cb16-383"><a href="#cb16-383" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-384"><a href="#cb16-384" aria-hidden="true" tabindex="-1"></a><span class="fu"># Random Forest Regression</span></span>
+<span id="cb16-385"><a href="#cb16-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-386"><a href="#cb16-386" aria-hidden="true" tabindex="-1"></a>A random forest model was implemented to enhance prediction performance.</span>
+<span id="cb16-387"><a href="#cb16-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-388"><a href="#cb16-388" aria-hidden="true" tabindex="-1"></a>Key results:</span>
+<span id="cb16-389"><a href="#cb16-389" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**RMSE**: 63755.28</span>
+<span id="cb16-390"><a href="#cb16-390" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**R-squared**: 0.252</span>
+<span id="cb16-391"><a href="#cb16-391" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-392"><a href="#cb16-392" aria-hidden="true" tabindex="-1"></a>Compared to multiple regression, random forest achieves better fit, although a large proportion of variance still remains unexplained.</span>
+<span id="cb16-393"><a href="#cb16-393" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-394"><a href="#cb16-394" aria-hidden="true" tabindex="-1"></a>Top features by importance:</span>
+<span id="cb16-395"><a href="#cb16-395" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>skill_count</span>
+<span id="cb16-396"><a href="#cb16-396" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>MODELED_DURATION</span>
+<span id="cb16-397"><a href="#cb16-397" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>exp_mid</span>
+<span id="cb16-398"><a href="#cb16-398" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>REMOTE_TYPE_NAME_Remote</span>
+<span id="cb16-399"><a href="#cb16-399" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-400"><a href="#cb16-400" aria-hidden="true" tabindex="-1"></a>Skill counts and modeled duration (likely representing experience) have the highest impact on salary predictions.</span>
+<span id="cb16-401"><a href="#cb16-401" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-402"><a href="#cb16-402" aria-hidden="true" tabindex="-1"></a><span class="fu">## Rank Importance Chart</span></span>
+<span id="cb16-403"><a href="#cb16-403" aria-hidden="true" tabindex="-1"></a>A bar chart displays the relative importance of the top 15 features, confirming the key role of skills and experience.</span>
+<span id="cb16-404"><a href="#cb16-404" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-405"><a href="#cb16-405" aria-hidden="true" tabindex="-1"></a><span class="fu"># Unsupervised Learning: KMeans Clustering</span></span>
+<span id="cb16-406"><a href="#cb16-406" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-407"><a href="#cb16-407" aria-hidden="true" tabindex="-1"></a>KMeans clustering was used to segment jobs into different clusters based on attributes.</span>
+<span id="cb16-408"><a href="#cb16-408" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-409"><a href="#cb16-409" aria-hidden="true" tabindex="-1"></a><span class="fu">## Elbow Plot</span></span>
+<span id="cb16-410"><a href="#cb16-410" aria-hidden="true" tabindex="-1"></a>The elbow plot suggests that an optimal number of clusters is likely around **3** to **4**, as the rate of decrease in within-cluster sum of squares slows beyond this point.</span>
+<span id="cb16-411"><a href="#cb16-411" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-412"><a href="#cb16-412" aria-hidden="true" tabindex="-1"></a><span class="fu">## Silhouette Score</span></span>
+<span id="cb16-413"><a href="#cb16-413" aria-hidden="true" tabindex="-1"></a>Silhouette scores were plotted for different numbers of clusters. The highest silhouette score is achieved at **k=2** (approximately 0.19), suggesting that two clusters provide the clearest separation.</span>
+<span id="cb16-414"><a href="#cb16-414" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-415"><a href="#cb16-415" aria-hidden="true" tabindex="-1"></a><span class="fu"># Conclusion</span></span>
+<span id="cb16-416"><a href="#cb16-416" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-417"><a href="#cb16-417" aria-hidden="true" tabindex="-1"></a>This analysis demonstrates that predicting salary is highly complex. Multiple regression and random forest models reveal that factors such as experience, skill count, and location significantly impact salary. Clustering analysis shows that job characteristics can be segmented into relatively clear groups, though the differences between some clusters are subtle.</span>
+<span id="cb16-418"><a href="#cb16-418" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-419"><a href="#cb16-419" aria-hidden="true" tabindex="-1"></a>Future work should include exploring additional variables (e.g., company size, industry sector) and more advanced modeling techniques (e.g., gradient boosting, neural networks) to improve prediction accuracy.</span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

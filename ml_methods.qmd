@@ -4,7 +4,7 @@ subtitle: ""
 
 bibliography: references.bib
 csl: csl/econometrica.csl
-format: 
+format:
   html:
     toc: true
     number-sections: true
@@ -300,3 +300,70 @@ fig_sil.write_html(
 )
 ```
 <iframe src="figures/Silhouette_Chart.html" width="100%" height="500"></iframe>
+
+
+# Multiple Linear Regression
+
+In this section, we built a multiple linear regression model to predict salaries using a variety of features, including experience, skill counts, education, and employment type. 
+
+Key results:
+- **RMSE**: 77724.06
+- **R-squared**: 0.0874
+
+These metrics indicate that while the model provides some insight, there is significant unexplained variance, suggesting that salary prediction is complex and influenced by additional unobserved factors.
+
+Top features influencing salary (positive coefficients):
+- STATE_NAME_Washington (+\$5135.86)
+- STATE_NAME_Vermont (+\$4992.13)
+- STATE_NAME_California (+\$4810.12)
+- STATE_NAME_Connecticut (+\$4240.56)
+
+The results show that the location (state) plays a crucial role in determining salary.
+
+## Visualizations
+
+### Coefficient Bar Chart
+A bar chart was used to visualize the top positive and negative influences on predicted salaries. Positive coefficients primarily relate to states with higher living costs.
+
+### Actual vs. Predicted Plot
+A scatter plot comparing actual salaries against predicted salaries shows a wide dispersion, indicating prediction inaccuracies at extreme salary values.
+
+### Residual Histogram
+The histogram of residuals suggests a concentration of errors near zero but with some large deviations, reinforcing the need for model improvement.
+
+# Random Forest Regression
+
+A random forest model was implemented to enhance prediction performance.
+
+Key results:
+- **RMSE**: 63755.28
+- **R-squared**: 0.252
+
+Compared to multiple regression, random forest achieves better fit, although a large proportion of variance still remains unexplained.
+
+Top features by importance:
+- skill_count
+- MODELED_DURATION
+- exp_mid
+- REMOTE_TYPE_NAME_Remote
+
+Skill counts and modeled duration (likely representing experience) have the highest impact on salary predictions.
+
+## Rank Importance Chart
+A bar chart displays the relative importance of the top 15 features, confirming the key role of skills and experience.
+
+# Unsupervised Learning: KMeans Clustering
+
+KMeans clustering was used to segment jobs into different clusters based on attributes.
+
+## Elbow Plot
+The elbow plot suggests that an optimal number of clusters is likely around **3** to **4**, as the rate of decrease in within-cluster sum of squares slows beyond this point.
+
+## Silhouette Score
+Silhouette scores were plotted for different numbers of clusters. The highest silhouette score is achieved at **k=2** (approximately 0.19), suggesting that two clusters provide the clearest separation.
+
+# Conclusion
+
+This analysis demonstrates that predicting salary is highly complex. Multiple regression and random forest models reveal that factors such as experience, skill count, and location significantly impact salary. Clustering analysis shows that job characteristics can be segmented into relatively clear groups, though the differences between some clusters are subtle.
+
+Future work should include exploring additional variables (e.g., company size, industry sector) and more advanced modeling techniques (e.g., gradient boosting, neural networks) to improve prediction accuracy.
