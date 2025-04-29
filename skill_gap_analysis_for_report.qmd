@@ -1,0 +1,150 @@
+---
+title: "Skill Gap Analysis"
+subtitle: ""
+
+bibliography: references.bib
+csl: csl/econometrica.csl
+format:
+  html:
+    toc: true
+    number-sections: true
+    df-print: paged
+    code: false
+    code-tools: true
+    code-fold: true
+    section-divs: true
+    theme: cosmo
+---
+
+
+
+```{python}
+#| echo: false
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import plotly.express as px
+import plotly.offline as pyo
+import plotly.io as pio
+from collections import Counter
+import os
+```
+```{python}
+#| echo: false
+data = pd.read_csv("files/cleaned_job_postings.csv")
+```
+```{python}
+#| echo: false
+figures_folder = "figures"
+if not os.path.exists(figures_folder):
+    os.makedirs(figures_folder)
+```
+```{python}
+skills_data = {
+    "Name": ["Yixuan", "Arohit", "Chengjie"],
+    "Python": [5, 3, 4],
+    "SQL": [4, 2, 5],
+    "Machine Learning": [3, 1, 4],
+    "Cloud Computing": [2, 2, 3],
+    "Data Visualization": [4, 3, 5],
+    "Statistics": [5, 2, 4],
+    "Project Management": [3, 4, 3],
+    "Communication": [2, 5, 4],
+    "Problem-Solving": [4, 4, 5],
+    "Teamwork": [5, 5, 5],
+    "Excel" :[4, 4, 4],
+    "Adaptability": [4, 5, 3],
+    "Data Analysis": [4, 3, 4],
+    "Leadership": [3, 4, 2],
+    "R": [3, 5, 4]
+
+}
+
+df_skills = pd.DataFrame(skills_data)
+df_skills.set_index("Name", inplace=True)
+df_skills
+```
+![](figures/skill1.png){width=100%}
+![](figures/skill2.png){width=100%}
+
+```{python}
+#| echo: false
+fig = px.imshow(
+    df_skills,
+    labels=dict(x="Skills", y="Team Members", color="Skill Level"),
+    x=df_skills.columns,
+    y=df_skills.index,
+    color_continuous_scale="RdBu",
+    title="Team Skill Levels Heatmap",
+    text_auto=True
+)
+
+fig.update_layout(
+    width=800,
+    height=600,
+    margin=dict(l=100, r=100, t=100, b=100),
+    xaxis_title="Skills",
+    yaxis_title="Team Members",
+    coloraxis_colorbar_title="Skill Level",
+    template="plotly_white"
+)
+
+heatmap_file = os.path.join(figures_folder, "team_skill_levels_heatmap.html")
+fig.write_html(heatmap_file)
+```
+![](figures/team_skill_levels_heatmap.png){width=100%}
+
+## Personalized Learning Plan
+
+Based on the heatmap and extracted job skill requirements, the following areas are recommended for improvement:
+
+- **Yixuan**: Should focus on improving **Communication** and **Cloud Computing**, which are below average and frequently required by employers.
+- **Arohit**: Needs significant upskilling in **Machine Learning**, **Statistics**, and **Data Visualization**, which are critical for data-centric roles.
+- **Chengjie**: Should enhance **Leadership** and **Adaptability** skills, which are essential for project coordination and dynamic environments.
+
+Courses on platforms such as **Coursera**, **edX**, or **LinkedIn Learning** can be recommended to address these gaps effectively.
+
+
+```{python}
+skill_keywords = [
+    "Python", "R", "SQL", "Data Analysis", "Machine Learning",
+    "Statistics", "Data Visualization", "Excel", "Tableau", "Power BI",
+    "Java", "C++", "JavaScript", "HTML/CSS", "Cloud Computing",
+    "Cybersecurity", "Network Administration", "Database Management",
+    "Communication", "Problem-Solving", "Teamwork", "Project Management",
+    "Leadership", "Time Management", "Adaptability", "Financial Analysis",
+    "Marketing Strategy", "Customer Relationship Management", "Supply Chain Management",
+    "Regulatory Compliance"
+]
+```
+```{python}
+def extract_skills(body_text):
+    if pd.isna(body_text) or not body_text:
+        return []
+    body_text = body_text.lower()
+    # Extract skills present in the text
+    skills = [skill for skill in skill_keywords if skill.lower() in body_text]
+    return skills
+```
+```{python}
+data['extracted_skills'] = data['BODY'].apply(extract_skills)
+```
+```{python}
+all_skills = set()
+for skills in data['extracted_skills']:
+    all_skills.update(skills)
+print(all_skills)
+```
+```{python}
+for skill in all_skills:
+    if skill not in df_skills.columns:
+        df_skills[skill] = 0
+
+df_skills
+```
+![](figures/skill3.png){width=100%}
+![](figures/skill4.png){width=100%}
+
+## Conclusion
+
+This skill gap analysis reveals critical strengths in collaboration, problem-solving, and communication within the team. However, technical gaps—particularly in Machine Learning, Cloud Computing, and Leadership—need to be addressed to align with job market demands. The personalized learning plans are tailored to ensure all members enhance relevant skills for competitive employability in the data and tech sectors.

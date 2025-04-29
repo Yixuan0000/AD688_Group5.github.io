@@ -1,0 +1,199 @@
+---
+title: "Data Analysis"
+subtitle: "Comprehensive Data Cleaning & Exploratory Analysis of Job Market Trends"
+author:
+  - name: Yixuan Yang
+    affiliations:
+      - id: bu
+        name: Boston University
+        city: Boston
+        state: MA
+  - name: Arohit Talari
+    affiliations:
+      - ref: bu
+  - name: Chengjie Lu
+    affiliations:
+      - ref: bu
+
+bibliography: references.bib
+csl: csl/econometrica.csl
+format: 
+  html:
+    toc: true
+    number-sections: true
+    df-print: paged
+    code: false
+    code-tools: true
+    section-divs: true
+---
+# Data Preparation and Cleaning 
+```{python}
+#| echo: false
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import plotly.express as px
+import plotly.offline as pyo
+import plotly.io as pio
+import os
+```
+```{python}
+#| echo: false
+data = pd.read_csv("files/lightcast_job_postings_new.csv")
+```
+
+```{python include=false}
+columns_to_drop = [
+   "ID", "URL", "ACTIVE_URLS", "DUPLICATES", "LAST_UPDATED_TIMESTAMP",
+    "NAICS2", "NAICS3", "NAICS4", "NAICS5", "NAICS6",
+    "SOC_2", "SOC_2_NAME", "SOC_3", "SOC_3_NAME", "SOC_4", "SOC_4_NAME", "SOC_5", "SOC_5_NAME", "SOC_2021_2", "SOC_2021_2_NAME", "SOC_2021_3", "SOC_2021_3_NAME", "SOC_2021_5", "SOC_2021_5_NAME",
+    'NAICS_2022_2', 'NAICS_2022_2_NAME', 'NAICS_2022_3',
+       'NAICS_2022_3_NAME', 'NAICS_2022_4', 'NAICS_2022_4_NAME','NAICS_2022_5', 'NAICS_2022_5_NAME', 'SOC_2_NAME', 'SOC_3_NAME', 'SOC_4', 'SOC_4_NAME', 'SOC_5_NAME'
+]
+data_drop = data.drop(columns=columns_to_drop)
+```
+```{python}
+#| echo: false
+figures_folder = "figures"
+if not os.path.exists(figures_folder):
+    os.makedirs(figures_folder)
+#pd.set_option('display.max_rows', None)
+#pd.set_option('display.max_columns', None)
+#data_drop.columns
+```
+
+```{python}
+#Replace salary with median
+salary_median = data_drop['SALARY'].median()
+salary_to_median = data_drop['SALARY_TO'].median()
+salary_from_median = data_drop['SALARY_FROM'].median()
+data_drop['SALARY'] = data_drop['SALARY'].fillna(salary_median)
+data_drop['SALARY_TO'] = data_drop['SALARY_TO'].fillna(salary_to_median)
+data_drop['SALARY_FROM'] = data_drop['SALARY_FROM'].fillna(salary_from_median)
+```
+
+```{python}
+#Replace NA Values with 0 and -1
+data_drop['MIN_YEARS_EXPERIENCE'] = data_drop['MIN_YEARS_EXPERIENCE'].fillna(0)
+data_drop['DURATION'] = data_drop['DURATION'].fillna(-1)
+data_drop['MODELED_DURATION'] = data_drop['MODELED_DURATION'].fillna(-1)
+```
+
+```{python}
+#Replace Missing Dates with Reasonable Values, and convert to date time format
+data_drop['POSTED'] = pd.to_datetime(data['POSTED'], errors='coerce')
+data_drop['EXPIRED'] = pd.to_datetime(data['EXPIRED'], errors='coerce')
+data_drop['LAST_UPDATED_DATE'] = pd.to_datetime(data['LAST_UPDATED_DATE'], errors='coerce')
+data_drop['MODELED_EXPIRED'] = pd.to_datetime(data_drop['MODELED_EXPIRED'], errors='coerce')
+
+data_drop['EXPIRED'] = data_drop['EXPIRED'].fillna(pd.to_datetime('2100-12-31'))
+data_drop['MODELED_EXPIRED'] = data_drop['MODELED_EXPIRED'].fillna(pd.to_datetime('2100-12-31'))
+```
+
+```{python}
+#Handle the remaining missing values
+string_cols = data_drop.select_dtypes(include='object').columns
+data_drop[string_cols] = data_drop[string_cols].fillna("Unknown")
+
+numeric_cols = data_drop.select_dtypes(include=['float64', 'int64']).columns
+data_drop[numeric_cols] = data_drop[numeric_cols].fillna(0)
+```
+
+```{python include=false}
+#Remove Duplicates
+data_cleaned = data_drop.drop_duplicates(subset=["TITLE", "COMPANY", "LOCATION", "POSTED"], keep="first")
+```
+
+```{python include=false}
+data_cleaned[data_cleaned.isna().any(axis=1)]
+data_cleaned = data_cleaned.drop(index=478)
+```
+
+```{python include=false}
+data_cleaned.isna().sum()
+```
+
+```{python}
+#| include: false
+folder = "files"
+file_name = "cleaned_job_postings.csv"
+file_path = os.path.join(folder, file_name)
+
+# Save the DataFrame to CSV in the files folder
+data_cleaned.to_csv(file_path, index=False)
+```
+# Data Visualization
+```{python}
+#| echo: false
+industry_counts = data_cleaned["NAICS_2022_6_NAME"].value_counts().head(11).reset_index()
+industry_counts.columns = ['Industry', 'Count']
+industry_counts = industry_counts[industry_counts['Industry'] != 'Unclassified Industry']
+
+fig = px.bar(industry_counts, x='Industry', y='Count', title="Top 10 Job Postings by Industry")
+fig.update_layout(xaxis_tickangle=45, height=800, margin=dict(b=200))
+fig.write_html(os.path.join(figures_folder, "industry_plot.html"))
+
+```
+![](figures/industry_plot.png){width=100%}
+
+The bar plot is used to display the top 10 highest number of job posting industries.
+The graph shows that computer related services are standing out, management services and employment placement agencies also have double the amount of job postings than others in this category.
+
+```{python}
+#| echo: false
+top_industries = data_cleaned["NAICS_2022_6_NAME"].value_counts().head(11).index
+filtered_data = data_cleaned[data_cleaned["NAICS_2022_6_NAME"].isin(top_industries)]
+filtered_data = filtered_data[filtered_data['NAICS_2022_6_NAME'] != 'Unclassified Industry']
+
+fig = px.box(
+    filtered_data,
+    x="NAICS_2022_6_NAME",
+    y="SALARY",
+    title="Salary Distribution by Industry",
+    labels={"NAICS_2022_6_NAME": "Industry", "SALARY": "Salary"},
+    points="outliers",
+    category_orders={"NAICS_2022_6_NAME": top_industries}
+)
+
+
+fig.update_layout(
+    xaxis_tickangle=45,
+    xaxis_title="Top 10 Industries",
+    yaxis_title="Salary ($)",
+    height=700,
+    margin=dict(b=150)
+)
+
+fig.write_html(os.path.join(figures_folder, "salary_distribution_by_industry.html"))
+```
+![](figures/salary_distribution_by_industry.png){width=100%}
+
+The box plot presents the salary distribution across the top 10 industries with the highest number of job postings.
+By reducing the number of categories and adjusting the axis labels, we improve readability.
+
+```{python}
+#| echo: false
+remote_counts = data_cleaned["REMOTE_TYPE_NAME"].value_counts().reset_index()
+remote_counts.columns = ["REMOTE_TYPE", "Count"]
+remote_counts = remote_counts[remote_counts['REMOTE_TYPE'] != '[None]']
+
+
+fig = px.pie(
+    remote_counts,
+    names="REMOTE_TYPE",
+    values="Count",
+    title="Remote vs. On-Site Jobs",
+    color="REMOTE_TYPE",
+    color_discrete_map={"Remote": "blue", "On-Site": "green", "Hybrid": "purple"}
+)
+
+
+fig.update_traces(textinfo="percent+label")
+fig.update_layout(height=400)
+
+fig.write_html(os.path.join(figures_folder, "remote_vs_onsite_jobs.html"))
+```
+![](figures/remote_vs_onsite_jobs.png){width=100%}
+
+The pie chart represents the distribution of remote, on-site, and hybrid job postings.
+It helps visualize the proportion of different work arrangements in the job market.

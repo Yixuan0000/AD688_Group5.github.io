@@ -1,0 +1,89 @@
+---
+title: "Natural Language Processing (NLP) Analysis"
+format:
+  html:
+    toc: true
+    number-sections: true
+    df-print: paged
+    code: true
+    code-tools: true
+    section-divs: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  eval: true
+jupyter: python3
+---
+
+# Introduction
+
+In this section, we conduct a basic Natural Language Processing (NLP) analysis based on job descriptions in our dataset (`cleaned_job_postings.csv`). The goal is to extract key topics and skills mentioned in job postings, enhancing our understanding of employer expectations in the market.
+
+```{python}
+# echo: false
+import pandas as pd
+import re
+from sklearn.feature_extraction.text import CountVectorizer, ENGLISH_STOP_WORDS
+from sklearn.decomposition import LatentDirichletAllocation
+import plotly.express as px
+from collections import Counter
+
+data = pd.read_csv("files/cleaned_job_postings.csv")
+
+text_data = data['BODY'].dropna().reset_index(drop=True)
+
+def preprocess(text):
+    text = text.lower()
+    text = re.sub(r'[^a-z\s]', '', text)
+    words = text.split()
+    words = [word for word in words if word not in ENGLISH_STOP_WORDS and len(word) > 2]
+    return words
+
+data['tokens'] = text_data.apply(preprocess)
+
+all_words = [word for tokens in data['tokens'] for word in tokens]
+word_freq = Counter(all_words)
+
+word_freq_df = pd.DataFrame(word_freq.most_common(20), columns=["word", "count"])
+
+fig = px.bar(word_freq_df, x='word', y='count', title='Top 20 Most Frequent Words (After Removing Stopwords)')
+fig.show()
+
+corpus = [" ".join(tokens) for tokens in data['tokens']]
+vectorizer = CountVectorizer(max_df=0.9, min_df=10, stop_words='english')
+dtm = vectorizer.fit_transform(corpus)
+
+lda = LatentDirichletAllocation(n_components=5, random_state=42)
+lda.fit(dtm)
+
+feature_names = vectorizer.get_feature_names_out()
+
+def display_topics(model, feature_names, no_top_words):
+    for idx, topic in enumerate(model.components_):
+        print(f"Topic {idx + 1}:")
+        print(" | ".join([feature_names[i] for i in topic.argsort()[:-no_top_words - 1:-1]]))
+        print()
+
+display_topics(lda, feature_names, 10)
+```
+![](figures/NLP1.png){width=100%}
+
+## Topic Modeling Summary
+
+Based on the LDA topic modeling results, we can identify five major underlying themes within the job descriptions:
+
+- **Topic 1**: Focuses on **work, health, data, benefits, insurance, and employment terms**, suggesting that many job postings emphasize hiring conditions, employee benefits, and information handling requirements.
+
+- **Topic 2**: Centers around **teamwork, technology, and skill development**, highlighting the growing importance of collaboration and technical proficiency in hiring practices.
+
+- **Topic 3**: Emphasizes **client management, Oracle systems, and employment roles**, reflecting strong demand for CRM (Customer Relationship Management) and ERP (Enterprise Resource Planning) system skills.
+
+- **Topic 4**: Highlights **SAP expertise, management skills, and technical requirements**, indicating a sustained need for advanced management and systems integration capabilities.
+
+- **Topic 5**: Concentrates on **data analytics, business intelligence, and skill applications**, showing a strong market preference for data-driven decision-making and analytical roles.
+
+### Overall Interpretation
+
+Current job postings repeatedly emphasize **technical competencies** (such as **Oracle** and **SAP**), **data analytics capabilities**, and **cross-functional communication skills**.  
+Additionally, **benefits**, **health insurance**, and specific **employment requirements** are critical elements emphasized by employers during recruitment.

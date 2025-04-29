@@ -1,0 +1,39 @@
+## 1. Personalized Learning Plan
+
+Based on our skill gap analysis, we developed individual development goals to enhance each team member’s capabilities. The heatmap and table showed skill levels across 15 competencies including Python, Machine Learning, Communication, and Leadership.
+
+### Yixuan Yang
+
+- **Strengths**: Python (5), Problem-Solving (4), Teamwork (5), Leadership (3)
+- **Development Focus**:
+  - Cloud Computing (2): Take online labs (e.g., AWS Academy, GCP Fundamentals)
+  - Communication (2): Practice presentations and join group discussions weekly
+  - Project Management (3): Consider introductory PM courses (Coursera or LinkedIn Learning)
+
+### Arohit Talari
+
+- **Strengths**: Communication (5), Teamwork (5), Leadership (4), R (5)
+- **Development Focus**:
+  - SQL (1): Complete SQL bootcamp on DataCamp
+  - Machine Learning (2): Study basics with scikit-learn tutorials
+  - Data Visualization (2): Learn with Tableau or Plotly tutorials
+  - Cloud Computing (2): Follow step-by-step GCP training
+
+### Chengjie Lu
+
+- **Strengths**: Python (4), Data Visualization (5), SQL (5), Communication (5)
+- **Development Focus**:
+  - Leadership (2): Take initiative in meetings, and read leadership case studies
+  - Adaptability (2): Volunteer for cross-functional tasks or new tool trials
+
+## 2. Actionable Timeline
+
+| Member     | Focus Area(s)            | Resource                              | Target Date |
+|------------|--------------------------|----------------------------------------|-------------|
+| Yixuan     | Cloud Computing, PM      | AWS Labs, Coursera Intro PM            | June 2025   |
+| Arohit     | SQL, ML, Viz             | DataCamp, scikit-learn, Tableau        | June 2025   |
+| Chengjie   | Leadership, Adaptability | Case studies, team role rotation       | June 2025   |
+
+---
+
+By tailoring development plans to individual gaps, we aim to strengthen our team's readiness for data-driven projects and leadership roles in 2024 and beyond.

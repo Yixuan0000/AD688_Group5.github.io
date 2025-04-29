@@ -1,6 +1,6 @@
 ---
 title: "Evaluating Personal Job Market Prospects in 2024"
-subtitle: "Final Report"
+subtitle: "AD688 Final Report"
 author:
   - name: Yixuan Yang
     affiliations:
@@ -24,22 +24,20 @@ format:
   docx: default
 ---
 
-{{< include introduction.qmd >}}
+{{< embed introduction.qmd >}}
 
-{{< include research_introduction.qmd >}}
+{{< embed research_introduction.qmd >}}
 
-{{< include data_cleaning.qmd >}}
+{{< embed data_cleaning_for_report.qmd >}}
 
-{{< include eda.qmd >}}
+{{< embed eda_for_report.qmd >}}
 
-{{< embed skill_gap_analysis.qmd >}}
+{{< embed skill_gap_analysis_for_report.qmd >}}
 
 {{< include career_plan.qmd >}}
 
-{{< embed ml_methods.qmd >}}
+{{< embed ml_methods_for_report.qmd >}}
 
-{{< include ml_methods_summary.qmd >}}
-
-{{< embed nlp_methods.qmd >}}
+{{< embed nlp_methods_for_report.qmd >}}
 
 {{< include conclusion.qmd >}}

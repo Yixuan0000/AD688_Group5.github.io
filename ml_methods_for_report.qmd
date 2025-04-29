@@ -1,0 +1,373 @@
+---
+title: "Multiple Linear Regression - Salary Predition"
+subtitle: ""
+
+bibliography: references.bib
+csl: csl/econometrica.csl
+format:
+  html:
+    toc: true
+    number-sections: true
+    df-print: paged
+    code: false
+    code-tools: true
+    section-divs: true
+---
+
+# Mutiple Linear Regression
+```{python}
+#| echo: false
+import os, json
+import pandas as pd
+import numpy as np
+import plotly.express as px
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
+import plotly.graph_objects as go
+from sklearn.metrics import silhouette_score
+```
+
+```{python}
+#| echo: false
+df = pd.read_csv('files/cleaned_job_postings.csv')
+```
+
+```{python}
+#| echo: false
+df.head()
+```
+```{python}
+na_values = ["Unknown", "[None]", "", "None", "unknown"]
+df = df.replace(na_values, np.nan)
+```
+```{python}
+#| echo: false
+#df.columns
+```
+```{python}
+df["exp_mid"] = df[["MIN_YEARS_EXPERIENCE", "MAX_YEARS_EXPERIENCE"]].mean(axis=1)
+
+df["skill_count"] = df["SPECIALIZED_SKILLS_NAME"].fillna("").str.count(",") + 1
+
+df["has_python"] = df["SPECIALIZED_SKILLS_NAME"].str.contains("Python", case=False, na=False).astype(int)
+
+df["edu_ge_bachelors"] = df["MIN_EDULEVELS_NAME"].isin(
+    ["Bachelor's Degree", "Master's Degree", "Doctoral Degree"]
+).astype(int)
+
+keep_num  = ["exp_mid", "MODELED_DURATION", "skill_count",
+             "has_python", "edu_ge_bachelors"]
+
+keep_cat  = ["EMPLOYMENT_TYPE_NAME", "REMOTE_TYPE_NAME",
+             "STATE_NAME", 
+             "SOC_2021_4_NAME"]
+
+df_model = (
+    df.dropna(subset=["SALARY"])      
+      .loc[:, keep_num + keep_cat + ["SALARY"]]  
+)
+```
+
+## Feature Engineering
+```{python}
+df_dummies = pd.get_dummies(
+    df_model,
+    columns = keep_cat,   
+    drop_first = True,   
+    dtype = float        
+)
+```
+
+
+```{python}
+#| echo: false
+print(df_dummies.shape)
+print(df_dummies.dtypes.head(10))
+```
+
+```{python}
+# Drop salary to form features
+X = df_dummies.drop('SALARY', axis = 1)
+y = df_dummies['SALARY']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y ,test_size = 0.3, random_state = 688)
+```
+
+```{python}
+model = LinearRegression()
+model.fit(X_train, y_train)
+```
+
+```{python}
+y_pred = model.predict(X_test)
+pd.Series(y_pred).describe()
+```
+
+```{python}
+rmse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print(f"RMSE: {rmse:.2f}")
+print(f"R-squared: {r2:.4f}")
+```
+
+```{python}
+coef_df = pd.DataFrame({
+    "Feature": X.columns,
+    "Coefficient": model.coef_
+}).sort_values(by="Coefficient", ascending=False)
+
+coef_df.head(10)
+```
+
+```{python}
+coef_cleaned = coef_df[~coef_df["Feature"].str.contains(
+    r"Unknown|\[None\]",  
+    na=False              
+)]
+
+coef_cleaned.head(10)
+```
+
+# Visualization 
+
+```{python}
+#| echo: false
+figures_folder = "figures"
+if not os.path.exists(figures_folder):
+    os.makedirs(figures_folder)
+```
+## Coefficient bar chart
+```{python}
+#| echo: false
+# 1. Coefficient bar chart
+fig = px.bar(coef_df, x="Coefficient", y="Feature", orientation="h",
+             title="Top 15 Positive/Negative MLR Coefficients",
+             template="plotly_white", width=800, height=550)
+fig.update_yaxes(autorange="reversed")
+fig.write_html(os.path.join(figures_folder, "MLR_Coefficients.html"))
+```
+![](figures/ML1.png){width=100%}
+
+## Actual vs. Predicted
+
+```{python}
+#| echo: false
+# 2. Actual vs. Predicted
+fig = go.Figure()
+fig.add_trace(go.Scatter(
+    x=y_test, y=y_pred, mode="markers", name="Observations",
+    marker=dict(size=6, opacity=0.6)
+))
+lims = [min(y_test.min(), y_pred.min()), max(y_test.max(), y_pred.max())]
+fig.add_shape(type="line", x0=lims[0], y0=lims[0],
+              x1=lims[1], y1=lims[1],
+              line=dict(dash="dash", width=2, color="red"))
+fig.update_layout(
+    title="MLR – Actual vs. Predicted",
+    xaxis_title="Actual Salary",
+    yaxis_title="Predicted Salary",
+    template="plotly_white", width=800, height=550
+)
+fig.write_html(os.path.join(figures_folder, "MLR_AVP.html"))
+```
+![](figures/ML2.png){width=100%}
+
+## Residual histogram
+```{python}
+#| echo: false
+# 3. Residual histogram
+resid = y_test - y_pred
+fig = px.histogram(resid, nbins=40,
+                   title="MLR Residual Distribution",
+                   labels={"value":"Error (Actual – Predicted)"},
+                   template="plotly_white", width=800, height=500)
+fig.write_html(os.path.join(figures_folder, "MLR_Residuals.html"))
+```
+![](figures/ML3.png){width=100%}
+
+# Random Forest
+```{python}
+rf_model = RandomForestRegressor(
+    n_estimators     = 300,
+    min_samples_leaf = 2,
+    random_state     = 688,
+    n_jobs           = -1
+)
+rf_model.fit(X_train, y_train)
+```
+
+```{python}
+rf_pred = rf_model.predict(X_test)
+rf_rmse = mean_squared_error(y_test, rf_pred)
+rf_r2   = r2_score(y_test, rf_pred)
+print(f"Random Forest  •  RMSE = {rf_rmse:.2f}  |  R² = {rf_r2:.3f}")
+```
+
+## Rank Importance
+```{python}
+#| echo: false
+imp_df = (pd.Series(rf_model.feature_importances_, index=X_train.columns)
+            .sort_values(ascending=False)
+            .head(15)
+            .reset_index()
+            .rename(columns={"index": "Feature", 0: "Importance"}))
+
+fig = px.bar(imp_df, x="Importance", y="Feature", orientation="h",
+             title="Top 15 Random Forest Importances",
+             template="plotly_white", width=800, height=550)
+fig.update_yaxes(autorange="reversed")
+fig.write_html(os.path.join(figures_folder, "RF_Importance.html"))
+```
+![](figures/ML4.png){width=100%}
+
+# Unsupervised Learning - Kmeans 
+
+```{python}
+#| echo: false
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(df_dummies)
+```
+
+```{python}
+#| echo: false
+inertias, silhouettes = [], []
+k_range = range(2, 11)
+
+for k in k_range:
+    km = KMeans(n_clusters=k, random_state=688, n_init="auto")
+    km.fit(X_scaled)
+    inertias.append(km.inertia_)
+    silhouettes.append(silhouette_score(X_scaled, km.labels_))
+```
+
+## Elbow Plot
+
+```{python}
+#| echo: false
+# Elbow Plot
+fig_elbow = go.Figure()
+fig_elbow.add_trace(go.Scatter(
+    x=list(k_range),
+    y=inertias,
+    mode="lines+markers",
+    marker=dict(size=8),
+    line=dict(width=2),
+    name="WCSS"
+))
+fig_elbow.update_layout(
+    title="Elbow Method – Within‑Cluster Sum of Squares",
+    xaxis_title="Number of Clusters (k)",
+    yaxis_title="WCSS",
+    template="plotly_white",
+    width=800,
+    height=500
+)
+fig_elbow.write_html(
+    os.path.join(figures_folder, "Elbow_Chart.html"),
+    include_plotlyjs="cdn"
+)
+```
+![](figures/ML5.png){width=100%}
+
+## Silhouette Score 
+```{python}
+#| echo: false
+fig_sil = go.Figure()
+fig_sil.add_trace(go.Bar(
+    x=list(k_range),
+    y=silhouettes,
+    name="Silhouette"
+))
+fig_sil.update_layout(
+    title="Silhouette Score by k",
+    xaxis_title="Number of Clusters (k)",
+    yaxis_title="Average Silhouette",
+    template="plotly_white",
+    width=800,
+    height=500
+)
+fig_sil.write_html(
+    os.path.join(figures_folder, "Silhouette_Chart.html"),
+    include_plotlyjs="cdn"
+)
+```
+![](figures/ML6.png){width=100%}
+
+# Multiple Linear Regression
+
+In this section, we built a multiple linear regression model to predict salaries using a variety of features, including experience, skill counts, education, and employment type. 
+
+Key results:
+- **RMSE**: 77724.06
+- **R-squared**: 0.0874
+
+These metrics indicate that while the model provides some insight, there is significant unexplained variance, suggesting that salary prediction is complex and influenced by additional unobserved factors.
+
+Top features influencing salary (positive coefficients):
+- STATE_NAME_Washington (+\$5135.86)
+- STATE_NAME_Vermont (+\$4992.13)
+- STATE_NAME_California (+\$4810.12)
+- STATE_NAME_Connecticut (+\$4240.56)
+
+The results show that the location (state) plays a crucial role in determining salary.
+
+## Visualizations
+
+### Coefficient Bar Chart
+![](figures/ML1.png){width=100%}
+A bar chart was used to visualize the top positive and negative influences on predicted salaries. Positive coefficients primarily relate to states with higher living costs.
+
+### Actual vs. Predicted Plot
+![](figures/ML2.png){width=100%}
+A scatter plot comparing actual salaries against predicted salaries shows a wide dispersion, indicating prediction inaccuracies at extreme salary values.
+
+### Residual Histogram
+![](figures/ML3.png){width=100%}
+The histogram of residuals suggests a concentration of errors near zero but with some large deviations, reinforcing the need for model improvement.
+
+# Random Forest Regression
+
+A random forest model was implemented to enhance prediction performance.
+
+Key results:
+- **RMSE**: 63755.28
+- **R-squared**: 0.252
+
+Compared to multiple regression, random forest achieves better fit, although a large proportion of variance still remains unexplained.
+
+Top features by importance:
+- skill_count
+- MODELED_DURATION
+- exp_mid
+- REMOTE_TYPE_NAME_Remote
+
+Skill counts and modeled duration (likely representing experience) have the highest impact on salary predictions.
+
+## Rank Importance Chart
+![](figures/ML4.png){width=100%}
+A bar chart displays the relative importance of the top 15 features, confirming the key role of skills and experience.
+
+# Unsupervised Learning: KMeans Clustering
+
+KMeans clustering was used to segment jobs into different clusters based on attributes.
+
+## Elbow Plot
+![](figures/ML5.png){width=100%}
+The elbow plot suggests that an optimal number of clusters is likely around **3** to **4**, as the rate of decrease in within-cluster sum of squares slows beyond this point.
+
+## Silhouette Score
+![](figures/ML6.png){width=100%}
+Silhouette scores were plotted for different numbers of clusters. The highest silhouette score is achieved at **k=2** (approximately 0.19), suggesting that two clusters provide the clearest separation.
+
+# Conclusion
+
+This analysis demonstrates that predicting salary is highly complex. Multiple regression and random forest models reveal that factors such as experience, skill count, and location significantly impact salary. Clustering analysis shows that job characteristics can be segmented into relatively clear groups, though the differences between some clusters are subtle.
+
+Future work should include exploring additional variables (e.g., company size, industry sector) and more advanced modeling techniques (e.g., gradient boosting, neural networks) to improve prediction accuracy.
